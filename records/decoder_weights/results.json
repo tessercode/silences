@@ -6931,8 +6931,13 @@
   "6": 17464
  },
  "git": {
-  "commit": "",
-  "dirty_paths": [],
+  "commit": "b34d6de35f65ae8f23aaa017cf065ca8e0bd4e78",
+  "dirty_paths": [
+   "records/random_letters/calibration.json",
+   "records/random_letters/diag_joint_beta.json",
+   "records/random_letters/manifest.json",
+   "records/random_letters/results.json"
+  ],
   "relevant_dirty_paths": [],
   "clean_for_record": true
  },
@@ -6943,5 +6948,5 @@
   "torch": "2.11.0+cu128",
   "snntorch": "0.9.4"
  },
- "finished": "2026-10-25T13:28:52-06:00"
+ "finished": "2026-10-25T14:54:59-06:00"
 }

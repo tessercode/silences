@@ -1,10 +1,14 @@
 {
   "experiment": "exp207_temperature",
   "protocol_hash": "f3b85d0c9db49b96",
-  "created": "2026-10-25T13:24:39-06:00",
+  "created": "2026-10-25T14:51:07-06:00",
   "git": {
-    "commit": "",
-    "dirty_paths": [],
+    "commit": "b34d6de35f65ae8f23aaa017cf065ca8e0bd4e78",
+    "dirty_paths": [
+      "records/random_letters/calibration.json",
+      "records/random_letters/diag_joint_beta.json",
+      "records/random_letters/results.json"
+    ],
     "relevant_dirty_paths": [],
     "clean_for_record": true
   },
@@ -16,11 +20,11 @@
     "snntorch": "0.9.4"
   },
   "files": {
-    "calibration.json": "412c04f652eab3bebed1c8377eec3a55d1639ffe316e9cd0c6e2da40169b016c",
+    "calibration.json": "18dd8aaff129e88a4c8b47af12c8c9ed5808912b42522bfd0e8740543bd695c9",
     "calibration_curves.json": "085cabc05015865c0bafd29016ff7bbf2bb20c4f8036456b0fcdb20b09012ae8",
-    "results.json": "b91dd724c963abaedabe9579de2f6d0260106ffb555b8e8ebbcc98047d399224",
+    "results.json": "313f6e33367e2855dcd992010ad06f29192c91142fa4883ab3404530fdfbfa8f",
     "oracle_conf8.json": "bfc693caa6b22c8f27d8239478d426004a41ffbc3be5bf1536739d8196873d06",
-    "diag_joint_beta.json": "9155033f9accccba8351eb2f6f0debb0889f60b29f5fee996ac0f412868866b8"
+    "diag_joint_beta.json": "5e7b44e9131bb239929d9242642640e2a31a2d680c73abfc3c5f79651eccfe58"
   },
   "feature_matrix_sha256": [
     "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085"
@@ -60,1079 +64,722 @@
   },
   "model_sidecars": {
     "lif_seed0.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 0,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "468aa424b01d3c2e0f010c5924b75308849409ada1c5aeb457c27cc662683fdb",
-      "deterministic_algorithms": true,
-      "wall_s": 888.2,
-      "finished": "2026-09-16T18:02:08-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 1167.9,
+      "finished": "2026-10-25T13:56:42-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "lif_seed1.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 1,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "97d2ce13de1f2585b84ef9cc117dd5cb024c2e3d67cf6b89a31e37e0e2f7264c",
-      "deterministic_algorithms": true,
-      "wall_s": 1000.1,
-      "finished": "2026-09-16T18:33:38-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 1074.8,
+      "finished": "2026-10-25T13:55:09-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "lif_seed2.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 2,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "bab123021ef5bb2bb928276863b0da269176e939cc7c9dcdf66b605f7e051e10",
-      "deterministic_algorithms": true,
-      "wall_s": 1175.8,
-      "finished": "2026-09-16T18:36:34-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 1136.5,
+      "finished": "2026-10-25T13:56:11-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "lif_seed3.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 3,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "a3b8c0008880a47ed251f1058d5ed93f8b96a5f51f889230f5e1f37f3c5f4b94",
-      "deterministic_algorithms": true,
-      "wall_s": 1162.2,
-      "finished": "2026-09-16T18:36:20-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 1228.6,
+      "finished": "2026-10-25T14:15:39-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "lif_seed4.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 4,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "9159bd9055e98ce76e91e33e590566879eb0e430ead7e7e1eb5eacf7b6b6e9a1",
-      "deterministic_algorithms": true,
-      "wall_s": 1030.3,
-      "finished": "2026-09-16T18:51:09-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 1234.1,
+      "finished": "2026-10-25T14:16:47-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "lif_seed5.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 5,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "73583fff6161a2cc295db76843a41bd4d606c627f36400b8260f3fce302f5b5a",
-      "deterministic_algorithms": true,
-      "wall_s": 1122.8,
-      "finished": "2026-09-16T18:55:21-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 1198.2,
+      "finished": "2026-10-25T14:16:42-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "lif_seed6.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 6,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "010e054f433c89cb0eee52552835fb9313af0d1c08a019432547c63818bf1513",
-      "deterministic_algorithms": true,
-      "wall_s": 1211.6,
-      "finished": "2026-09-16T18:57:00-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 1133.1,
+      "finished": "2026-10-25T14:34:34-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "lif_seed7.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 7,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "7ea36eb76ab548805b9bc920e2f3c4a865ce25f978b550f269e58578b9a77fcf",
-      "deterministic_algorithms": true,
-      "wall_s": 1022.0,
-      "finished": "2026-09-16T19:08:30-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 1049.8,
+      "finished": "2026-10-25T14:34:14-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "lif_seed8.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 8,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "1e93187888bc11465b0fdd46acc9046b0de904099b856854ef9ad60779c533fa",
-      "deterministic_algorithms": true,
-      "wall_s": 1139.5,
-      "finished": "2026-09-16T19:14:38-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 1135.0,
+      "finished": "2026-10-25T14:35:43-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "lif_seed9.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "lif",
       "seed": 9,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "T": 40,
+        "batch": 512,
+        "beta": 0.95,
+        "epochs": 60,
         "hidden": [
           256,
           128
         ],
-        "beta": 0.95,
-        "threshold": 1.0,
-        "T": 40,
-        "epochs": 60,
         "lr": 0.001,
-        "batch": 512,
-        "wd": 1e-05,
-        "val": 0.1
+        "threshold": 1.0,
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "ea9265131d6c62bb9e9fd54640e0b78af22c97a6bfda1a6472f34004e86e4e23",
-      "deterministic_algorithms": true,
-      "wall_s": 1158.3,
-      "finished": "2026-09-16T19:16:37-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 898.8,
+      "finished": "2026-10-25T14:49:14-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed0.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 0,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "1333b66723167720968c118e388da372128e35046051d514843bdf3a318e2268",
-      "deterministic_algorithms": true,
-      "wall_s": 33.9,
-      "finished": "2026-09-16T19:17:22-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 26.7,
+      "finished": "2026-10-25T13:33:02-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed1.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 1,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "77f27333ddea5564a805e2554f881b65ce7917a0fd096a5f6c47c53bc6d784f5",
-      "deterministic_algorithms": true,
-      "wall_s": 34.5,
-      "finished": "2026-09-16T19:17:23-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 25.1,
+      "finished": "2026-10-25T13:33:38-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed2.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 2,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "c95a921047efd2f17d2eafa3d27168b2bcad2085036ededa4aacf95e6b6a8124",
-      "deterministic_algorithms": true,
-      "wall_s": 34.5,
-      "finished": "2026-09-16T19:17:23-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 25.3,
+      "finished": "2026-10-25T13:34:04-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed3.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 3,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "7b913a6e4b9354a1d16c97ba168e35a9be6dbfde8163671133d54beed7ed273e",
-      "deterministic_algorithms": true,
-      "wall_s": 34.4,
-      "finished": "2026-09-16T19:18:12-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 25.2,
+      "finished": "2026-10-25T13:34:31-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed4.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 4,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "c532e040bb577d20f68ffd06cacc7d1386431868c6fd892cb64fece5a9cc7190",
-      "deterministic_algorithms": true,
-      "wall_s": 34.4,
-      "finished": "2026-09-16T19:18:12-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 25.5,
+      "finished": "2026-10-25T13:34:57-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed5.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 5,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "cdd4eb1ae704f3fed91b7f9efd72758529f8bfac06e2ca44d893020caabdd5d4",
-      "deterministic_algorithms": true,
-      "wall_s": 34.4,
-      "finished": "2026-09-16T19:18:12-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 25.8,
+      "finished": "2026-10-25T13:35:24-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed6.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 6,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "5da75ce48d8cdd02bb417036e0ee50b7309610784e30f49098aa02e7852f902f",
-      "deterministic_algorithms": true,
-      "wall_s": 34.2,
-      "finished": "2026-09-16T19:19:02-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 25.9,
+      "finished": "2026-10-25T13:35:51-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed7.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 7,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "1ee534dbb7e131377270a1ebd5c1c170eb53ea8e7a05fc604691513f8333e7f9",
-      "deterministic_algorithms": true,
-      "wall_s": 34.8,
-      "finished": "2026-09-16T19:19:03-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 25.8,
+      "finished": "2026-10-25T13:36:18-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed8.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 8,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "f7da4e40afe7b6c638f8a720e71e432e8b3b07ab9e5483a5a2be7fd7b7ce78d9",
-      "deterministic_algorithms": true,
-      "wall_s": 34.0,
-      "finished": "2026-09-16T19:19:02-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 26.4,
+      "finished": "2026-10-25T13:36:46-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     },
     "mlp_seed9.meta.json": {
-      "experiment": "exp206_seed_sweep",
       "family": "mlp",
       "seed": 9,
-      "protocol_hash": "77b7e88caa7e32d8",
+      "protocol_hash": "f3b85d0c9db49b96",
       "protocol": {
+        "batch": 1024,
+        "epochs": 150,
         "hidden": [
           256,
           128
         ],
-        "epochs": 150,
         "lr": 0.001,
-        "batch": 1024,
-        "wd": 1e-05,
-        "val": 0.1
+        "val": 0.1,
+        "wd": 1e-05
       },
       "train": {
-        "per_fist": 1000,
-        "corpus_seed": 13,
         "W": 10,
+        "corpus_seed": 13,
+        "per_fist": 1000,
         "tu": "fe_tu_us"
       },
       "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
       "pickle_sha256": "bc72775ef52fc1b8bf60023131f1a88777eb3551978b18dafe1c51957f55a90b",
-      "deterministic_algorithms": true,
-      "wall_s": 27.0,
-      "finished": "2026-09-16T19:19:45-06:00",
-      "git": {
-        "commit": "dd8f52bf7dfc37983c2f9d2429fbab05d6cd27bc",
-        "branch": "exp206-seed-sweep",
-        "dirty_paths": [
-          "eploy/rp2040_sentence_decoder/spiking_gap9/RESULTS.md",
-          "notebooks/experiment206_notes.md",
-          "papers/silences/Makefile",
-          "papers/silences/scripts/make_figures.py",
-          "papers/silences/values_ledger.md",
-          "outputs/exp206_seed_sweep/determinism.json",
-          "outputs/exp206_seed_sweep/models/",
-          "outputs/experiment206_seed_sweep_output.ipynb"
-        ],
-        "relevant_dirty_paths": [],
-        "clean_for_record": true
-      },
+      "wall_s": 25.9,
+      "finished": "2026-10-25T13:37:13-06:00",
       "env": {
         "python": "3.12.3",
-        "torch": "2.11.0+cu128",
         "numpy": "2.4.4",
-        "snntorch": "0.9.4",
-        "hostname": "daystrom",
-        "omp_num_threads": "6"
-      }
+        "blas_threads": null,
+        "torch": "2.11.0+cu128",
+        "snntorch": "0.9.4"
+      },
+      "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
     }
   },
   "determinism": {
     "deterministic": true,
     "max_abs_weight_diff": 0.0,
-    "checked": "2026-09-16T18:16:57-06:00",
-    "protocol_hash": "77b7e88caa7e32d8",
-    "omp_threads": 6
+    "checked": "2026-10-25T13:56:42-06:00",
+    "protocol_hash": "f3b85d0c9db49b96",
+    "omp_threads": 6,
+    "method": "LIF seed 0 retrained in a fresh process and compared byte for byte with the shipped model"
   }
 }

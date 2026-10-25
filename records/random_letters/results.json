@@ -6203,9 +6203,10 @@
   "determinism": {
     "deterministic": true,
     "max_abs_weight_diff": 0.0,
-    "checked": "2026-09-16T18:16:57-06:00",
-    "protocol_hash": "77b7e88caa7e32d8",
-    "omp_threads": 6
+    "checked": "2026-10-25T13:56:42-06:00",
+    "protocol_hash": "f3b85d0c9db49b96",
+    "omp_threads": 6,
+    "method": "LIF seed 0 retrained in a fresh process and compared byte for byte with the shipped model"
   },
-  "finished": "2026-10-25T13:24:34-06:00"
+  "finished": "2026-10-25T14:51:02-06:00"
 }
