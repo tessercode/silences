@@ -36,6 +36,9 @@ from ..segmenters.mlp import MLP   # noqa: E402
 
 RETRAIN = OUTPUTS / "retrain"
 FEATURES_SHA256 = "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085"
+# The same matrix rounded to 9 decimals: equal on any CPU, where the exact bits depend on which SIMD
+# kernels numpy uses for log (AVX2 and AVX-512 can differ in the last bit).
+FEATURES_SHA256_9DP = "0cb308eac5078c7e169a4b7acdfca093ac821f0539308d06a6cdf2e1a765c126"
 
 
 def training_matrix():
@@ -51,7 +54,11 @@ def training_matrix():
         OUTPUTS.mkdir(exist_ok=True)
         np.savez(cache, F=F, y=y)
     sha = hashlib.sha256(F.tobytes() + y.tobytes()).hexdigest()
-    assert sha == FEATURES_SHA256, "the training matrix is not the one the models were trained on"
+    if sha != FEATURES_SHA256:
+        rounded = hashlib.sha256(np.round(F, 9).tobytes() + y.tobytes()).hexdigest()
+        assert rounded == FEATURES_SHA256_9DP, "the training matrix is not the one the models were trained on"
+        print("note: this CPU's floating-point kernels give the training matrix in different last bits; it is the\n"
+              "      same matrix to 9 decimals, but retrained models will not be bit-identical to the shipped ones", flush=True)
     return F, y, sha
 
 

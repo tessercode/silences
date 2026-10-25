@@ -48,7 +48,7 @@ def test_q16_scalar_and_vector_agree():
 
 
 def test_training_matrix_is_the_one_the_models_were_trained_on():
-    assert training_matrix()[2].startswith("119dbc64")      # also asserted inside
+    training_matrix()          # raises unless the matrix equals the training one, exactly or to 9 decimals
 
 
 def test_generator_matches_the_published_stream():

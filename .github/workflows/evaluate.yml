@@ -1,0 +1,23 @@
+name: evaluate
+# Manual: regenerate every evaluation record on a GitHub runner and compare it with the committed one.
+on: workflow_dispatch
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install (CPU torch)
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt
+          .venv/bin/python -m nltk.downloader words brown
+      - name: CPU
+        run: lscpu | grep -E "Model name|Flags" | cut -c1-200; grep -o -m1 avx512f /proc/cpuinfo || echo "no avx512f"
+      - name: Training matrix
+        run: PYTHONPATH=. .venv/bin/python -c "from silences.training.window_nets import training_matrix; print(training_matrix()[2])"
+      - name: Evaluate and compare
+        run: SILENCES_WORKERS=4 make evaluate
