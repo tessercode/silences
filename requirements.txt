@@ -1,0 +1,10 @@
+# The environment the records were produced in (Python 3.12.3). The paper and the evaluation need only
+# numpy, scipy, matplotlib and nltk; torch and snntorch are for training and for re-quantizing the
+# BiGRU checkpoints.
+numpy==2.4.4
+scipy==1.17.1
+matplotlib==3.10.9
+nltk==3.9.4
+torch==2.11.0
+snntorch==0.9.4
+pytest==9.0.3

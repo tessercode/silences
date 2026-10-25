@@ -1,0 +1,13 @@
+# SHARED Renode harness for the clf bench firmware (used by spiking_gap9_lif and spiking_gap9_mlp).
+# The run script sets $fw to the module's build/clf_bench.elf before including this.
+$machine_name?="raspberry_pico"
+$rp2040=$ORIGIN/../third_party/Renode_RP2040
+$uartlog?=$ORIGIN/uart_capture.log
+path add $rp2040
+include $rp2040/cores/initialize_peripherals_source.resc
+machine LoadPlatformDescription $rp2040/boards/raspberry_pico.repl
+sysbus LoadELF $rp2040/bootroms/rp2040/b2.elf
+sysbus LoadELF $fw
+sysbus.cpu0 VectorTableOffset 0x00000000
+sysbus.cpu1 VectorTableOffset 0x00000000
+sysbus.uart0 CreateFileBackend $uartlog true

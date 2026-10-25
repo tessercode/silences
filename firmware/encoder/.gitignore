@@ -1,0 +1,9 @@
+build/
+build_off/
+build_on/
+host/enc_host_check
+host/cases.txt
+host/anchor_cases.txt
+host/rng_cases.txt
+result_e1.bin
+.renode_e1.log

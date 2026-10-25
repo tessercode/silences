@@ -1,0 +1,185 @@
+{
+ "all_equal": true,
+ "records": [
+  {
+   "record": "random_letters/calibration.json",
+   "original": "seed_sweep/calibration.json",
+   "values_compared": 760,
+   "differences": 0,
+   "skipped": [
+    "source_sha256"
+   ],
+   "why": "bigru_deployed's weights now live in models/bigru/pool_q16.npz (same arrays)",
+   "first_differences": []
+  },
+  {
+   "record": "random_letters/calibration_curves.json",
+   "original": "seed_sweep/calibration_curves.json",
+   "values_compared": 558,
+   "differences": 0,
+   "skipped": [],
+   "why": "",
+   "first_differences": []
+  },
+  {
+   "record": "random_letters/results.json",
+   "original": "seed_sweep/results.json",
+   "values_compared": 3725,
+   "differences": 0,
+   "skipped": [
+    "determinism",
+    "source_sha256"
+   ],
+   "why": "as above; the determinism check was re-run (see training/determinism.json)",
+   "first_differences": []
+  },
+  {
+   "record": "random_letters/diag_joint_beta.json",
+   "original": "seed_sweep/diag_joint_beta.json",
+   "values_compared": 245,
+   "differences": 0,
+   "skipped": [],
+   "why": "",
+   "first_differences": []
+  },
+  {
+   "record": "decoder_weights/fit.json",
+   "original": "seed_sweep/exp209/fit.json",
+   "values_compared": 24195,
+   "differences": 0,
+   "skipped": [],
+   "why": "",
+   "first_differences": []
+  },
+  {
+   "record": "decoder_weights/eval.json",
+   "original": "seed_sweep/exp209/eval.json",
+   "values_compared": 12865,
+   "differences": 0,
+   "skipped": [],
+   "why": "",
+   "first_differences": []
+  },
+  {
+   "record": "decoder_weights/results.json",
+   "original": "seed_sweep/exp209/results.json",
+   "values_compared": 4138,
+   "differences": 0,
+   "skipped": [],
+   "why": "",
+   "first_differences": []
+  },
+  {
+   "record": "decoder_weights/diag_beta_edge.json",
+   "original": "seed_sweep/exp209/diag_beta_edge.json",
+   "values_compared": 298,
+   "differences": 0,
+   "skipped": [],
+   "why": "",
+   "first_differences": []
+  },
+  {
+   "record": "random_letters/oracle_conf8.json",
+   "original": "seed_sweep/exp206_t1/results.json rows/perfect_gaps",
+   "values_compared": 25,
+   "differences": 0,
+   "skipped": [],
+   "why": "",
+   "first_differences": []
+  }
+ ],
+ "files": [
+  {
+   "file": "records/collision.json",
+   "original": "outputs/exp116_boundary_ambiguity_summary.json",
+   "identical": true
+  },
+  {
+   "file": "models/charlm_mix_q16.bin",
+   "original": "deploy/rp2040_sentence_decoder/a1_charlm_golden_reference/charlm_mix_q16.bin",
+   "identical": true
+  }
+ ],
+ "models": [
+  {
+   "model": "models/lif/seed0.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/lif/seed1.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/lif/seed2.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/lif/seed3.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/lif/seed4.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/lif/seed5.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/lif/seed6.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/lif/seed7.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/lif/seed8.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/lif/seed9.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed0.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed1.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed2.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed3.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed4.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed5.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed6.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed7.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed8.pkl",
+   "identical_to_record": true
+  },
+  {
+   "model": "models/mlp/seed9.pkl",
+   "identical_to_record": true
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "module": "mlp",
+ "sha256": "84f80d0c83f4b856b3801b66954ff5e9362a125dd4394568a71bb8db0c84f774",
+ "g_ring": "0x200025b4",
+ "correct": true,
+ "npass": 50,
+ "nvec": 50,
+ "burst": true,
+ "hwm": 75,
+ "dropped": 0,
+ "cap_vid": 104,
+ "fol_vid": 103,
+ "fails": []
+}

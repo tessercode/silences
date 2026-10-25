@@ -1,0 +1,11 @@
+build/
+build_base/
+build_host/
+host/a1_host_check
+host/hb_n1
+host/hb_n5
+result_b2b3_n*.log
+.renode_b2b3_n*.log
+.b2b3_run_n*.resc
+uart_beam_n*.log
+.renode_beam_n*.log

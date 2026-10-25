@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+outputs/
+firmware/third_party/
+firmware/*/build/
+firmware/*/build_*/
+firmware/*/host/build/
+firmware/*/result_*.bin
+firmware/*/result_*.log
+firmware/*/.renode_*.log
+firmware/*/uart_capture*.log
+firmware/encoder/host/*.txt

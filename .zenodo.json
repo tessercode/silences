@@ -1,0 +1,17 @@
+{
+  "title": "Playing the Silences: code, models and records",
+  "upload_type": "software",
+  "license": "MIT",
+  "description": "Code, trained models and result records behind the paper Playing the Silences: A Feedforward Spiking Gap Detector for Word-Level Decoding of TEMPO Morse, including the RP2040 firmware and its bit-exact host reference.",
+  "creators": [
+    {
+      "name": "Hindman, Lucas S.",
+      "orcid": "0009-0004-8949-9342",
+      "affiliation": "Boise State University"
+    }
+  ],
+  "keywords": ["spiking neural networks", "neuromorphic computing", "Morse code", "LIF", "RP2040", "TEMPO"],
+  "related_identifiers": [
+    {"identifier": "10.5281/zenodo.20648716", "relation": "isDerivedFrom", "resource_type": "software"}
+  ]
+}

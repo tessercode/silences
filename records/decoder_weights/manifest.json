@@ -1,0 +1,25 @@
+{
+ "experiment": "exp209_corpus_decoder_weights",
+ "protocol_hash": "a7f80cf1ace9639d",
+ "base_protocol_hash": "f3b85d0c9db49b96",
+ "created": "2026-10-25T13:31:20-06:00",
+ "git": {
+  "commit": "",
+  "dirty_paths": [],
+  "relevant_dirty_paths": [],
+  "clean_for_record": true
+ },
+ "env": {
+  "python": "3.12.3",
+  "numpy": "2.4.4",
+  "blas_threads": "1",
+  "torch": "2.11.0+cu128",
+  "snntorch": "0.9.4"
+ },
+ "files": {
+  "fit.json": "fdf1a62bee16bbc48f9c2dd981990c8da075066cba85b248a013f8e7c3e4a5c6",
+  "eval.json": "762908cf988cc00dfea4827fffe95f051eb0c037a043f6204e550e01706fec30",
+  "results.json": "715bdf5323a4447e2418c0965530e94f087d3be21feaef9c0e42bea184265732",
+  "diag_beta_edge.json": "fa76def88bbfa8b79f4801bd2438a02b3a9e9ec26202a36e8109d09982a6d19d"
+ }
+}

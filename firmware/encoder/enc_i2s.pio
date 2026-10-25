@@ -1,0 +1,56 @@
+;
+; enc_i2s.pio — I2S master transmit for the ENC_AUDIO creature-comfort (Feature 1).
+;
+; VENDORED VERBATIM from raspberrypi/pico-extras
+;   src/rp2_common/pico_audio_i2s/audio_i2s.pio  (SPDX: BSD-3-Clause, (c) 2020 Raspberry Pi Ltd),
+; renamed `audio_i2s` -> `enc_audio_i2s` so it cannot clash with any SDK/extras symbol. pico-extras is
+; NOT vendored in this tree (no `pico_audio_i2s` library available), so the one PIO program the DAC
+; needs is carried here. Only the non-swapped variant is kept (clock_pin_base = BCK, base+1 = LRCK).
+;
+; ⚠️ OBSERVER-ONLY: this drives GP18/19/20 (I2S), which are FREE pins — it touches NOTHING on the
+;    validated GP6/GP7 completion-spike path. Compiled ONLY when ENC_AUDIO is defined (CMake option).
+;
+; Transmit a stereo I2S stream, 16 bits per sample. Autopull, threshold 32, shift LEFT (I2S is
+; MSB-first). FIFO word layout: | 31:16 sample(ws=0/L) | 15:0 sample(ws=1/R) |. 1 data bit per clock;
+; 2 PIO cycles per bit => 64 PIO cycles per stereo frame, so PIO clock = 64 * sample_rate.
+;
+; Side-set (2 bits):  bit1 = LRCLK (word select),  bit0 = BCLK (bit clock).
+
+.program enc_audio_i2s
+.side_set 2
+
+                    ;        /--- LRCLK
+                    ;        |/-- BCLK
+bitloop1:           ;        ||
+    out pins, 1       side 0b10
+    jmp x-- bitloop1  side 0b11
+    out pins, 1       side 0b00
+    set x, 14         side 0b01
+
+bitloop0:
+    out pins, 1       side 0b00
+    jmp x-- bitloop0  side 0b01
+    out pins, 1       side 0b10
+public entry_point:
+    set x, 14         side 0b11
+
+% c-sdk {
+
+static inline void enc_audio_i2s_program_init(PIO pio, uint sm, uint offset, uint data_pin, uint clock_pin_base) {
+    pio_sm_config sm_config = enc_audio_i2s_program_get_default_config(offset);
+
+    sm_config_set_out_pins(&sm_config, data_pin, 1);
+    sm_config_set_sideset_pins(&sm_config, clock_pin_base);
+    sm_config_set_out_shift(&sm_config, false, true, 32);   /* shift LEFT, autopull @ 32 bits */
+    sm_config_set_fifo_join(&sm_config, PIO_FIFO_JOIN_TX);   /* deepen TX FIFO (8 words) */
+
+    pio_sm_init(pio, sm, offset, &sm_config);
+
+    uint32_t pin_mask = (1u << data_pin) | (3u << clock_pin_base);
+    pio_sm_set_pindirs_with_mask(pio, sm, pin_mask, pin_mask);
+    pio_sm_set_pins(pio, sm, 0); /* clear pins */
+
+    pio_sm_exec(pio, sm, pio_encode_jmp(offset + enc_audio_i2s_offset_entry_point));
+}
+
+%}

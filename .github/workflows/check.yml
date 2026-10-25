@@ -1,0 +1,21 @@
+name: check
+on: [push, pull_request]
+jobs:
+  paper-and-host-gates:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install (CPU torch)
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt
+          .venv/bin/python -m nltk.downloader words brown
+      - name: The paper from the records
+        run: SILENCES_ALLOW_DIRTY= make paper
+      - name: Unit tests, goldens, generated headers
+        run: make check
+      - name: Firmware host gates
+        run: make firmware-host

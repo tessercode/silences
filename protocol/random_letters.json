@@ -1,0 +1,85 @@
+{
+ "beta_pinned": 2.5,
+ "bigru_pool_seeds": [
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49
+ ],
+ "calib": {
+  "criterion": "cer",
+  "grid": [
+   1,
+   1.5,
+   2,
+   3,
+   4,
+   6,
+   8,
+   12,
+   16
+  ],
+  "per_fist": 250,
+  "seed": 4242
+ },
+ "ci": 0.95,
+ "eval": {
+  "per_fist": 250,
+  "seeds": [
+   999,
+   777,
+   555,
+   321
+  ]
+ },
+ "lif": {
+  "T": 40,
+  "batch": 512,
+  "beta": 0.95,
+  "epochs": 60,
+  "hidden": [
+   256,
+   128
+  ],
+  "lr": 0.001,
+  "threshold": 1.0,
+  "val": 0.1,
+  "wd": 1e-05
+ },
+ "mlp": {
+  "batch": 1024,
+  "epochs": 150,
+  "hidden": [
+   256,
+   128
+  ],
+  "lr": 0.001,
+  "val": 0.1,
+  "wd": 1e-05
+ },
+ "omp_threads": 6,
+ "oracle_conf": 20.0,
+ "rule": "For each metric M in {CER, WER} and each pair (LIF vs BiGRU seeds, LIF vs MLP seeds, MLP vs BiGRU seeds): the per-seed value is the mean over the four evaluation seeds; the difference D = mean(baseline seeds) - mean(candidate seeds) in percentage points, positive = candidate better; the 95% interval is Welch's t on the two seed samples. A win on M is claimed only if the interval excludes zero. Reported alongside, never as the claim: wins-of-N (candidate seeds whose eval-mean beats the baseline's seed mean), training-seed spread (max - min of the per-seed means), eval-seed spread. The deployed 5-seed BiGRU ensemble and the committed snn_fetu.pkl / ff_fetu.pkl are separate rows, not sample members. Pre-registered 2026-09-16 before any Exp 206 model was trained. Exp 207 amendment (pre-registered 2026-09-17 before any temperature was fitted): every row carries its own temperature T, chosen from CALIB['grid'] as the value minimising decoded CER on the calibration corpus (seed 4242, per_fist 250; ties to the smaller T); WER at that T is reported, not optimised. T is applied to the Q16.16 log-posteriors as ((T_q*lp)+32768)>>16 on the host exactly as a device would. The language-model insertion bonus beta stays 2.5. The oracle uses confidence ORACLE_CONF. The claims rule above is then applied at each row's calibrated T; the same rows at T = 1 are re-reported so the effect of calibration is visible.",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "train": {
+  "W": 10,
+  "corpus_seed": 13,
+  "per_fist": 1000,
+  "tu": "fe_tu_us"
+ }
+}

@@ -1,0 +1,62 @@
+; Stage 3 edge-duration capture — B1.2 HANDOVER-COMPENSATED variant (sentence tree ONLY; the
+; word-scoped deploy/rp2040 original keeps the deficit and stays byte-identical).
+; One state machine per input pin (GP2 dot, GP3 dash). Measures low/high run lengths as before:
+; each counting iteration is exactly 2 sysclk cycles in BOTH loops; counts->ticks recovered from
+; the 400 ms CAL pulse. ~16 ns resolution at 125 MHz.
+;
+; FIX (pio_handover_census.md §3/§6): the original program never counted its run-handover
+; instructions — 4 cycles at low->high, 5 at high->low = 9 cycles = 72 ns lost per mark, which
+; accumulated per channel and surfaced as the B1.2 cross-channel imbalance skew. This variant:
+;   * pads the high->low handover by ONE delay cycle ([1] on the high_done mov) so both handovers
+;     are EVEN: low->high = 4 cycles (2 counts), high->low = 6 cycles (3 counts);
+;   * pre-biases each run's down-counter via preloaded scratch registers so the reported count
+;     INCLUDES its handover: low run reports n+3 (mov x, y with Y = ~3), high run reports n+2
+;     (mov x, osr with OSR = ~2). mov costs 1 cycle either way -> census otherwise unchanged.
+; Reported (n_low+3)+(n_high+2) counts x 2 cycles = true period EXACTLY; cal_counts becomes exact
+; (retires the +0.08 ppm scale term). Y/OSR are loaded once per SM in lvldur_program_init below —
+; NOT via the FIFO: FJOIN_RX disables the TX FIFO (RP2040 datasheet §3.5.6.3, SHIFTCTRL.FJOIN_RX:
+; the RX FIFO steals the TX FIFO's storage and "the TX FIFO is disabled"), so pio_sm_put + exec'd
+; pull would stall forever; immediate pio_sm_exec SET/MOV instructions are used instead.
+
+.program lvldur
+.wrap_target
+    mov x, y                  ; x = ~3: low count reports n+3 (= its 6-cycle handover, below)
+low_loop:
+    jmp pin, low_done         ; pin high -> low run ended         (1 cyc, not taken while low)
+    jmp x--, low_loop         ; pin low  -> count one iteration    (1 cyc) => 2 cyc/count
+low_done:
+    mov isr, ~x               ; low-run length = ~x = n_low + 3
+    push noblock
+    mov x, osr                ; x = ~2: high count reports n+2 (= its 4-cycle handover)
+high_loop:
+    jmp pin, high_cont        ; pin high -> keep counting          (1 cyc, taken while high)
+    jmp high_done             ; pin low  -> high run ended
+high_cont:
+    jmp x--, high_loop        ;                                    (1 cyc) => 2 cyc/count
+high_done:
+    mov isr, ~x           [1] ; high-run length = ~x = n_high + 2; [1] pads high->low to 6 cycles
+    push noblock
+.wrap
+
+% c-sdk {
+static inline void lvldur_program_init(PIO pio, uint sm, uint offset, uint pin) {
+    pio_sm_config c = lvldur_program_get_default_config(offset);
+    sm_config_set_jmp_pin(&c, pin);          // `jmp pin` tests this input pin
+    sm_config_set_clkdiv(&c, 1.0f);          // full sysclk: 2 cycles per count
+    // RX-only, no autopush; deepen RX FIFO by donating the unused TX FIFO.
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);
+    gpio_set_dir(pin, GPIO_IN);
+    pio_sm_init(pio, sm, offset, &c);
+    // B1.2 fix preload — PER STATE MACHINE (X/Y/OSR are per-SM even though the program copy is
+    // shared): Y = ~3 (low-run bias), OSR = ~2 (high-run bias). Loaded with immediate exec'd
+    // instructions; the FIFO route (pio_sm_put + exec'd pull) is IMPOSSIBLE here: FJOIN_RX
+    // disables the TX FIFO (RP2040 datasheet SHIFTCTRL.FJOIN_RX), so a pull would stall forever.
+    // X is clobbered as staging — harmless: the program's first instruction overwrites X.
+    // These survive the per-capture arm (CTRL.SM_RESTART clears ISR contents and the OSR SHIFT
+    // COUNTER, but NOT X/Y/OSR contents), so one preload at init covers every capture.
+    pio_sm_exec(pio, sm, pio_encode_set(pio_y, 3));            // Y = 3
+    pio_sm_exec(pio, sm, pio_encode_mov_not(pio_y, pio_y));    // Y = ~3 = 0xFFFFFFFC
+    pio_sm_exec(pio, sm, pio_encode_set(pio_x, 2));            // X = 2 (staging)
+    pio_sm_exec(pio, sm, pio_encode_mov_not(pio_osr, pio_x));  // OSR = ~2 = 0xFFFFFFFD
+}
+%}

@@ -1,0 +1,25 @@
+{
+ "description": "sha256 of every golden in this directory; the vector generators refuse to bake a golden that does not match",
+ "files": {
+  "beam_cap_vectors.json": "dd961b31fd92ef715e8f02e47f9c3f49945a430b89126f0fa18f4bab5454b66b",
+  "beam_n1.json": "f361738311be691f190af679ef3d4854c55bf8638ce21e297df165f5bc76325b",
+  "beam_n5.json": "157a98d1b2c41960a27175efaf291445c56c787376ee4cf2ca78835e82ff9036",
+  "chain_bigru_n1.json": "851482aaaa6cb893ff33039086ce1177b167403f38f412c1cc87e02014fdc2b8",
+  "chain_bigru_n5.json": "1a5dbcc101c2a9386a8c9ae99dad9d37549235808a9c6151e6a8498f9c61e81f",
+  "chain_lif.json": "1b6872e469051bfab0869fc000e31e7632da7bf08c0e27858260d99c8db157d5",
+  "chain_mlp.json": "ffbd53a1d6762ef30445aa5fa9ccedb6b2ea3bb85ad5e6a3b6884dfebc7263f3",
+  "fe_cootie_corrected.json": "b36af44cf4415b2aa76a0f0b2cfd79759af49e693f1ec9f67e14f05ca9d3a299",
+  "fe_cootie_high_jitter.json": "705f24ef3061374cf99074828ca91630bd8ee86f68b1482186f149e862c3a365",
+  "fe_fast_normalr.json": "592d225f960cdc05a65ebdf85b3c04ec4829f585f788dd86917dde12e5215c8c",
+  "fe_high_r_bug.json": "8aaf18cca6b057e626aa606607ee4d32ecc5d8ad7cd474452a1376b254ab95c5",
+  "fe_overflow.json": "82c45741e183307f68c140eb4c4b91004bd0fbb864d6fcfcffeeff8ed97f554c",
+  "fe_slow_normalr.json": "4f75942869a3417dd59f85a8bcfc89ffa4ca5235e342c6f1fb71cb8733aa6829",
+  "frames_n1.json": "ab6deecf34c67b551190beea862961c7aab3e0bb35b0e7d8f8ec0edcd51eabd2",
+  "frames_n5.json": "da433f057713fa30f874028016e2dfb3ecbcb0b99316917d05d70cc2035d1a9e",
+  "rng_kat.json": "7e56284b69e221cbd35297a2a3485ae17bee59bf4a9ff1cf0b28a000c9e3e38c",
+  "segmenter_bigru_n1.json": "aea507ca450506cd6dc3b326947d7a37e04a1fad05a7fa2d8f890306627cb070",
+  "segmenter_bigru_n5.json": "55fdeae43b830147ea686b3cbd39678580b6fa664cbf5ba1a080154c900e8df3",
+  "segmenter_lif.json": "e290643f2c694d30e1bcdd0395904c4e95e15a446a4bb6864fec232c84329897",
+  "segmenter_mlp.json": "102f4f0d6ffd88fe53208bdff1f236651be12006761985170e953121f2a2f38a"
+ }
+}

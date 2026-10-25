@@ -1,0 +1,51 @@
+{
+ "generated_by": "gen_kat.py",
+ "fetched": "2026-07-17",
+ "sources": [
+  {
+   "url": "https://prng.di.unimi.it/xoshiro128starstar.c",
+   "vendored": "reference/xoshiro128starstar.c",
+   "sha256": "2e3e540e15e1b1edf6144509ba3a71bc4611e3676d52e03d567a0f230a141a67",
+   "version": "xoshiro128** 1.1",
+   "note": "v1.1 fixed a bug where s[0] was used instead of s[1] in the scrambler; enc_rng.h:49 uses s[1] -> the tree carries the CORRECTED form"
+  },
+  {
+   "url": "https://prng.di.unimi.it/splitmix64.c",
+   "vendored": "reference/splitmix64.c",
+   "sha256": "071795a8e29978a5cbd7015ce8f7d772e7ab4631e574e9102b748fe99105ff3d"
+  }
+ ],
+ "licence": "public domain / CC0 per the sources' own headers ('Permission to use, copy, modify, and/or distribute this software for any purpose ... is hereby granted')",
+ "anchor": {
+  "truth": "Vigna's published algorithm",
+  "generated_from": "canonical_ref.py (independent transcription of the vendored .c)",
+  "failure_means": "THE IMPLEMENTATION IS WRONG"
+ },
+ "regression_freeze": {
+  "truth": "what this generator did on 2026-07-17",
+  "generated_from": "the tree's own enc_rng_ref.py",
+  "reason": "no published vectors exist for the Box-Muller (enc_rng_audit.md \u00a73)",
+  "failure_means": "SOMETHING CHANGED -- it cannot mean 'wrong'"
+ },
+ "derived_properties": {
+  "r_max": {
+   "value": 6.7637056350018945,
+   "derivation": "sqrt(2*33*ln 2) <- u1_min = 0.5/2**32 = 2**-33",
+   "pins": "the uniform mapping (x + 0.5)/2^32",
+   "why": "the property every parity gate was blind to; makes three fists' delimiter splits exactly impossible (enc_rng_audit.md \u00a74.1)"
+  },
+  "fist4_split": {
+   "value": 2.1313e-06,
+   "ratio_to_ideal": 1.0,
+   "note": "the only operationally relevant split figure; computed against the generator's own exact marginal, not an idealisation"
+  }
+ },
+ "files": {
+  "enc_rng_kat.h": "677f4aac4a18b718d59eceae690d096c29576c2e6b40c1910072841800e0e698",
+  "enc_rng_kat.py": "838100afa871d3a7e4ba8b6b296c6b608394962bc1d5e58ede24bccb751ed522",
+  "canonical_ref.py": "9ebc29434e8599db389005cd424c3e41a9226d4e0c84e31d802d85ed813efb4c",
+  "gen_kat.py": "0356e4fc2fd175eb3588ca1be6aa51bd0c65cee403ef86147058fd43f82c6630",
+  "reference/xoshiro128starstar.c": "2e3e540e15e1b1edf6144509ba3a71bc4611e3676d52e03d567a0f230a141a67",
+  "reference/splitmix64.c": "071795a8e29978a5cbd7015ce8f7d772e7ab4631e574e9102b748fe99105ff3d"
+ }
+}

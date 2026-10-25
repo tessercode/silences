@@ -1,0 +1,44 @@
+; uart_rx.pio -- 8N1 UART receiver in PIO (idle-high, LSB-first), one state machine PER INPUT line.
+; Standard Raspberry Pi Pico uart_rx pattern. The router instantiates this program on N pins (one SM
+; each) -- increment 1 uses two (encoder line, gap9 line); a third input (front-end) is one more SM.
+; This is the RP2040 showcase: the receivers are free-running hardware, the CPU just drains FIFOs.
+
+.program uart_rx
+    wait 0 pin 0          ; stall until start bit (high->low)
+    set x, 7      [10]    ; preload bit counter; delay to the centre of bit 0
+bitloop:
+    in pins, 1           ; sample one data bit (LSB first)
+    jmp x-- bitloop [6]  ; 8 bits, 8 cycles each
+    jmp pin good_stop    ; stop bit should be high
+    wait 1 pin 0         ; framing error/break -> wait for idle, drop the byte
+    jmp 0
+good_stop:
+    push                 ; push the received byte (shift-right -> byte in ISR MSBs)
+
+% c-sdk {
+#include "hardware/clocks.h"
+#include "hardware/gpio.h"
+
+// Init one RX state machine on `pin` at `baud`. Integer clkdiv (8x oversample) -> no float at all.
+static inline void uart_rx_program_init(PIO pio, uint sm, uint offset, uint pin, uint baud) {
+    pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, false);   // pin is an input
+    pio_gpio_init(pio, pin);
+    gpio_pull_up(pin);                                        // idle-high line
+    pio_sm_config c = uart_rx_program_get_default_config(offset);
+    sm_config_set_in_pins(&c, pin);                           // for WAIT/IN
+    sm_config_set_jmp_pin(&c, pin);                           // for JMP PIN (stop-bit check)
+    sm_config_set_in_shift(&c, true, false, 32);              // shift right, no autopush
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);            // deeper RX FIFO
+    uint32_t div256 = (uint32_t)(((uint64_t)clock_get_hz(clk_sys) * 256u) / (8u * baud));
+    sm_config_set_clkdiv_int_frac(&c, (uint16_t)(div256 >> 8), (uint8_t)(div256 & 0xFF));
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+
+// Non-blocking: returns 1 and the byte if one is waiting, else 0. Byte is in the ISR MSBs (shift-right).
+static inline int uart_rx_getc_nonblock(PIO pio, uint sm, uint8_t *out) {
+    if (pio_sm_is_rx_fifo_empty(pio, sm)) return 0;
+    *out = (uint8_t)(pio_sm_get(pio, sm) >> 24);
+    return 1;
+}
+%}

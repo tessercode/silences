@@ -1,0 +1,7 @@
+{
+ "description": "Figures from the bench runs of the LIF segmenter board that no other record carries. Latency, bit-exactness and the chain results come from latency_*.json, transport_*.json and chain_*.json; flash and SRAM from footprint_lif.txt.",
+ "lif": {
+  "stack_bytes": 264,
+  "stack_note": "Worst-case stack of the classifier path as reported at deployment: main (104 B) plus clf_run_marks (160 B) in the -fstack-usage output of clf_hw. Within PICO_STACK_SIZE."
+ }
+}

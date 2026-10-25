@@ -1,0 +1,20 @@
+# The encoder's render path on the emulated RP2040 (Renode_RP2040 models). Renode cannot observe GPIO, so
+# uart0 reports the tick/channel stream the board would emit, computed in the board's own soft-float.
+
+$machine_name?="raspberry_pico"
+$rp2040=$ORIGIN/../third_party/Renode_RP2040
+$fw?=$ORIGIN/build/e1_test.elf
+$reslog?=$ORIGIN/result_e1.bin
+
+path add $rp2040
+
+include $rp2040/cores/initialize_peripherals_source.resc
+
+machine LoadPlatformDescription $rp2040/boards/raspberry_pico.repl
+sysbus LoadELF $rp2040/bootroms/rp2040/b2.elf
+sysbus LoadELF $fw
+
+sysbus.cpu0 VectorTableOffset 0x00000000
+sysbus.cpu1 VectorTableOffset 0x00000000
+
+sysbus.uart0 CreateFileBackend $reslog true

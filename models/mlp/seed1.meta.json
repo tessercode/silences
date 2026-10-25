@@ -1,0 +1,34 @@
+{
+  "family": "mlp",
+  "seed": 1,
+  "protocol_hash": "f3b85d0c9db49b96",
+  "protocol": {
+    "batch": 1024,
+    "epochs": 150,
+    "hidden": [
+      256,
+      128
+    ],
+    "lr": 0.001,
+    "val": 0.1,
+    "wd": 1e-05
+  },
+  "train": {
+    "W": 10,
+    "corpus_seed": 13,
+    "per_fist": 1000,
+    "tu": "fe_tu_us"
+  },
+  "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
+  "pickle_sha256": "77f27333ddea5564a805e2554f881b65ce7917a0fd096a5f6c47c53bc6d784f5",
+  "wall_s": 25.1,
+  "finished": "2026-10-25T13:33:38-06:00",
+  "env": {
+    "python": "3.12.3",
+    "numpy": "2.4.4",
+    "blas_threads": null,
+    "torch": "2.11.0+cu128",
+    "snntorch": "0.9.4"
+  },
+  "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
+}

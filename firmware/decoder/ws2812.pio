@@ -1,0 +1,38 @@
+; ws2812.pio -- standard Raspberry Pi Pico WS2812 (NeoPixel) driver, one data line, 800kHz.
+; Used by common/status_led.c. Single pixel here (YD-RP2040 onboard RGB on GP23), but the program
+; drives an arbitrary-length chain unchanged. 24-bit GRB, MSB first, via side-set timing.
+.program ws2812
+.side_set 1
+.define public T1 2
+.define public T2 5
+.define public T3 3
+
+.wrap_target
+bitloop:
+    out x, 1        side 0 [T3 - 1]   ; drive low, shift out one bit
+    jmp !x do_zero  side 1 [T1 - 1]   ; drive high; branch on the bit value
+do_one:
+    jmp  bitloop    side 1 [T2 - 1]   ; long high = '1'
+do_zero:
+    nop             side 0 [T2 - 1]   ; short high = '0'
+.wrap
+
+% c-sdk {
+#include "hardware/clocks.h"
+
+// Init the WS2812 SM on `pin`. Integer clkdiv (no float) -> keeps the board FPU-free / float-free.
+static inline void ws2812_program_init(PIO pio, uint sm, uint offset, uint pin) {
+    pio_gpio_init(pio, pin);
+    pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);       // pin is an output
+    pio_sm_config c = ws2812_program_get_default_config(offset);
+    sm_config_set_sideset_pins(&c, pin);
+    sm_config_set_out_shift(&c, false, true, 24);               // shift left, autopull @ 24 bits (GRB)
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);              // deeper TX FIFO
+    const uint32_t cyc  = ws2812_T1 + ws2812_T2 + ws2812_T3;    // PIO cycles per WS2812 bit
+    const uint32_t freq = 800000u;                             // WS2812 bit rate
+    uint32_t div256 = (uint32_t)(((uint64_t)clock_get_hz(clk_sys) * 256u) / (freq * cyc));
+    sm_config_set_clkdiv_int_frac(&c, (uint16_t)(div256 >> 8), (uint8_t)(div256 & 0xFF));
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

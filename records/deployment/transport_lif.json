@@ -1,0 +1,14 @@
+{
+ "module": "lif",
+ "sha256": "b4b726c61e81f215e98246593fc81c819fff99f1abbac8a0e7457d27b791ee39",
+ "g_ring": "0x200035e4",
+ "correct": true,
+ "npass": 50,
+ "nvec": 50,
+ "burst": true,
+ "hwm": 75,
+ "dropped": 0,
+ "cap_vid": 104,
+ "fol_vid": 103,
+ "fails": []
+}

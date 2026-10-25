@@ -1,0 +1,10 @@
+build/
+host_gap9_3c
+host_gap9_3c_n5
+uart_capture.log
+.renode_run.log
+build_host/
+result_b2b_n*.bin
+uart_b2b_n*.log
+.renode_b2b_n*.log
+.b2b_run_n*.resc

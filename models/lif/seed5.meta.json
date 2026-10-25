@@ -1,0 +1,37 @@
+{
+  "family": "lif",
+  "seed": 5,
+  "protocol_hash": "f3b85d0c9db49b96",
+  "protocol": {
+    "T": 40,
+    "batch": 512,
+    "beta": 0.95,
+    "epochs": 60,
+    "hidden": [
+      256,
+      128
+    ],
+    "lr": 0.001,
+    "threshold": 1.0,
+    "val": 0.1,
+    "wd": 1e-05
+  },
+  "train": {
+    "W": 10,
+    "corpus_seed": 13,
+    "per_fist": 1000,
+    "tu": "fe_tu_us"
+  },
+  "feature_sha256": "119dbc647d8d8a7e1415787baa21e6ccd39e924d5e6abf78b8944dc937a74085",
+  "pickle_sha256": "73583fff6161a2cc295db76843a41bd4d606c627f36400b8260f3fce302f5b5a",
+  "wall_s": 1198.2,
+  "finished": "2026-10-25T14:16:42-06:00",
+  "env": {
+    "python": "3.12.3",
+    "numpy": "2.4.4",
+    "blas_threads": null,
+    "torch": "2.11.0+cu128",
+    "snntorch": "0.9.4"
+  },
+  "note": "retrained by python -m silences.training.window_nets; the pickle is byte-identical to the one shipped"
+}

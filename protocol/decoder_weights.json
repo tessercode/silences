@@ -1,0 +1,61 @@
+{
+ "T_grid": [
+  0.5,
+  1,
+  1.5,
+  2,
+  3,
+  4,
+  6,
+  8,
+  12,
+  16
+ ],
+ "base_protocol_hash": "f3b85d0c9db49b96",
+ "beta_grid": [
+  0.0,
+  1.0,
+  2.0,
+  2.5,
+  3.0,
+  4.0
+ ],
+ "calib_seed": {
+  "eng": 4243,
+  "rand": 4242
+ },
+ "criterion": "cer",
+ "deployed": {
+  "T": 1,
+  "beta": 2.5
+ },
+ "eng_vocab": {
+  "draw": "L ~ U{2..6} (as random_words), then a uniform word of length L",
+  "filter": "isalpha, upper, all chars in _corpus.LETTERS",
+  "lengths": [
+   2,
+   6
+  ],
+  "source": "nltk.corpus.words"
+ },
+ "eval": {
+  "per_fist": 250,
+  "seeds": [
+   999,
+   777,
+   555,
+   321
+  ]
+ },
+ "fixed_point_rows": [
+  "lif_committed_fx",
+  "mlp_committed_fx"
+ ],
+ "oracle_conf": 20.0,
+ "rule": "For each metric M in {CER, WER} and each pair (LIF vs BiGRU seeds, LIF vs MLP seeds, MLP vs BiGRU seeds): the per-seed value is the mean over the four evaluation seeds; the difference D = mean(baseline seeds) - mean(candidate seeds) in percentage points, positive = candidate better; the 95% interval is Welch's t on the two seed samples. A win on M is claimed only if the interval excludes zero. Reported alongside, never as the claim: wins-of-N (candidate seeds whose eval-mean beats the baseline's seed mean), training-seed spread (max - min of the per-seed means), eval-seed spread. The deployed 5-seed BiGRU ensemble and the committed snn_fetu.pkl / ff_fetu.pkl are separate rows, not sample members. Pre-registered 2026-09-16 before any Exp 206 model was trained. Exp 207 amendment (pre-registered 2026-09-17 before any temperature was fitted): every row carries its own temperature T, chosen from CALIB['grid'] as the value minimising decoded CER on the calibration corpus (seed 4242, per_fist 250; ties to the smaller T); WER at that T is reported, not optimised. T is applied to the Q16.16 log-posteriors as ((T_q*lp)+32768)>>16 on the host exactly as a device would. The language-model insertion bonus beta stays 2.5. The oracle uses confidence ORACLE_CONF. The claims rule above is then applied at each row's calibrated T; the same rows at T = 1 are re-reported so the effect of calibration is visible.",
+ "texts": [
+  "rand",
+  "eng"
+ ],
+ "ties": "smaller T, then smaller beta"
+}
