@@ -4,6 +4,17 @@ Each level checks itself against what is committed and says so. The times are on
 Start with `make setup` (a Python 3.12 venv with the versions in `requirements.txt`, and the NLTK
 `words` and `brown` corpora).
 
+## Which results are bit-identical where
+
+Level 1 (the paper from the records) and every firmware check use integer arithmetic or fixed inputs,
+and reproduce exactly on any machine. Levels 2 and 3 run floating-point code (numpy's log, exp and tanh,
+BLAS matrix products, torch) whose last bits depend on the CPU's vector instructions. They were verified
+bit for bit on x86-64 with AVX2 (an Intel Core Ultra 9 285K, and a GitHub-hosted AMD EPYC 7763). On a CPU
+whose kernels differ, for example one with AVX-512, the training matrix can differ in its last bits
+(the training scripts then say so: it still equals the original to 9 decimals); retrained models will
+then not be byte-identical, and the evaluation records may differ in rare values. Rounding to Q16.16
+before decoding absorbs almost all of such differences; `make evaluate` lists any that remain.
+
 ## 1. The paper from the records (seconds)
 
 ```bash

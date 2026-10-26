@@ -1,10 +1,11 @@
 name: evaluate
 # Manual: regenerate every evaluation record on a GitHub runner and compare it with the committed one.
+# With 4 workers this takes several hours (about 10 minutes locally with 20).
 on: workflow_dispatch
 jobs:
   evaluate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 180
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
