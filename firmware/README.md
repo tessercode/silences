@@ -58,3 +58,22 @@ cmake -S segmenter_lif -B segmenter_lif/build -DCMAKE_BUILD_TYPE=Release && make
 The chain's decoder image was built with `-DB2_SILICON_HWM=ON` (receive-ring occupancy readable over
 SWD). Rebuilt images match the source of the images flashed for the paper's runs, but are not expected to
 hash-match those flashed binaries: compiler and build paths change the bytes.
+
+## Reading the source comments
+
+The firmware was written in stages, and its comments name those stages. The labels are historical: they
+say which step introduced or validated a piece of code, and they have no meaning outside these comments.
+Comments that cite a `*.md` note or a `deploy/` or `phase2*` path refer to design notes and earlier
+firmware in the research repository, which is not part of this release.
+
+| Label | Meaning |
+|---|---|
+| `A<n>` | A per-board port of one software module to the RP2040: `A2` the BiGRU segmenter (one seed), `A3` the same code built as the five-seed ensemble, `A4` the beam decoder and its Q16.16 language-model table. `A1` is the earlier word-scoped decoder these boards were developed from |
+| `B<n>` | The chain's transport and framing: `B1` the front end and its 0x06 frame, `B2` the 0x03 and 0x05 frames (`B2.0` the frame goldens, `B2a` the interrupt-driven receive rings, `B2b.1` the segmenter board's receive and transmit wrapper, `B2b.2` the router, `B2b.3` the decoder's receive path), `B3` the router's slot-eviction rule |
+| `E.<n>` | The encoder board: `E.0` the chain's frozen reference, `E.1` the port of the encoder's generator and renderer, `E.2` its timing measured on the bench |
+| `<stage>.0`, `.0b`, `.1`, `.2` | Within a stage: the inventory of what existed, the golden reference, the port checked on the host and on Renode, and the check on physical boards |
+| `D<n>` | A design decision recorded during a stage, for example `D1` (the segmenter runs in Q16.16, not int8) and `D4` (the 0x03 frame carries posteriors only, with no decision bits) |
+| `G<n>`, `T<n>` | A numbered gate or test within the stage the comment belongs to |
+| `gap9`, `gap9_3c` | The BiGRU baseline segmenter (nine features per gap), and its three-class form, which is the one in the paper |
+| `phase2a`, `phase2b`, `phase2c` | The earlier word-scoped firmware: its floating-point reference vectors, its Q16.16 datapath (reused here), and an int8 variant that was dropped |
+| sentence tree | These boards, as opposed to the earlier word-scoped firmware |

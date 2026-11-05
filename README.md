@@ -12,13 +12,20 @@ a character language model turns the posteriors into text. This repository holds
   time-unit estimate and the gap-window features;
 - the three segmenters: the feedforward LIF network, its tanh MLP control and the bidirectional-GRU
   baseline, with every trained model the paper reports (ten LIF seeds, ten MLP seeds, the eight-seed
-  BiGRU pool, and the committed models deployed on hardware);
+  BiGRU pool, and the models deployed on hardware);
 - the decoder (integer beam search and the Q16.16 character language model), the per-model fit of the
   decoder weights, and the evaluation and statistics (`silences/evaluation/`);
 - the result records the paper's numbers come from (`records/`), and the script that turns them into
   the paper's tables, figures and numbers (`paper/make_figures.py`);
 - the firmware for the five-board RP2040 decoder (`firmware/`), the bench scripts that measured it
   (`bench/`), and the goldens the firmware is checked against, bit for bit.
+
+## Interactive demo
+
+[tessercode.com/silences-demo](https://tessercode.com/silences-demo/) runs this release's encoder,
+front end, segmenters and beam decoder in the browser (Pyodide), with the same models and fixed-point
+arithmetic as the RP2040 chain. Its source is at
+[tessercode/silences-demo](https://github.com/tessercode/silences-demo).
 
 ## Quick start
 
@@ -40,7 +47,7 @@ emulated RP2040.
 | Table 1, the five operators | `paper/fists_table.tex` | `firmware/encoder/fists.h` |
 | Figure 1 and its numbers, the 4.0 T_u collision | `paper/figures/fig_collision.pdf`, `records/collision.json` | `python -m silences.collision` |
 | Figure 2, style coverage | `paper/figures/fig_coverage.pdf` | `data/operator_style_fits.csv`, `fists.h` |
-| Table 2, English error rates of the committed models | `paper/cerwer_table_eng.tex` | `records/decoder_weights/` |
+| Table 2, English error rates of the deployed models | `paper/cerwer_table_eng.tex` | `records/decoder_weights/` |
 | Table 3, training-seed distributions | `paper/seed_table_dw.tex` | `records/decoder_weights/` |
 | Figure 7, error by operator | `paper/figures/fig_cerwer_eng.pdf` | `records/decoder_weights/` |
 | Figure 8, the decoder weights | `paper/figures/fig_decoder_weights.pdf` | `records/decoder_weights/fit.json` |
