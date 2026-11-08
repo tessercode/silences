@@ -22,15 +22,27 @@ make paper
 ```
 
 `paper/make_figures.py` reads the records, checks each against its manifest's hashes and protocol
-hash, and writes `paper/numbers.tex` (the 64 numbers the prose cites), the three tables and the four
-data figures. The PDFs carry no creation date, so the whole `paper/` directory must come out
+hash, and writes `paper/numbers.tex` (the numbers the prose and the proposal cite, listed in
+`paper/consumed_macros.txt`), the five tables and the four data figures. The PDFs carry no creation date, so the whole `paper/` directory must come out
 byte-identical; `make paper` ends with `git diff --exit-code` on it.
 
-## 2. The records from the shipped models (about 10 minutes)
+## 2. The records from the shipped models
 
 ```bash
-make evaluate
+make evaluate-matched     # the record of the paper, about 40 minutes
+make evaluate             # the superseded 5,000-transmission records, about 10 minutes
 ```
+
+`make evaluate-matched` runs `silences.evaluation.matched`: every segmenter of the grid (the original
+rows, the three BiGRU arms with their ensembles, the op12 and gen feedforward families, the deployed
+networks in Q16.16) on eighteen corpora, the ten of the decoder-weight protocol and four fresh
+evaluation corpora per text (seeds 1106, 2212, 3318, 4424); then the (T, γ) fit of every row on the
+calibration corpora, the evaluation at the fitted and the default weights, the fixed-point fidelity,
+criterion 1A's reference means, and the statistics of `records/matched/results.json`. Rows already in
+`outputs/tables/` are copied, not recomputed. `tools/compare_records.py --git records/matched` then
+compares every value with the committed record.
+
+`make evaluate` regenerates the two earlier records:
 
 | Step | What it does | Time |
 |---|---|---|
@@ -48,13 +60,21 @@ repository's vocabulary; the glossary in `records/README.md` maps their terms to
 ## 3. The models (minutes to hours)
 
 ```bash
-make train-lif SEED=0     # about 18 minutes per seed, CPU
-make train-mlp SEED=0     # about 30 seconds per seed, CPU
-make train-bigru          # the eight-seed BiGRU pool, about 5 minutes on a CUDA GPU
+make train-lif SEED=0 CORPUS=op12   # the family of record: about 70 minutes per seed, CPU
+make train-mlp SEED=0 CORPUS=op12   # about 2 minutes per seed, CPU
+make train-lif SEED=0 CORPUS=gen    # the generic-corpus control (the BiGRU recipe's final-phase corpus)
+make train-lif SEED=0               # the original 5,000-transmission corpus, about 18 minutes per seed
+make train-mlp SEED=0               # about 30 seconds per seed
+make train-bigru ARM=fist           # the baseline of record, about 5 minutes on a CUDA GPU
+make train-bigru                    # the original eight-seed pool; ARM=rep and ARM=shared are the other arms
 ```
 
 LIF and MLP training is deterministic on the CPU: the retrained pickle (in `outputs/retrain/`) must be
-byte-identical to `models/<family>/seed<N>.pkl`, and the command says whether it is. Seeds run 0 to 9.
+byte-identical to `models/<family>/seed<N>.pkl` (or `models/<family>/<corpus>/seed<N>.pkl`), and the
+command says whether it is. Seeds run 0 to 9. The op12 and gen corpora are generated per seed and
+their feature matrices are checked against the hashes in `records/training/window_nets_grid.json`
+before training starts. The deployed networks are `models/{lif,mlp}/op12/seed0.pkl`, so
+`CORPUS=op12 SEED=0` regenerates what runs on the boards.
 
 The BiGRU pool trains on the GPU in bfloat16 with CUDA graphs. On the GPU and software it was trained
 with (an RTX 5080, torch 2.11.0 with CUDA 12.8) every retrained weight equals the shipped
@@ -62,8 +82,11 @@ checkpoint's; elsewhere expect the retrain to agree statistically, which the com
 `records/training/bigru_pool.json` (each seed's selection accuracy within the shipped pool's range
 widened by its own spread, the ensemble above the 93.9% floor).
 
-`models/lif/committed.pkl` and `models/mlp/committed.pkl`, the models deployed on hardware, were
-trained by an earlier version of the training script and are shipped as artifacts of record.
+The BiGRU arms (`ARM=rep|fist|shared`) swap only the final phase's corpus; on the GPU and software
+above each arm retrains bit-identical, and `records/training/bigru_arms.json` carries the statistical
+check elsewhere. `models/lif/deployed_5k.pkl` and `models/mlp/deployed_5k.pkl`, the networks first
+deployed (the `lif_committed` and `mlp_committed` rows), were trained by an earlier version of the
+training script and are shipped as artifacts of record.
 
 ```bash
 make lm                   # rebuild the character language model from NLTK Brown and the templated ham corpus

@@ -1,12 +1,17 @@
 """Training the LIF segmenter and the MLP control (Sections 7 and 8).
 
-    python -m silences.training.window_nets lif 0        # retrain one seed and compare with the shipped model
-    python -m silences.training.window_nets mlp 0
+    python -m silences.training.window_nets lif 0                # the original 5,000-transmission corpus
+    python -m silences.training.window_nets mlp 0 --corpus op12  # the corpus of record: 12,000 operator transmissions
+    python -m silences.training.window_nets lif 0 --corpus gen   # the BiGRU recipe's generic corpus
 
-Both train on the same matrix: the 42 window features of every gap in the training corpus (random
-letters, 1000 transmissions per operator, seed 13) with their gap labels, standardised by the
-features' own mean and spread. Ten percent is held out for model selection: the weights kept are
-those of the epoch with the lowest validation loss. Adam, cross-entropy, weight decay 1e-5.
+The recipe is the same for every corpus: the 42 window features of every gap in the training corpus with
+their gap labels, standardised by the features' own mean and spread; ten percent held out for model
+selection (the weights kept are those of the epoch with the lowest validation loss); Adam, cross-entropy,
+weight decay 1e-5. The corpora differ (Section 5.4): the original one is shared by every seed (random
+letters, 1,000 transmissions per operator, seed 13); op12 gives each training seed its own 12,000
+operator transmissions (2,400 per operator, corpus seed 210442 + training seed), the families of record
+since v1.1.0; gen gives each seed the 12,000 generic transmissions of the BiGRU recipe's final phase
+(generator seed 197442 + training seed, silences.training.bigru.generic_transmissions).
 
 Training runs on the CPU with six threads and torch's deterministic algorithms, and is bit for bit
 reproducible: a retrained seed must produce a pickle identical to models/<family>/seed<N>.pkl. The
@@ -59,6 +64,27 @@ def training_matrix():
         assert rounded == FEATURES_SHA256_9DP, "the training matrix is not the one the models were trained on"
         print("note: this CPU's floating-point kernels give the training matrix in different last bits; it is the\n"
               "      same matrix to 9 decimals, but retrained models will not be bit-identical to the shipped ones", flush=True)
+    return F, y, sha
+
+
+def grid_matrix(arm, seed):
+    """(F, y, sha256) for one grid corpus; the sha must equal the one recorded when the shipped model was trained."""
+    from ..features import fe_tu_us
+    if arm == "op12":
+        n = P.GRID_N_TX // len(P.OPERATORS)
+        txs = corpus(n, P.GRID_CORPUS_SEED0["op12"] + seed, "rand")
+    else:
+        from .bigru import generic_transmissions
+        txs = generic_transmissions(P.GRID_N_TX, P.GRID_CORPUS_SEED0["gen"] + seed)
+    assert all(fe_tu_us(tx["ticks"]) > 0 for tx in txs)
+    F = np.concatenate([transmission_features(tx, P.TRAIN["W"]) for tx in txs]).astype(np.float32)
+    y = np.concatenate([np.asarray(tx["labels"], dtype=np.int64) for tx in txs])
+    sha = hashlib.sha256(F.tobytes() + y.tobytes()).hexdigest()
+    rec = json.loads((RECORDS / "training" / "window_nets_grid.json").read_text())["corpora"][f"{arm}_{seed}"]
+    assert len(txs) == rec["transmissions"] and len(y) == rec["gaps"], f"{arm} corpus {seed}: size differs from the record"
+    if sha != rec["feature_sha256"]:
+        print(f"note: the {arm} feature matrix for seed {seed} differs in its last bits from the recorded one "
+              f"(this CPU's kernels); the retrained model will not be bit-identical", flush=True)
     return F, y, sha
 
 
@@ -162,12 +188,12 @@ def fit_lif(m, F, y, epochs, lr, batch, wd, val, seed):
     return m
 
 
-def train(family, seed, outdir=RETRAIN):
+def train(family, seed, outdir=RETRAIN, arm=None):
     import torch
     torch.set_num_threads(OMP_THREADS)
     torch.use_deterministic_algorithms(True)
     t0 = time.time()
-    F, y, f_sha = training_matrix()
+    F, y, f_sha = training_matrix() if arm is None else grid_matrix(arm, seed)
     c = P.RANDOM_LETTERS[family]
     if family == "lif":
         m = fit_lif(LIF(W=P.TRAIN["W"], hidden=tuple(c["hidden"]), beta=c["beta"], threshold=c["threshold"], T=c["T"]),
@@ -176,9 +202,9 @@ def train(family, seed, outdir=RETRAIN):
         m = fit_mlp(MLP(W=P.TRAIN["W"], hidden=tuple(c["hidden"])),
                     F, y, c["epochs"], c["lr"], c["batch"], c["wd"], c["val"], seed)
     outdir.mkdir(parents=True, exist_ok=True)
-    path = outdir / f"{family}_seed{seed}.pkl"
+    path = outdir / (f"{family}_seed{seed}.pkl" if arm is None else f"{family}_{arm}_seed{seed}.pkl")
     m.save(path)
-    meta = dict(family=family, seed=seed, protocol_hash=P.RANDOM_LETTERS_HASH, protocol=c, train=P.TRAIN,
+    meta = dict(family=family, seed=seed, corpus=arm or "record", protocol_hash=P.RANDOM_LETTERS_HASH, protocol=c, train=P.TRAIN,
                 feature_sha256=f_sha, pickle_sha256=sha256_file(path), wall_s=round(time.time() - t0, 1),
                 finished=now(), git=git_info(), env=env_info())
     path.with_suffix(".meta.json").write_text(json.dumps(meta, indent=2))
@@ -187,12 +213,14 @@ def train(family, seed, outdir=RETRAIN):
 
 def main(argv):
     family, seed = argv[0], int(argv[1])
-    path, meta = train(family, seed)
-    shipped = MODELS / family / f"seed{seed}.pkl"
+    arm = argv[argv.index("--corpus") + 1] if "--corpus" in argv else None
+    assert arm in (None, "op12", "gen"), arm
+    path, meta = train(family, seed, arm=arm)
+    shipped = MODELS / family / f"seed{seed}.pkl" if arm is None else MODELS / family / arm / f"seed{seed}.pkl"
     same = meta["pickle_sha256"] == sha256_file(shipped)
     print(f"{family} seed {seed}: retrained in {meta['wall_s']:.0f}s, sha256 {meta['pickle_sha256'][:16]} "
           f"{'IDENTICAL to' if same else 'DIFFERS from'} {shipped.relative_to(MODELS.parent)}")
-    if family == "lif" and seed == 0:          # the determinism record the evaluation quotes
+    if family == "lif" and seed == 0 and arm is None:          # the determinism record the evaluation quotes
         (RECORDS / "training").mkdir(parents=True, exist_ok=True)
         (RECORDS / "training" / "determinism.json").write_text(json.dumps(dict(
             deterministic=bool(same), max_abs_weight_diff=0.0 if same else None, checked=now(),

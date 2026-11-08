@@ -1,0 +1,2065 @@
+{
+ "experiment": "exp210_m1_controls",
+ "description": "The BiGRU recipe retrained with its final curriculum phase on three corpora (Section 5.4, Table 4): rep = the generic corpus of the original pool (the harness check), fist = 12,000 transmissions from the five operators (2,400 each, corpus seed 210400 + training seed; the baseline of record since v1.1.0), shared = the feedforward networks' original 5,000-transmission corpus. Eight training seeds per arm, every seed alive; the five with the best selection balanced accuracy form each arm's ensemble.",
+ "arms": {
+  "rep": {
+   "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+   ],
+   "alive": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+   ],
+   "selected_top": [
+    47,
+    42,
+    48,
+    49,
+    43
+   ],
+   "select_balacc": {
+    "mean": 0.9442029386785364,
+    "sd": 0.0019609998027022434,
+    "min": 0.9412358309525897,
+    "max": 0.9472585770959832
+   },
+   "recipe": {
+    "notebook": "notebooks/experiment197_3class_ensemble.ipynb",
+    "cells": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "cells_sha256": "819ccfafde3795f93b4e969e9c10b2efd089c8917c6e52b7a9ed74e36106f8cd",
+    "n_tx_train": 12000,
+    "epochs": 180,
+    "phase_starts": [
+     30,
+     60,
+     90
+    ],
+    "batch": 64,
+    "lr": 0.0005,
+    "k_iw": 7.5,
+    "max_t": 122,
+    "n_params": 8451
+   },
+   "device": "cuda:0",
+   "wall_s": 276.1,
+   "finished": "2026-11-06T08:52:01-07:00",
+   "rows": {
+    "42": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9922825070159027,
+       0.995,
+       0.9975
+      ]
+     },
+     "select_balacc": 0.9456615796299723,
+     "select_recalls": [
+      0.9743699690100766,
+      0.8932327474079305,
+      0.9693820224719101
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9872476612506155,
+       "recalls": [
+        1.0,
+        0.9617429837518464,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9887030733560258,
+       "recalls": [
+        1.0,
+        0.9661092200680775,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9383824864471021,
+       "recalls": [
+        0.9810227092266158,
+        0.86888720666162,
+        0.9652375434530707
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.8684805870045369,
+       "recalls": [
+        0.9172625913110343,
+        0.775859524863509,
+        0.9123196448390677
+       ]
+      }
+     },
+     "final_train_loss": 0.02099489553613709,
+     "final_train_rec": [
+      0.9891918897628784,
+      0.9870530962944031,
+      0.9989979267120361
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "generic",
+       "rng_seed": 197442
+      },
+      "tu_vs_fe_max_rel": null,
+      "transmissions": 12000,
+      "gaps": 514255,
+      "class_share": [
+       0.7438585915547734,
+       0.20946417633275322,
+       0.046677232112473384
+      ]
+     },
+     "checkpoint_sha256": "523b603cc9285ac58645d0b33324aba56ce37a1377a4d46e4d076f860346274e",
+     "max_abs_weight_diff_vs_exp197_pool": 0.0,
+     "wall_s": 35.2,
+     "checkpoint": "models/bigru/rep/bigru3_seed42.pt"
+    },
+    "43": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9948550046772685,
+       0.99875,
+       1.0
+      ]
+     },
+     "select_balacc": 0.9447543585446819,
+     "select_recalls": [
+      0.9756368526711755,
+      0.8788509420639935,
+      0.9797752808988764
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9833768932502345,
+       "recalls": [
+        1.0,
+        0.9512555391432792,
+        0.9988751406074241
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.986137832371368,
+       "recalls": [
+        1.0,
+        0.9584134971141038,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9340191636419984,
+       "recalls": [
+        0.9849134508496109,
+        0.838001514004542,
+        0.9791425260718424
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.8755584692712767,
+       "recalls": [
+        0.9184928873510189,
+        0.7670060498745758,
+        0.9411764705882353
+       ]
+      }
+     },
+     "final_train_loss": 0.019614644952064463,
+     "final_train_rec": [
+      0.9904454946517944,
+      0.9874152541160583,
+      0.9993346333503723
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "generic",
+       "rng_seed": 197443
+      },
+      "tu_vs_fe_max_rel": null,
+      "transmissions": 12000,
+      "gaps": 518347,
+      "class_share": [
+       0.7442485439290668,
+       0.20922856696382924,
+       0.04652288910710393
+      ]
+     },
+     "checkpoint_sha256": "3681c8895f264aafe385c0835c43e0aacb5095024047a5091b090c3ccb5f7034",
+     "max_abs_weight_diff_vs_exp197_pool": 0.0,
+     "wall_s": 34.3,
+     "checkpoint": "models/bigru/rep/bigru3_seed43.pt"
+    },
+    "44": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9997661365762395,
+       0.95875,
+       0.965
+      ]
+     },
+     "select_balacc": 0.9412358309525897,
+     "select_recalls": [
+      0.975461438010408,
+      0.8771786391170241,
+      0.9710674157303371
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9826875776421596,
+       "recalls": [
+        1.0,
+        0.9491875923190547,
+        0.9988751406074241
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9851290101810651,
+       "recalls": [
+        1.0,
+        0.9564895663756104,
+        0.9988974641675854
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9290612766767574,
+       "recalls": [
+        0.9852310624106717,
+        0.851778955336866,
+        0.9501738122827347
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.8680141966058778,
+       "recalls": [
+        0.9174932718185314,
+        0.7509222369780139,
+        0.9356270810210877
+       ]
+      }
+     },
+     "final_train_loss": 0.020058693367447124,
+     "final_train_rec": [
+      0.9893561005592346,
+      0.9871259331703186,
+      0.9994546175003052
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "generic",
+       "rng_seed": 197444
+      },
+      "tu_vs_fe_max_rel": null,
+      "transmissions": 12000,
+      "gaps": 513632,
+      "class_share": [
+       0.7442663229705314,
+       0.20921009594417794,
+       0.04652358108529064
+      ]
+     },
+     "checkpoint_sha256": "3116ca9f3eb5368e60359c3dee7848668c5d8031d0ae14624edecad297a43b74",
+     "max_abs_weight_diff_vs_exp197_pool": 0.0,
+     "wall_s": 34.4,
+     "checkpoint": "models/bigru/rep/bigru3_seed44.pt"
+    },
+    "45": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9997661365762395,
+       0.9375,
+       0.99
+      ]
+     },
+     "select_balacc": 0.9426472319205171,
+     "select_recalls": [
+      0.9773130372073986,
+      0.8694488832732543,
+      0.9811797752808988
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9813089464260099,
+       "recalls": [
+        1.0,
+        0.9450516986706056,
+        0.9988751406074241
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9835232598293128,
+       "recalls": [
+        1.0,
+        0.9505697794879384,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9343654379073015,
+       "recalls": [
+        0.982213752580594,
+        0.8440575321725965,
+        0.9768250289687138
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.8714851020147473,
+       "recalls": [
+        0.9277201076509035,
+        0.7377895824110964,
+        0.9489456159822419
+       ]
+      }
+     },
+     "final_train_loss": 0.01874505825305432,
+     "final_train_rec": [
+      0.9897968173027039,
+      0.9876282215118408,
+      0.9994618892669678
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "generic",
+       "rng_seed": 197445
+      },
+      "tu_vs_fe_max_rel": null,
+      "transmissions": 12000,
+      "gaps": 519516,
+      "class_share": [
+       0.7442946896726954,
+       0.2090772950207501,
+       0.04662801530655456
+      ]
+     },
+     "checkpoint_sha256": "0307ffcbb02729f4509f1f472ae4cf458f110d20702b64c4c468a043e3b10554",
+     "max_abs_weight_diff_vs_exp197_pool": 0.0,
+     "wall_s": 34.4,
+     "checkpoint": "models/bigru/rep/bigru3_seed45.pt"
+    },
+    "46": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9981290926099158,
+       0.985,
+       0.995
+      ]
+     },
+     "select_balacc": 0.9417623118778372,
+     "select_recalls": [
+      0.9782485820648255,
+      0.8807462187372255,
+      0.9662921348314607
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.983721551054272,
+       "recalls": [
+        1.0,
+        0.9522895125553914,
+        0.9988751406074241
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9850303470662708,
+       "recalls": [
+        1.0,
+        0.9561935770312269,
+        0.9988974641675854
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9312771540330406,
+       "recalls": [
+        0.9861838970938542,
+        0.8528387585162756,
+        0.9548088064889919
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.8670457522055807,
+       "recalls": [
+        0.9275663206459054,
+        0.7612512911317693,
+        0.9123196448390677
+       ]
+      }
+     },
+     "final_train_loss": 0.018717591688281524,
+     "final_train_rec": [
+      0.9897469282150269,
+      0.9879682660102844,
+      0.9994993805885315
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "generic",
+       "rng_seed": 197446
+      },
+      "tu_vs_fe_max_rel": null,
+      "transmissions": 12000,
+      "gaps": 516515,
+      "class_share": [
+       0.7441739349292857,
+       0.20929111448844662,
+       0.0465349505822677
+      ]
+     },
+     "checkpoint_sha256": "fe9430ebc0a3cbee55a662ac4182bc2bdf599b7b99c982b17d260a0c36b01541",
+     "max_abs_weight_diff_vs_exp197_pool": 0.0,
+     "wall_s": 34.5,
+     "checkpoint": "models/bigru/rep/bigru3_seed46.pt"
+    },
+    "47": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9981290926099158,
+       0.99625,
+       1.0
+      ]
+     },
+     "select_balacc": 0.9472585770959832,
+     "select_recalls": [
+      0.9723429551523184,
+      0.8882530008547326,
+      0.9811797752808988
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9878385032003939,
+       "recalls": [
+        1.0,
+        0.9635155096011817,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9886537417986286,
+       "recalls": [
+        1.0,
+        0.9659612253958858,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.940549338397302,
+       "recalls": [
+        0.9798316658726378,
+        0.8591975775927327,
+        0.9826187717265353
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.8722042505729112,
+       "recalls": [
+        0.9104190695886197,
+        0.7639073336284492,
+        0.9422863485016648
+       ]
+      }
+     },
+     "final_train_loss": 0.020411584434028674,
+     "final_train_rec": [
+      0.989501416683197,
+      0.9864577651023865,
+      0.9993763566017151
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "generic",
+       "rng_seed": 197447
+      },
+      "tu_vs_fe_max_rel": null,
+      "transmissions": 12000,
+      "gaps": 516512,
+      "class_share": [
+       0.744207298184747,
+       0.20910840406418438,
+       0.04668429775106871
+      ]
+     },
+     "checkpoint_sha256": "e71b2e29ea12710693299e0d57a6bd3c6d42dee585de1b9889c1835108242357",
+     "max_abs_weight_diff_vs_exp197_pool": 0.0,
+     "wall_s": 34.3,
+     "checkpoint": "models/bigru/rep/bigru3_seed47.pt"
+    },
+    "48": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9981290926099158,
+       0.9625,
+       0.9875
+      ]
+     },
+     "select_balacc": 0.9452361156323659,
+     "select_recalls": [
+      0.9765334164928762,
+      0.8805232450109629,
+      0.9786516853932584
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9852289512555391,
+       "recalls": [
+        1.0,
+        0.9556868537666174,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9869271372897243,
+       "recalls": [
+        1.0,
+        0.9607814118691728,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9388853038673233,
+       "recalls": [
+        0.9831665872637764,
+        0.8508705526116578,
+        0.9826187717265353
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.8701117206196192,
+       "recalls": [
+        0.9237216455209535,
+        0.7543160690571049,
+        0.9322974472807991
+       ]
+      }
+     },
+     "final_train_loss": 0.020498104900240587,
+     "final_train_rec": [
+      0.9891455173492432,
+      0.9872192740440369,
+      0.9995429515838623
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "generic",
+       "rng_seed": 197448
+      },
+      "tu_vs_fe_max_rel": null,
+      "transmissions": 12000,
+      "gaps": 518054,
+      "class_share": [
+       0.7440073814698854,
+       0.20941446258498148,
+       0.046578155945133135
+      ]
+     },
+     "checkpoint_sha256": "ec21bc120cbee74a2a076b296d14a834ee7146267b69b8d9024ca3d69e30d8a6",
+     "max_abs_weight_diff_vs_exp197_pool": 0.0,
+     "wall_s": 34.4,
+     "checkpoint": "models/bigru/rep/bigru3_seed48.pt"
+    },
+    "49": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9997661365762395,
+       0.96,
+       0.98
+      ]
+     },
+     "select_balacc": 0.9450675037743438,
+     "select_recalls": [
+      0.9743114974564874,
+      0.8861719127429485,
+      0.9747191011235955
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9841949778434268,
+       "recalls": [
+        1.0,
+        0.9525849335302806,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9867791426175324,
+       "recalls": [
+        1.0,
+        0.9603374278525973,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.941036725728019,
+       "recalls": [
+        0.9839606161664285,
+        0.8611657834973505,
+        0.9779837775202781
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.8685459477982537,
+       "recalls": [
+        0.9141868512110727,
+        0.7702523240371846,
+        0.9211986681465039
+       ]
+      }
+     },
+     "final_train_loss": 0.020198867096433065,
+     "final_train_rec": [
+      0.9891968965530396,
+      0.9875235557556152,
+      0.9995423555374146
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "generic",
+       "rng_seed": 197449
+      },
+      "tu_vs_fe_max_rel": null,
+      "transmissions": 12000,
+      "gaps": 519244,
+      "class_share": [
+       0.7445767307855267,
+       0.2090250441025799,
+       0.04639822511189345
+      ]
+     },
+     "checkpoint_sha256": "5bfff1123741e03ef58cfcc986061bd3799aecde7979dea12cf7d78f33546cd6",
+     "max_abs_weight_diff_vs_exp197_pool": 0.0,
+     "wall_s": 34.5,
+     "checkpoint": "models/bigru/rep/bigru3_seed49.pt"
+    }
+   }
+  },
+  "fist": {
+   "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+   ],
+   "alive": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+   ],
+   "selected_top": [
+    49,
+    42,
+    47,
+    43,
+    48
+   ],
+   "select_balacc": {
+    "mean": 0.9665311809791641,
+    "sd": 0.0014758048284727093,
+    "min": 0.9643881553777495,
+    "max": 0.9685220281350851
+   },
+   "recipe": {
+    "notebook": "notebooks/experiment197_3class_ensemble.ipynb",
+    "cells": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "cells_sha256": "819ccfafde3795f93b4e969e9c10b2efd089c8917c6e52b7a9ed74e36106f8cd",
+    "n_tx_train": 12000,
+    "epochs": 180,
+    "phase_starts": [
+     30,
+     60,
+     90
+    ],
+    "batch": 64,
+    "lr": 0.0005,
+    "k_iw": 7.5,
+    "max_t": 122,
+    "n_params": 8451
+   },
+   "device": "cuda:0",
+   "wall_s": 273.6,
+   "finished": "2026-11-06T08:56:37-07:00",
+   "rows": {
+    "42": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9922825070159027,
+       0.995,
+       0.9975
+      ]
+     },
+     "select_balacc": 0.9683360356184748,
+     "select_recalls": [
+      0.9733954431169236,
+      0.9327362592441191,
+      0.998876404494382
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9903988183161004,
+       "recalls": [
+        1.0,
+        0.9711964549483013,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9928444798209487,
+       "recalls": [
+        0.9998446722584654,
+        0.9786887672043807,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9662004732856991,
+       "recalls": [
+        0.9721295855169129,
+        0.9276305828917487,
+        0.9988412514484357
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9241097102212801,
+       "recalls": [
+        0.9221837754709727,
+        0.8534749889331562,
+        0.9966703662597114
+       ]
+      }
+     },
+     "final_train_loss": 0.0599942854419479,
+     "final_train_rec": [
+      0.9596560001373291,
+      0.9598607420921326,
+      0.9961869120597839
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 2400,
+       "seed": 210442
+      },
+      "tu_vs_fe_max_rel": 7.581868043354261e-05,
+      "transmissions": 12000,
+      "gaps": 517973,
+      "class_share": [
+       0.6985750222501945,
+       0.24354551299005933,
+       0.05787946475974617
+      ]
+     },
+     "checkpoint_sha256": "f08b79ee511b687c199b89911135bd20edff6a41c52d387968fcbe9ae787b4ce",
+     "max_abs_weight_diff_vs_exp197_pool": 1.6712555885314941,
+     "wall_s": 35.0,
+     "checkpoint": "models/bigru/fist/bigru3_seed42.pt"
+    },
+    "43": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9948550046772685,
+       0.99875,
+       1.0
+      ]
+     },
+     "select_balacc": 0.9671218967062553,
+     "select_recalls": [
+      0.9754224569746818,
+      0.9273477275261065,
+      0.9985955056179775
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9881831610044314,
+       "recalls": [
+        1.0,
+        0.9645494830132939,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9905752281806744,
+       "recalls": [
+        0.9998446722584654,
+        0.9718810122835578,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9661166119341583,
+       "recalls": [
+        0.9769731618230904,
+        0.9236941710825133,
+        0.9976825028968713
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9238346432032657,
+       "recalls": [
+        0.9254901960784314,
+        0.8493433672716542,
+        0.9966703662597114
+       ]
+      }
+     },
+     "final_train_loss": 0.062150543103827637,
+     "final_train_rec": [
+      0.9599401354789734,
+      0.9580707550048828,
+      0.9954043626785278
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 2400,
+       "seed": 210443
+      },
+      "tu_vs_fe_max_rel": 7.578100834234056e-05,
+      "transmissions": 12000,
+      "gaps": 515991,
+      "class_share": [
+       0.6984346626200845,
+       0.2436302183565217,
+       0.05793511902339382
+      ]
+     },
+     "checkpoint_sha256": "edfd60d28bd456fb47af16c1f66f778a42870bafce37019211adad78ddba088f",
+     "max_abs_weight_diff_vs_exp197_pool": 1.6073639392852783,
+     "wall_s": 34.0,
+     "checkpoint": "models/bigru/fist/bigru3_seed43.pt"
+    },
+    "44": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9997661365762395,
+       0.95875,
+       0.965
+      ]
+     },
+     "select_balacc": 0.9646512234087247,
+     "select_recalls": [
+      0.977780809636112,
+      0.9195436471069159,
+      0.996629213483146
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9861081789576792,
+       "recalls": [
+        0.9999220698254364,
+        0.9595273264401772,
+        0.9988751406074241
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9899598058914324,
+       "recalls": [
+        0.9999223361292326,
+        0.9699570815450643,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.961141241580671,
+       "recalls": [
+        0.9776877878354772,
+        0.9103709311127933,
+        0.9953650057937428
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9215365488332683,
+       "recalls": [
+        0.9341022683583238,
+        0.8382765235354876,
+        0.9922308546059934
+       ]
+      }
+     },
+     "final_train_loss": 0.06023596362941198,
+     "final_train_rec": [
+      0.9596438407897949,
+      0.9600089192390442,
+      0.9965786933898926
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 2400,
+       "seed": 210444
+      },
+      "tu_vs_fe_max_rel": 7.915057913281767e-05,
+      "transmissions": 12000,
+      "gaps": 517635,
+      "class_share": [
+       0.6989210544109267,
+       0.243320100070513,
+       0.05775884551856038
+      ]
+     },
+     "checkpoint_sha256": "b7a72a8c3b8b2f98083d3093fe529455bcca573d2bbd600f2e5097693f0758d7",
+     "max_abs_weight_diff_vs_exp197_pool": 1.339957594871521,
+     "wall_s": 34.2,
+     "checkpoint": "models/bigru/fist/bigru3_seed44.pt"
+    },
+    "45": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9997661365762395,
+       0.9375,
+       0.99
+      ]
+     },
+     "select_balacc": 0.9643881553777495,
+     "select_recalls": [
+      0.9780146958504687,
+      0.9162733657883979,
+      0.998876404494382
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.985179714426391,
+       "recalls": [
+        1.0,
+        0.9555391432791728,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9873686769498521,
+       "recalls": [
+        0.9998446722584654,
+        0.9622613585910907,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9630098851929839,
+       "recalls": [
+        0.9784024138478641,
+        0.9129447388342165,
+        0.9976825028968713
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9221844035819706,
+       "recalls": [
+        0.9343329488658209,
+        0.83444001770695,
+        0.9977802441731409
+       ]
+      }
+     },
+     "final_train_loss": 0.0609444853710924,
+     "final_train_rec": [
+      0.9606627225875854,
+      0.9589247107505798,
+      0.9959224462509155
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 2400,
+       "seed": 210445
+      },
+      "tu_vs_fe_max_rel": 8.364312268554339e-05,
+      "transmissions": 12000,
+      "gaps": 517118,
+      "class_share": [
+       0.6986161765786533,
+       0.24338738933860357,
+       0.0579964340827432
+      ]
+     },
+     "checkpoint_sha256": "2d6a13fb6dce2aa6dda4e5e17953162bdcf3180276c051cb89de23f40f74e837",
+     "max_abs_weight_diff_vs_exp197_pool": 1.566218614578247,
+     "wall_s": 33.8,
+     "checkpoint": "models/bigru/fist/bigru3_seed45.pt"
+    },
+    "46": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9981290926099158,
+       0.985,
+       0.995
+      ]
+     },
+     "select_balacc": 0.965862895342982,
+     "select_recalls": [
+      0.9745648741887072,
+      0.9247092050986658,
+      0.998314606741573
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.988133924175283,
+       "recalls": [
+        1.0,
+        0.9644017725258494,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9908243303241083,
+       "recalls": [
+        1.0,
+        0.972472990972325,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9651124192672095,
+       "recalls": [
+        0.9735588375416865,
+        0.9229371688115064,
+        0.9988412514484357
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9196239990127225,
+       "recalls": [
+        0.9252595155709342,
+        0.839161871034381,
+        0.9944506104328524
+       ]
+      }
+     },
+     "final_train_loss": 0.05937851126032094,
+     "final_train_rec": [
+      0.9612464308738708,
+      0.9597378373146057,
+      0.9967581033706665
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 2400,
+       "seed": 210446
+      },
+      "tu_vs_fe_max_rel": 8.49256900065645e-05,
+      "transmissions": 12000,
+      "gaps": 517628,
+      "class_share": [
+       0.6987914100473699,
+       0.24323259174542336,
+       0.05797599820720672
+      ]
+     },
+     "checkpoint_sha256": "87f51a0a68f0252ee505b9cd03bd3da48fc5a8bff28e2cc8e65f4f9283ebccff",
+     "max_abs_weight_diff_vs_exp197_pool": 1.7020612955093384,
+     "wall_s": 34.0,
+     "checkpoint": "models/bigru/fist/bigru3_seed46.pt"
+    },
+    "47": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9981290926099158,
+       0.99625,
+       1.0
+      ]
+     },
+     "select_balacc": 0.9674691667268935,
+     "select_recalls": [
+      0.9705303369910538,
+      0.9324389609424356,
+      0.999438202247191
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9928114229443624,
+       "recalls": [
+        1.0,
+        0.9784342688330872,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9935585652249852,
+       "recalls": [
+        0.999767008387698,
+        0.9809086872872577,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9661479507682776,
+       "recalls": [
+        0.9671272034302049,
+        0.9324753974261922,
+        0.9988412514484357
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9176069008230429,
+       "recalls": [
+        0.9158016147635525,
+        0.8381289656190054,
+        0.9988901220865705
+       ]
+      }
+     },
+     "final_train_loss": 0.06079671467448736,
+     "final_train_rec": [
+      0.9597237706184387,
+      0.9602358937263489,
+      0.9964559078216553
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 2400,
+       "seed": 210447
+      },
+      "tu_vs_fe_max_rel": 9.17431192646931e-05,
+      "transmissions": 12000,
+      "gaps": 517148,
+      "class_share": [
+       0.698449960166142,
+       0.24356277119896044,
+       0.05798726863489755
+      ]
+     },
+     "checkpoint_sha256": "8b78591273a891bc3613f6c767714e2ce13ae52aceea9a010fb37f6b400d0556",
+     "max_abs_weight_diff_vs_exp197_pool": 1.6553587913513184,
+     "wall_s": 34.2,
+     "checkpoint": "models/bigru/fist/bigru3_seed47.pt"
+    },
+    "48": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9981290926099158,
+       0.9625,
+       0.9875
+      ]
+     },
+     "select_balacc": 0.9658980465171485,
+     "select_recalls": [
+      0.9747402888494747,
+      0.9240774462075886,
+      0.998876404494382
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9879862136878385,
+       "recalls": [
+        1.0,
+        0.9639586410635155,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9896897045039713,
+       "recalls": [
+        1.0,
+        0.9690691135119136,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9656294296584292,
+       "recalls": [
+        0.9743528664443386,
+        0.9236941710825133,
+        0.9988412514484357
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9205350303428189,
+       "recalls": [
+        0.9251826220684353,
+        0.8397521027003099,
+        0.9966703662597114
+       ]
+      }
+     },
+     "final_train_loss": 0.06273819006762296,
+     "final_train_rec": [
+      0.9588293433189392,
+      0.957440197467804,
+      0.9956682324409485
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 2400,
+       "seed": 210448
+      },
+      "tu_vs_fe_max_rel": 9.02527075777799e-05,
+      "transmissions": 12000,
+      "gaps": 518940,
+      "class_share": [
+       0.698782132809188,
+       0.24323428527382743,
+       0.05798358191698462
+      ]
+     },
+     "checkpoint_sha256": "352ea14b7a6e9a99dcdba932401a35d47ed6af99eaf0fd2bb9efe5465a984d31",
+     "max_abs_weight_diff_vs_exp197_pool": 1.2943227291107178,
+     "wall_s": 34.2,
+     "checkpoint": "models/bigru/fist/bigru3_seed48.pt"
+    },
+    "49": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9997661365762395,
+       0.96,
+       0.98
+      ]
+     },
+     "select_balacc": 0.9685220281350851,
+     "select_recalls": [
+      0.9710175999376304,
+      0.9356720799732432,
+      0.998876404494382
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9916010456993901,
+       "recalls": [
+        0.9997662094763092,
+        0.9750369276218611,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9930159180936152,
+       "recalls": [
+        0.999767008387698,
+        0.9792807458931478,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.966042080247924,
+       "recalls": [
+        0.9668095918691441,
+        0.9324753974261922,
+        0.9988412514484357
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.923638682205529,
+       "recalls": [
+        0.9182622068435218,
+        0.855983473513354,
+        0.9966703662597114
+       ]
+      }
+     },
+     "final_train_loss": 0.061666014629066325,
+     "final_train_rec": [
+      0.9571566581726074,
+      0.9595430493354797,
+      0.9961977005004883
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 2400,
+       "seed": 210449
+      },
+      "tu_vs_fe_max_rel": 8.141382047888053e-05,
+      "transmissions": 12000,
+      "gaps": 518094,
+      "class_share": [
+       0.6989445930661231,
+       0.24304276830073307,
+       0.05801263863314379
+      ]
+     },
+     "checkpoint_sha256": "c6efe0f83304d7d1efed9874a4743c92d465998293da0292a231d253306fbda0",
+     "max_abs_weight_diff_vs_exp197_pool": 1.5843532085418701,
+     "wall_s": 34.2,
+     "checkpoint": "models/bigru/fist/bigru3_seed49.pt"
+    }
+   }
+  },
+  "shared": {
+   "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+   ],
+   "alive": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+   ],
+   "selected_top": [
+    42,
+    47,
+    45,
+    49,
+    43
+   ],
+   "select_balacc": {
+    "mean": 0.9642165152255989,
+    "sd": 0.0014282879134021153,
+    "min": 0.9613876055508094,
+    "max": 0.9662578558923282
+   },
+   "recipe": {
+    "notebook": "notebooks/experiment197_3class_ensemble.ipynb",
+    "cells": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "cells_sha256": "819ccfafde3795f93b4e969e9c10b2efd089c8917c6e52b7a9ed74e36106f8cd",
+    "n_tx_train": 12000,
+    "epochs": 180,
+    "phase_starts": [
+     30,
+     60,
+     90
+    ],
+    "batch": 64,
+    "lr": 0.0005,
+    "k_iw": 7.5,
+    "max_t": 122,
+    "n_params": 8451
+   },
+   "device": "cuda:0",
+   "wall_s": 191.7,
+   "finished": "2026-11-06T08:59:52-07:00",
+   "rows": {
+    "42": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9922825070159027,
+       0.995,
+       0.9975
+      ]
+     },
+     "select_balacc": 0.9662578558923282,
+     "select_recalls": [
+      0.9665542713469897,
+      0.9341855884648259,
+      0.9980337078651685
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9902018709995076,
+       "recalls": [
+        1.0,
+        0.9706056129985229,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9925226025196426,
+       "recalls": [
+        0.999767008387698,
+        0.9778007991712299,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9653527573319703,
+       "recalls": [
+        0.9602985548673971,
+        0.9380772142316427,
+        0.9976825028968713
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9172342075016767,
+       "recalls": [
+        0.9067281814686659,
+        0.8505238306035119,
+        0.9944506104328524
+       ]
+      }
+     },
+     "final_train_loss": 0.06860305497656784,
+     "final_train_rec": [
+      0.953421950340271,
+      0.9545314311981201,
+      0.9956455230712891
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 1000,
+       "seed": 13
+      },
+      "tu_vs_fe_max_rel": 9.63391136801152e-05,
+      "transmissions": 5000,
+      "gaps": 213869,
+      "class_share": [
+       0.6988390089260248,
+       0.24306935554007358,
+       0.05809163553390159
+      ]
+     },
+     "checkpoint_sha256": "622f73586d27d1ae247a0b742edd95c6c7ea65a00132419baff5327eadb1f011",
+     "max_abs_weight_diff_vs_exp197_pool": 1.1630582809448242,
+     "wall_s": 25.4,
+     "checkpoint": "models/bigru/shared/bigru3_seed42.pt"
+    },
+    "43": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9948550046772685,
+       0.99875,
+       1.0
+      ]
+     },
+     "select_balacc": 0.9641685254394506,
+     "select_recalls": [
+      0.9732395189740192,
+      0.9215132483555688,
+      0.9977528089887641
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9865091088133924,
+       "recalls": [
+        1.0,
+        0.9595273264401772,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9885526343273865,
+       "recalls": [
+        0.9998446722584654,
+        0.965813230723694,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9632727117270948,
+       "recalls": [
+        0.9730824202000953,
+        0.920211960635882,
+        0.996523754345307
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9185779886843491,
+       "recalls": [
+        0.9206459054209919,
+        0.8406374501992032,
+        0.9944506104328524
+       ]
+      }
+     },
+     "final_train_loss": 0.06724428279054787,
+     "final_train_rec": [
+      0.9552708864212036,
+      0.9551174640655518,
+      0.9958867430686951
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 1000,
+       "seed": 13
+      },
+      "tu_vs_fe_max_rel": 9.63391136801152e-05,
+      "transmissions": 5000,
+      "gaps": 213869,
+      "class_share": [
+       0.6988390089260248,
+       0.24306935554007358,
+       0.05809163553390159
+      ]
+     },
+     "checkpoint_sha256": "b78b5f08cc218d3caee8c25ce87fb2505f94027c57b63c0862946bf87e2eb6a2",
+     "max_abs_weight_diff_vs_exp197_pool": 0.9639855027198792,
+     "wall_s": 23.7,
+     "checkpoint": "models/bigru/shared/bigru3_seed43.pt"
+    },
+    "44": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9997661365762395,
+       0.95875,
+       0.965
+      ]
+     },
+     "select_balacc": 0.9635465673078653,
+     "select_recalls": [
+      0.9723234646344553,
+      0.920844327176781,
+      0.9974719101123596
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9864831320885378,
+       "recalls": [
+        0.9999220698254364,
+        0.9595273264401772,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.988578522284309,
+       "recalls": [
+        0.9999223361292326,
+        0.965813230723694,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9615274245400776,
+       "recalls": [
+        0.9700651103700174,
+        0.9191521574564724,
+        0.9953650057937428
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9178062624830838,
+       "recalls": [
+        0.9199538638985005,
+        0.8390143131178988,
+        0.9944506104328524
+       ]
+      }
+     },
+     "final_train_loss": 0.0676316837232342,
+     "final_train_rec": [
+      0.9541367292404175,
+      0.9556715488433838,
+      0.99588942527771
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 1000,
+       "seed": 13
+      },
+      "tu_vs_fe_max_rel": 9.63391136801152e-05,
+      "transmissions": 5000,
+      "gaps": 213869,
+      "class_share": [
+       0.6988390089260248,
+       0.24306935554007358,
+       0.05809163553390159
+      ]
+     },
+     "checkpoint_sha256": "bdd6034c401cb762f252c884567b59c19736c7e74d48ee0fcd937b8b4912da53",
+     "max_abs_weight_diff_vs_exp197_pool": 1.0188264846801758,
+     "wall_s": 23.8,
+     "checkpoint": "models/bigru/shared/bigru3_seed44.pt"
+    },
+    "45": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9997661365762395,
+       0.9375,
+       0.99
+      ]
+     },
+     "select_balacc": 0.9650457076315607,
+     "select_recalls": [
+      0.9691075291870505,
+      0.9282767847188673,
+      0.9977528089887641
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9896083124291684,
+       "recalls": [
+        0.9998441396508728,
+        0.9689807976366323,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9912140940703912,
+       "recalls": [
+        0.9996893445169307,
+        0.973952937694243,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9619665436372539,
+       "recalls": [
+        0.9599809433063363,
+        0.9282361847085542,
+        0.9976825028968713
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9175977488989938,
+       "recalls": [
+        0.9173394848135332,
+        0.8421130293640254,
+        0.9933407325194229
+       ]
+      }
+     },
+     "final_train_loss": 0.06705940936303038,
+     "final_train_rec": [
+      0.9556452035903931,
+      0.955484926700592,
+      0.9954853057861328
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 1000,
+       "seed": 13
+      },
+      "tu_vs_fe_max_rel": 9.63391136801152e-05,
+      "transmissions": 5000,
+      "gaps": 213869,
+      "class_share": [
+       0.6988390089260248,
+       0.24306935554007358,
+       0.05809163553390159
+      ]
+     },
+     "checkpoint_sha256": "f767c220ba0b3e68eabd5f906c5dcba9daaf6d6ba7a44c374c19002f665a1769",
+     "max_abs_weight_diff_vs_exp197_pool": 0.8952285051345825,
+     "wall_s": 23.7,
+     "checkpoint": "models/bigru/shared/bigru3_seed45.pt"
+    },
+    "46": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9981290926099158,
+       0.985,
+       0.995
+      ]
+     },
+     "select_balacc": 0.9631478442885838,
+     "select_recalls": [
+      0.9681914748474867,
+      0.9237801479059051,
+      0.9974719101123596
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9880354505169867,
+       "recalls": [
+        1.0,
+        0.9641063515509601,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9893678272026651,
+       "recalls": [
+        0.9999223361292326,
+        0.9681811454787628,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9628778941051088,
+       "recalls": [
+        0.962918850246149,
+        0.9268735806207419,
+        0.9988412514484357
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9126092174961397,
+       "recalls": [
+        0.9104959630911188,
+        0.8362107127047366,
+        0.9911209766925638
+       ]
+      }
+     },
+     "final_train_loss": 0.06706741988185089,
+     "final_train_rec": [
+      0.9543526768684387,
+      0.9546286463737488,
+      0.9960496425628662
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 1000,
+       "seed": 13
+      },
+      "tu_vs_fe_max_rel": 9.63391136801152e-05,
+      "transmissions": 5000,
+      "gaps": 213869,
+      "class_share": [
+       0.6988390089260248,
+       0.24306935554007358,
+       0.05809163553390159
+      ]
+     },
+     "checkpoint_sha256": "e62ab03fe5ab267f39e069065f03542a9c881eeb22733a0e6580e52cd1492f54",
+     "max_abs_weight_diff_vs_exp197_pool": 1.1423006057739258,
+     "wall_s": 23.7,
+     "checkpoint": "models/bigru/shared/bigru3_seed46.pt"
+    },
+    "47": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9981290926099158,
+       0.99625,
+       1.0
+      ]
+     },
+     "select_balacc": 0.9655055481476031,
+     "select_recalls": [
+      0.9673533825793751,
+      0.9322531495038835,
+      0.9969101123595505
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9890174704793898,
+       "recalls": [
+        0.9998441396508728,
+        0.9672082717872968,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9910660993981995,
+       "recalls": [
+        0.9996893445169307,
+        0.9735089536776677,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9660922745756283,
+       "recalls": [
+        0.9602985548673971,
+        0.9391370174110523,
+        0.9988412514484357
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9161678805441548,
+       "recalls": [
+        0.9101114955786236,
+        0.8494909251881363,
+        0.9889012208657048
+       ]
+      }
+     },
+     "final_train_loss": 0.06778326429953233,
+     "final_train_rec": [
+      0.9540578722953796,
+      0.9553475379943848,
+      0.9962924122810364
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 1000,
+       "seed": 13
+      },
+      "tu_vs_fe_max_rel": 9.63391136801152e-05,
+      "transmissions": 5000,
+      "gaps": 213869,
+      "class_share": [
+       0.6988390089260248,
+       0.24306935554007358,
+       0.05809163553390159
+      ]
+     },
+     "checkpoint_sha256": "5b5a4b376d048b432d48598d24b75790809182db06f7dddaa41f2912a609e3c1",
+     "max_abs_weight_diff_vs_exp197_pool": 1.1255124807357788,
+     "wall_s": 23.8,
+     "checkpoint": "models/bigru/shared/bigru3_seed47.pt"
+    },
+    "48": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9981290926099158,
+       0.9625,
+       0.9875
+      ]
+     },
+     "select_balacc": 0.9613876055508094,
+     "select_recalls": [
+      0.9660280273646871,
+      0.9201010814225724,
+      0.9980337078651685
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9886728126753525,
+       "recalls": [
+        0.9998441396508728,
+        0.9661742983751846,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9897859232623182,
+       "recalls": [
+        0.9998446722584654,
+        0.969513097528489,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.9591711211066848,
+       "recalls": [
+        0.9587104970620931,
+        0.92112036336109,
+        0.9976825028968713
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9081777595355848,
+       "recalls": [
+        0.9062668204536717,
+        0.8238158477202302,
+        0.9944506104328524
+       ]
+      }
+     },
+     "final_train_loss": 0.06868231894703725,
+     "final_train_rec": [
+      0.9532633423805237,
+      0.9545524716377258,
+      0.9953244924545288
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 1000,
+       "seed": 13
+      },
+      "tu_vs_fe_max_rel": 9.63391136801152e-05,
+      "transmissions": 5000,
+      "gaps": 213869,
+      "class_share": [
+       0.6988390089260248,
+       0.24306935554007358,
+       0.05809163553390159
+      ]
+     },
+     "checkpoint_sha256": "6e43cbcd719935e6b22b76e1a3c1107c5abe8d45ba8a6a6cab8f613455dc0e62",
+     "max_abs_weight_diff_vs_exp197_pool": 1.0179762840270996,
+     "wall_s": 23.7,
+     "checkpoint": "models/bigru/shared/bigru3_seed48.pt"
+    },
+    "49": {
+     "status": "COMPLETED",
+     "gate": {
+      "checked": true,
+      "passed": true,
+      "epoch": 30,
+      "val_recalls": [
+       0.9997661365762395,
+       0.96,
+       0.98
+      ]
+     },
+     "select_balacc": 0.9646724675465905,
+     "select_recalls": [
+      0.9659110842575087,
+      0.9309153071463079,
+      0.9971910112359551
+     ],
+     "select_per_fist": {
+      "fast_normalr": {
+       "balacc": 0.9901937211378251,
+       "recalls": [
+        0.9995324189526185,
+        0.9710487444608568,
+        1.0
+       ]
+      },
+      "slow_normalr": {
+       "balacc": 0.9916321901300442,
+       "recalls": [
+        0.9996116806461635,
+        0.9752848897439692,
+        1.0
+       ]
+      },
+      "high_r_bug": {
+       "balacc": 0.962049306135328,
+       "recalls": [
+        0.9609337779895188,
+        0.9286903860711582,
+        0.996523754345307
+       ]
+      },
+      "cootie_high_jitter": {
+       "balacc": 0.9150582286993054,
+       "recalls": [
+        0.9041906958861976,
+        0.8487531356057253,
+        0.9922308546059934
+       ]
+      }
+     },
+     "final_train_loss": 0.06797932444036245,
+     "final_train_rec": [
+      0.9513965249061584,
+      0.9560375809669495,
+      0.9958887696266174
+     ],
+     "phase2b": {
+      "source": {
+       "kind": "_corpus.corpus",
+       "per_fist": 1000,
+       "seed": 13
+      },
+      "tu_vs_fe_max_rel": 9.63391136801152e-05,
+      "transmissions": 5000,
+      "gaps": 213869,
+      "class_share": [
+       0.6988390089260248,
+       0.24306935554007358,
+       0.05809163553390159
+      ]
+     },
+     "checkpoint_sha256": "40f931f065492872938107a123946343bab7f1d9c960eea5a788c064ba211642",
+     "max_abs_weight_diff_vs_exp197_pool": 0.914569616317749,
+     "wall_s": 23.8,
+     "checkpoint": "models/bigru/shared/bigru3_seed49.pt"
+    }
+   }
+  }
+ }
+}

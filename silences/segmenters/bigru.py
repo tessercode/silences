@@ -23,6 +23,15 @@ POOL_SEEDS = list(range(42, 50))
 DEPLOYED_SEEDS = [42, 47, 48, 49, 43]
 POOL_DIR = MODELS / "bigru" / "pool"
 POOL_Q16 = MODELS / "bigru" / "pool_q16.npz"
+ARMS = ("rep", "fist", "shared")              # the retrained arms of the matched-data record (training/bigru.py --arm)
+
+
+def arm_dir(arm):
+    return MODELS / "bigru" / arm
+
+
+def arm_q16(arm):
+    return MODELS / "bigru" / arm / "q16.npz"
 H = 32
 
 # ---- the nine features ----
@@ -111,10 +120,10 @@ def producer(seeds):
 _ARRAYS = ("w_ih", "w_hh", "b_ih", "b_hh")
 
 
-def load_checkpoint(seed):
-    """One pool seed, quantized from its float checkpoint (needs torch)."""
+def load_checkpoint(seed, directory=POOL_DIR):
+    """One seed, quantized from its float checkpoint (needs torch)."""
     import torch
-    return SeedQ16.from_state_dict(torch.load(POOL_DIR / f"bigru3_seed{seed}.pt", map_location="cpu",
+    return SeedQ16.from_state_dict(torch.load(directory / f"bigru3_seed{seed}.pt", map_location="cpu",
                                               weights_only=True))
 
 
@@ -138,3 +147,17 @@ def load_q16(seed, path=POOL_Q16):
 def deployed(n_seeds=5):
     """The deployed ensemble (n_seeds = 5), or its one-seed build (n_seeds = 1)."""
     return [load_q16(s) for s in DEPLOYED_SEEDS[:n_seeds]]
+
+
+def quantize_arm(arm):
+    """Write models/bigru/<arm>/q16.npz from the arm's float checkpoints (needs torch; run once per arm)."""
+    import json
+    alive = json.loads((MODELS.parent / "records" / "training" / "bigru_arms.json").read_text())["arms"][arm]["alive"]
+    save_q16(arm_q16(arm), {s: load_checkpoint(s, arm_dir(arm)) for s in alive})
+    return arm_q16(arm)
+
+
+if __name__ == "__main__":
+    import sys
+    for a in (sys.argv[1:] or ARMS):
+        print("wrote", quantize_arm(a))

@@ -1,0 +1,54 @@
+{
+  "family": "mlp",
+  "seed": 0,
+  "corpus_seed": 197442,
+  "protocol": {
+    "hidden": [
+      256,
+      128
+    ],
+    "epochs": 150,
+    "lr": 0.001,
+    "batch": 1024,
+    "wd": 1e-05,
+    "val": 0.1
+  },
+  "base_protocol_hash": "f3b85d0c9db49b96",
+  "feature_sha256": "c97648bcea9a343ca313fd7313ffc4a27b3c274d47ac6c20e287b211d25ef7a5",
+  "gaps": 514255,
+  "pickle_sha256": "342ed433da57f2eecfaabff3af17a2e454c64f7f8479d43ebd9649f182d16e70",
+  "wall_s": 95.1,
+  "finished": "2026-11-06T09:35:51-07:00",
+  "git": {
+    "commit": "def6c9b4f8b9913689d6f588f445add869d5c4ab",
+    "branch": "main",
+    "dirty_paths": [
+      "logs/daily_log.md",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp210.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp210_bigru.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp211.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp211_ff.py",
+      "notebooks/experiment210_notes.md",
+      "notebooks/experiment211_notes.md",
+      "outputs/exp210_m1_controls/",
+      "outputs/exp211_reverse_control/",
+      "papers/silences/notes/2026-11-06-training-details.md"
+    ],
+    "relevant_dirty_paths": [
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp210.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp210_bigru.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp211.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp211_ff.py"
+    ],
+    "clean_for_record": false
+  },
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.11.0+cu128",
+    "numpy": "2.4.4",
+    "snntorch": "0.9.4",
+    "hostname": "daystrom",
+    "omp_num_threads": "6"
+  },
+  "corpus": "gen"
+}

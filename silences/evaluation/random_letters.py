@@ -33,7 +33,7 @@ from ..fixedpoint.q16 import ONE, grid_q, scale_lp3   # noqa: E402
 from ..segmenters import bigru, oracle   # noqa: E402
 from . import protocol as P, tables   # noqa: E402
 from .metrics import edit_sums, welch   # noqa: E402
-from .producers import FAMILY_ROWS, all_producers, model_path   # noqa: E402
+from .producers import COMMITTED, FAMILY_ROWS, all_producers, model_path   # noqa: E402
 from .provenance import env_info, git_info, now, sha256_file   # noqa: E402
 
 OUT = RECORDS / "random_letters"
@@ -219,7 +219,7 @@ def diag_joint_beta():
     grid = {f"{g}|{T}": dict(beta=g, T=T, **got[(g, T)]) for g, T in jobs}
     best = min(grid.values(), key=lambda r: r["cer"])
     pinned = min((r for r in grid.values() if r["beta"] == P.GAMMA_PINNED), key=lambda r: r["cer"])
-    src = model_path("lif", 0).parent / "committed.pkl"
+    src = COMMITTED["lif"]
     return dict(experiment="exp207_diag_joint_beta", row="lif_committed", source=str(src.relative_to(ROOT)),
                 corpus=dict(seed=P.CALIB["seed"], per_fist=P.CALIB["per_fist"]), betas=list(GAMMAS), grid=P.CALIB["grid"],
                 results=grid, best_joint=best, best_pinned=pinned,

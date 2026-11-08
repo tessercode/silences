@@ -1,7 +1,15 @@
 """Training the bidirectional-GRU baseline (Section 6): an eight-seed pool, the five best kept.
 
-    python -m silences.training.bigru            # needs a CUDA GPU; about five minutes on one
+    python -m silences.training.bigru            # the original pool; needs a CUDA GPU, about five minutes on one
+    python -m silences.training.bigru --arm fist # the baseline of record since v1.1.0 (final phase on the operators)
     python -m silences.training.bigru --smoke    # a few epochs on small corpora, to check the pipeline
+
+--arm rep|fist|shared retrains the pool with its final phase on another corpus (Section 5.4, Table 4):
+rep is the original generic corpus (the check that the retrain path reproduces the pool), fist is 12,000
+transmissions from the five operators (2,400 each, corpus seed 210400 + training seed), shared is the
+feedforward networks' original corpus (1,000 per operator, seed 13); phases 1A to 2A are unchanged. The
+operator transmissions pass through this script's own estimator and features, as the generic ones do.
+The checkpoints are compared with models/bigru/<arm>/ and records/training/bigru_arms.json.
 
 Each seed trains for 180 epochs through four phases of growing difficulty: two-letter, two-word
 transmissions with no jitter, then jitter up to 0.2 and 0.3 time units, then two to four words of
@@ -36,7 +44,11 @@ from ..morse import MORSE_TABLE
 from ..operators import OPERATORS
 
 SMOKE = "--smoke" in sys.argv[1:]
-OUT = OUTPUTS / "retrain" / "bigru"
+ARM = sys.argv[sys.argv.index("--arm") + 1] if "--arm" in sys.argv[1:] else None
+assert ARM in (None, "rep", "fist", "shared"), ARM
+OUT = OUTPUTS / "retrain" / ("bigru" if ARM is None else f"bigru_{ARM}")
+FIST_SEED_BASE, FIST_PER_OPERATOR = 210_400, 2400
+SHARED_PER_OPERATOR, SHARED_SEED = 1000, 13
 
 # ---- the recipe ----
 POOL_SEEDS = list(range(42, 50))
@@ -166,6 +178,29 @@ def build_dataset(n_tx, sigma_min, sigma_max, n_words_list, wlen_list, rng_seed)
     return samples, np.array(tu_ratios)
 
 
+def generic_transmissions(n_tx, rng_seed, sigma=SIGMA_P2B, n_words_list=NW_P2B, wlen_list=WL_P2B):
+    """The final-phase corpus as spike trains: the same draws as build_dataset, keeping each transmission's
+    spike times (integer microseconds), channels and labels. This is the corpus the feedforward networks of
+    the grid's generic row were trained on (training.window_nets --corpus gen); build_dataset's skip
+    conditions are reproduced exactly so that the two consume the generator's random numbers identically."""
+    rng, out = np.random.default_rng(rng_seed), []
+    smin, smax = sigma
+    for _ in range(n_tx):
+        sigma_frac = rng.uniform(smin, smax) if smax > smin else smin
+        spikes, labels, _ = generate_sentence(n_words_list, wlen_list, T_U, sigma_frac, T_THRESH, rng)
+        if len(spikes) < 2 or not labels:
+            continue
+        est = estimate_tu(spikes)
+        if est is None or est <= 0:
+            continue
+        if len(features(spikes, TU_SCALAR_C * est)) == 0:
+            continue
+        ticks = np.array([round(t * 1e6) for t, _c in spikes], dtype=np.int64)
+        assert np.all(np.diff(ticks) > 0)
+        out.append(dict(ticks=ticks, ch=np.array([c for _t, c in spikes], dtype=np.int64), labels=np.array(labels, dtype=np.int64)))
+    return out
+
+
 # ---- the selection and test corpora (the operator style model) ----
 def render_selection(words, op, rng):
     """The style renderer the selection corpus was made with (no inter-word gap after the last word)."""
@@ -232,6 +267,19 @@ def encode(spike_sets):
             x = features(spikes, TU_SCALAR_C * est)
             if len(x):
                 enc.append((x, labels))
+    return enc
+
+
+def operator_phase(per_operator, rng_seed):
+    """The final-phase samples of the fist and shared arms: corpus transmissions (silences.corpus, random
+    letters, the five operators) through this script's estimator and features."""
+    from ..corpus import corpus
+    sets = []
+    for tx in corpus(per_operator, rng_seed, "rand"):
+        spikes = [(float(t) * 1e-6, int(c)) for t, c in zip(tx["ticks"], tx["ch"])]
+        sets.append((spikes, np.asarray(tx["labels"], dtype=np.int64)))
+    enc = encode(sets)
+    assert len(enc) == len(sets) and all(len(x) <= MAX_T for x, _ in enc)
     return enc
 
 
@@ -355,12 +403,22 @@ def main():
     gate_samples = build_dataset(N_TX_GATEVAL, *SIGMA_P1A, NW_P1, WL_P1, RNG_GATE)[0]
     (OUT / "pool").mkdir(parents=True, exist_ok=True)
     pool, models = {}, {}
+    shared = None
     for seed in POOL_SEEDS:
         phases = []
         for (lo, hi), nw, wl, base in ((SIGMA_P1A, NW_P1, WL_P1, RNG_TRAIN_P1A), (SIGMA_P1B, NW_P1, WL_P1, RNG_TRAIN_P1B),
-                                       (SIGMA_P2A, NW_P1, WL_P1, RNG_TRAIN_P2A), (SIGMA_P2B, NW_P2B, WL_P2B, RNG_TRAIN_P2B)):
+                                       (SIGMA_P2A, NW_P1, WL_P1, RNG_TRAIN_P2A)):
             X, y = training_tensors(build_dataset(N_TX_TRAIN, lo, hi, nw, wl, base + seed)[0])
             phases.append((X.to(device), y.to(device)))
+        if ARM == "fist":
+            final = operator_phase(FIST_PER_OPERATOR if not SMOKE else 80, FIST_SEED_BASE + seed)
+        elif ARM == "shared":
+            shared = shared or operator_phase(SHARED_PER_OPERATOR if not SMOKE else 80, SHARED_SEED)
+            final = shared
+        else:
+            final = build_dataset(N_TX_TRAIN, *SIGMA_P2B, NW_P2B, WL_P2B, RNG_TRAIN_P2B + seed)[0]
+        X, y = training_tensors(final)
+        phases.append((X.to(device), y.to(device)))
         model, gate = train_seed(seed, phases, device, gate_samples)
         del phases
         torch.cuda.empty_cache()
@@ -391,7 +449,11 @@ def main():
 def check(out):
     """A retrain passes if every seed's SELECT balanced accuracy lies within the shipped pool's range
     widened by its own spread, and the new ensemble's test balanced accuracy clears the floor."""
-    ref = json.loads((RECORDS / "training" / "bigru_pool.json").read_text())
+    if ARM is None:
+        ref = json.loads((RECORDS / "training" / "bigru_pool.json").read_text())
+    else:
+        A = json.loads((RECORDS / "training" / "bigru_arms.json").read_text())["arms"][ARM]
+        ref = dict(consistency=dict(min=A["select_balacc"]["min"], max=A["select_balacc"]["max"]), selected_seeds=A["selected_top"])
     lo, hi = ref["consistency"]["min"], ref["consistency"]["max"]
     band = (lo - (hi - lo), hi + (hi - lo))
     seeds_ok = all(band[0] <= p["select_balacc"] <= band[1] for p in out["pool"].values() if p["status"] == "COMPLETED")
@@ -400,9 +462,10 @@ def check(out):
           f"(shipped {lo * 100:.2f}-{hi * 100:.2f}%, band {band[0] * 100:.2f}-{band[1] * 100:.2f}%) -> {'PASS' if seeds_ok else 'FAIL'}; "
           f"ensemble test {out['ensemble_test']['pooled_balacc'] * 100:.2f}% (floor {BALACC_FLOOR * 100:.1f}%) -> "
           f"{'PASS' if ens_ok else 'FAIL'}; selected {out['selected_seeds']} (shipped {ref['selected_seeds']})")
-    from ..segmenters.bigru import POOL_DIR
+    from ..segmenters.bigru import POOL_DIR, arm_dir
+    shipped = POOL_DIR if ARM is None else arm_dir(ARM)
     same = [s for s, p in out["pool"].items() if p["status"] == "COMPLETED" and (OUT / "pool" / f"bigru3_seed{s}.pt").exists()
-            and _weights_equal(POOL_DIR / f"bigru3_seed{s}.pt", OUT / "pool" / f"bigru3_seed{s}.pt")]
+            and _weights_equal(shipped / f"bigru3_seed{s}.pt", OUT / "pool" / f"bigru3_seed{s}.pt")]
     print(f"weights identical to the shipped checkpoints for {len(same)} of {len(out['pool'])} seeds")
     if not SMOKE:
         sys.exit(0 if seeds_ok and ens_ok else 1)

@@ -1,0 +1,30 @@
+{
+ "passed": true,
+ "files": {
+  "results.json": {
+   "values": 41225,
+   "differences": 0,
+   "examples": []
+  },
+  "fidelity.json": {
+   "values": 83,
+   "differences": 0,
+   "examples": []
+  },
+  "criterion_1a.json": {
+   "values": 1506,
+   "differences": 0,
+   "examples": []
+  },
+  "fit.json": {
+   "values": 74664,
+   "differences": 0,
+   "examples": []
+  },
+  "eval.json": {
+   "values": 79488,
+   "differences": 0,
+   "examples": []
+  }
+ }
+}

@@ -181,5 +181,32 @@
    "model": "models/mlp/seed9.pkl",
    "identical_to_record": true
   }
- ]
+ ],
+ "matched_v1_1_0": {
+  "compared_against": "tempo-dev seed_sweep/exp212 (+ deps exp210/exp211 fits and evals)",
+  "passed": true,
+  "files": {
+   "results.json": {
+    "values": 41225,
+    "differences": 0
+   },
+   "fidelity.json": {
+    "values": 83,
+    "differences": 0
+   },
+   "criterion_1a.json": {
+    "values": 1506,
+    "differences": 0
+   },
+   "fit.json": {
+    "values": 74664,
+    "differences": 0
+   },
+   "eval.json": {
+    "values": 79488,
+    "differences": 0
+   }
+  },
+  "total_values": 196966
+ }
 }

@@ -1,0 +1,369 @@
+{
+ "experiment": "exp211_reverse_control",
+ "description": "The feedforward recipe (unchanged) trained on the BiGRU's two corpora, ten seeds per family and corpus: op12 = 12,000 transmissions from the five operators (2,400 each, corpus seed 210442 + training seed; the families of record since v1.1.0), gen = the BiGRU recipe's generic final-phase corpus (12,000 transmissions, generator seed 197442 + training seed). Each seed has its own corpus. Per-corpus feature matrices are described here; per-model metadata sits beside each model.",
+ "corpora": {
+  "op12_0": {
+   "arm": "op12",
+   "train_seed": 0,
+   "corpus_seed": 210442,
+   "transmissions": 12000,
+   "gaps": 517973,
+   "class_share": [
+    0.6985750222501945,
+    0.24354551299005933,
+    0.05787946475974617
+   ],
+   "tu_vs_nb_max_rel": 7.581868043236888e-05,
+   "feature_sha256": "1d32e612e046ab65f356e4cbde343d55723e093faa57fa2b6a9e28d9f2a84654",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "op12_1": {
+   "arm": "op12",
+   "train_seed": 1,
+   "corpus_seed": 210443,
+   "transmissions": 12000,
+   "gaps": 515991,
+   "class_share": [
+    0.6984346626200845,
+    0.2436302183565217,
+    0.05793511902339382
+   ],
+   "tu_vs_nb_max_rel": 7.578100835134267e-05,
+   "feature_sha256": "6bbd15b0b080bcdbd3dd7c3fb1e6d238a579655556e72442be92d84fc400cafb",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "op12_2": {
+   "arm": "op12",
+   "train_seed": 2,
+   "corpus_seed": 210444,
+   "transmissions": 12000,
+   "gaps": 517635,
+   "class_share": [
+    0.6989210544109267,
+    0.243320100070513,
+    0.05775884551856038
+   ],
+   "tu_vs_nb_max_rel": 7.915057915055106e-05,
+   "feature_sha256": "43edd4532ef2b6579c33e972f407519f78d65ab057d60cb5cfcd8da27357dc59",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "op12_3": {
+   "arm": "op12",
+   "train_seed": 3,
+   "corpus_seed": 210445,
+   "transmissions": 12000,
+   "gaps": 517118,
+   "class_share": [
+    0.6986161765786533,
+    0.24338738933860357,
+    0.0579964340827432
+   ],
+   "tu_vs_nb_max_rel": 8.364312267652733e-05,
+   "feature_sha256": "90a8a4a812f4b26a761bbb4aaa488a6f8c07b25188e1be22a8bb4670d1131d3b",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "op12_4": {
+   "arm": "op12",
+   "train_seed": 4,
+   "corpus_seed": 210446,
+   "transmissions": 12000,
+   "gaps": 517628,
+   "class_share": [
+    0.6987914100473699,
+    0.24323259174542336,
+    0.05797599820720672
+   ],
+   "tu_vs_nb_max_rel": 8.492569002115418e-05,
+   "feature_sha256": "1d10b1f7293e3d2624ebde717ed7e2307c230f94d1d0b543ceb667a4bdcebae0",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "op12_5": {
+   "arm": "op12",
+   "train_seed": 5,
+   "corpus_seed": 210447,
+   "transmissions": 12000,
+   "gaps": 517148,
+   "class_share": [
+    0.698449960166142,
+    0.24356277119896044,
+    0.05798726863489755
+   ],
+   "tu_vs_nb_max_rel": 9.174311926590431e-05,
+   "feature_sha256": "8ec512dc2605ba0fdd0e03b92caaad27d4b45aca3add9474e399dd31739cf617",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "op12_6": {
+   "arm": "op12",
+   "train_seed": 6,
+   "corpus_seed": 210448,
+   "transmissions": 12000,
+   "gaps": 518940,
+   "class_share": [
+    0.698782132809188,
+    0.24323428527382743,
+    0.05798358191698462
+   ],
+   "tu_vs_nb_max_rel": 9.025270758122743e-05,
+   "feature_sha256": "0cb8949bc737fcfd18cfe3b21534040c02e4973dac50712cdce7876cf062a399",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "op12_7": {
+   "arm": "op12",
+   "train_seed": 7,
+   "corpus_seed": 210449,
+   "transmissions": 12000,
+   "gaps": 518094,
+   "class_share": [
+    0.6989445930661231,
+    0.24304276830073307,
+    0.05801263863314379
+   ],
+   "tu_vs_nb_max_rel": 8.141382049242543e-05,
+   "feature_sha256": "94217530d58b32f18151dc433f218c1a8cdd244dba1bebebc63abbf65937af50",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "op12_8": {
+   "arm": "op12",
+   "train_seed": 8,
+   "corpus_seed": 210450,
+   "transmissions": 12000,
+   "gaps": 519541,
+   "class_share": [
+    0.6985627698295226,
+    0.24345913027075822,
+    0.05797809989971917
+   ],
+   "tu_vs_nb_max_rel": 7.75065963061106e-05,
+   "feature_sha256": "bc5cd26bf9c0c2ca0eb6f83ad253a8458ae15b4a4c162a0961c7ee1a8e39130e",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "op12_9": {
+   "arm": "op12",
+   "train_seed": 9,
+   "corpus_seed": 210451,
+   "transmissions": 12000,
+   "gaps": 521538,
+   "class_share": [
+    0.6984572552719073,
+    0.2435718969662805,
+    0.05797084776181218
+   ],
+   "tu_vs_nb_max_rel": 8.89521437466643e-05,
+   "feature_sha256": "d209e93500c96cfb1c2b2316eebf4c3dafb0af7f8a0c366e2fc623e2813060f9",
+   "source": "_corpus.corpus",
+   "per_fist": 2400
+  },
+  "gen_0": {
+   "arm": "gen",
+   "train_seed": 0,
+   "corpus_seed": 197442,
+   "transmissions": 12000,
+   "gaps": 514255,
+   "class_share": [
+    0.7438585915547734,
+    0.20946417633275322,
+    0.046677232112473384
+   ],
+   "tu_vs_nb_max_rel": 2.9811590746482232e-05,
+   "feature_sha256": "c97648bcea9a343ca313fd7313ffc4a27b3c274d47ac6c20e287b211d25ef7a5",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  },
+  "gen_1": {
+   "arm": "gen",
+   "train_seed": 1,
+   "corpus_seed": 197443,
+   "transmissions": 12000,
+   "gaps": 518347,
+   "class_share": [
+    0.7442485439290668,
+    0.20922856696382924,
+    0.04652288910710393
+   ],
+   "tu_vs_nb_max_rel": 2.1602513746989904e-05,
+   "feature_sha256": "203d4db3ecceab325befc5161b79626f6a35dda71a908de7b907564f4f771db6",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  },
+  "gen_2": {
+   "arm": "gen",
+   "train_seed": 2,
+   "corpus_seed": 197444,
+   "transmissions": 12000,
+   "gaps": 513632,
+   "class_share": [
+    0.7442663229705314,
+    0.20921009594417794,
+    0.04652358108529064
+   ],
+   "tu_vs_nb_max_rel": 2.309468822170901e-05,
+   "feature_sha256": "b7be1203844d4d279600b0b8288c1e23b2febfbd18251a4faf5d06b7930de683",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  },
+  "gen_3": {
+   "arm": "gen",
+   "train_seed": 3,
+   "corpus_seed": 197445,
+   "transmissions": 12000,
+   "gaps": 519516,
+   "class_share": [
+    0.7442946896726954,
+    0.2090772950207501,
+    0.04662801530655456
+   ],
+   "tu_vs_nb_max_rel": 2.648585655260091e-05,
+   "feature_sha256": "68d4bd0498c334ad29a824cfeb50e2f44ce1495c8c53fd99b65428af40688fd7",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  },
+  "gen_4": {
+   "arm": "gen",
+   "train_seed": 4,
+   "corpus_seed": 197446,
+   "transmissions": 12000,
+   "gaps": 516515,
+   "class_share": [
+    0.7441739349292857,
+    0.20929111448844662,
+    0.0465349505822677
+   ],
+   "tu_vs_nb_max_rel": 2.2727272727409332e-05,
+   "feature_sha256": "4e1780da3d574a8dc3fdd2966ba5502758d34daadaea7cc91a9cf2582739b40b",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  },
+  "gen_5": {
+   "arm": "gen",
+   "train_seed": 5,
+   "corpus_seed": 197447,
+   "transmissions": 12000,
+   "gaps": 516512,
+   "class_share": [
+    0.744207298184747,
+    0.20910840406418438,
+    0.04668429775106871
+   ],
+   "tu_vs_nb_max_rel": 2.1288038363383803e-05,
+   "feature_sha256": "8791df2de4839d8ca59a6b129544e9b6d5ff93bf2640e8b32c5fcf02f6c78b26",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  },
+  "gen_6": {
+   "arm": "gen",
+   "train_seed": 6,
+   "corpus_seed": 197448,
+   "transmissions": 12000,
+   "gaps": 518054,
+   "class_share": [
+    0.7440073814698854,
+    0.20941446258498148,
+    0.046578155945133135
+   ],
+   "tu_vs_nb_max_rel": 2.4042111656738513e-05,
+   "feature_sha256": "05317323dc7691cd5f71fbf594102a99d1208931501bc68e09b427d80fe9301c",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  },
+  "gen_7": {
+   "arm": "gen",
+   "train_seed": 7,
+   "corpus_seed": 197449,
+   "transmissions": 12000,
+   "gaps": 519244,
+   "class_share": [
+    0.7445767307855267,
+    0.2090250441025799,
+    0.04639822511189345
+   ],
+   "tu_vs_nb_max_rel": 2.3912718577171498e-05,
+   "feature_sha256": "36be9d9deaf753a1f7da9a77d076a315834f53b426ba2f2f00f86ea7488b77a2",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  },
+  "gen_8": {
+   "arm": "gen",
+   "train_seed": 8,
+   "corpus_seed": 197450,
+   "transmissions": 12000,
+   "gaps": 515846,
+   "class_share": [
+    0.7442085428596907,
+    0.20942878300888249,
+    0.04636267413142682
+   ],
+   "tu_vs_nb_max_rel": 2.3365635299254505e-05,
+   "feature_sha256": "5c8c4c427d9118029d626f1f77c52166b97d738167f0003306c511dd706472d2",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  },
+  "gen_9": {
+   "arm": "gen",
+   "train_seed": 9,
+   "corpus_seed": 197451,
+   "transmissions": 12000,
+   "gaps": 514568,
+   "class_share": [
+    0.7439327746770106,
+    0.20948834750703502,
+    0.04657887781595436
+   ],
+   "tu_vs_nb_max_rel": 2.198104135181405e-05,
+   "feature_sha256": "8e9c3e647e82fe39ed6c1b46c519ef3a155a183b50c7cfbf41a8268e9645dfcf",
+   "source": "exp197 phase-2B generator",
+   "b2_equal_to_notebook_builder": true
+  }
+ },
+ "recipe_cells_sha256": "819ccfafde3795f93b4e969e9c10b2efd089c8917c6e52b7a9ed74e36106f8cd",
+ "train_wall_s": {
+  "mlp_op12": {
+   "n": 10,
+   "min": 86.8,
+   "max": 97.9
+  },
+  "mlp_gen": {
+   "n": 10,
+   "min": 88.7,
+   "max": 100.1
+  },
+  "lif_op12": {
+   "n": 10,
+   "min": 3731.3,
+   "max": 4361.3
+  },
+  "lif_gen": {
+   "n": 10,
+   "min": 3943.7,
+   "max": 4523.0
+  }
+ },
+ "anchors": {
+  "b1": {
+   "mlp": 0.0,
+   "lif": 0.0
+  },
+  "b1_pass": true,
+  "b2_pass": true,
+  "b3_max_rel": 9.174311926590431e-05,
+  "b4": {
+   "train_fingerprints": 240000,
+   "corpora": 20,
+   "overlaps": {},
+   "b4_disjoint": true
+  },
+  "b5": {
+   "max_abs": 0.0,
+   "passed": true
+  }
+ },
+ "finished": "2026-11-06T09:30:11-07:00"
+}

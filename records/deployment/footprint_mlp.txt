@@ -1,14 +1,14 @@
 # clf_hw.elf footprint (mlp), regenerate with firmware/common/measure_footprint.sh mlp
 # arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; pico-sdk 2.2.0
    text	   data	    bss	    dec	    hex	filename
- 253308	      0	  28860	 282168	  44e38	clf_hw.elf
+ 253316	      0	  28860	 282176	  44e40	clf_hw.elf
 
 clf_hw.elf  :
 section                 size        addr
 .boot2                   256   268435456
-.text                  22124   268435712
-.rodata               224360   268457840
-.binary_info              40   268682200
+.text                  22132   268435712
+.rodata               224360   268457848
+.binary_info              40   268682208
 .ram_vector_table        192   536870912
 .uninitialized_data        0   536871104
 .data                    384   536871104
@@ -26,11 +26,11 @@ section                 size        addr
 .debug_loclists        87679           0
 .debug_aranges          4456           0
 .debug_rnglists        15010           0
-.debug_line           117554           0
+.debug_line           117568           0
 .debug_str             25242           0
 .debug_frame            8500           0
 .debug_line_str         1026           0
-Total                 842817
+Total                 842839
 
 
 # largest stack frames (-fstack-usage)

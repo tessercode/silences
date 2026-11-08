@@ -1,0 +1,6 @@
+{
+ "train_fingerprints": 240000,
+ "corpora": 20,
+ "overlaps": {},
+ "b4_disjoint": true
+}

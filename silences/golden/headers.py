@@ -15,7 +15,7 @@ import numpy as np
 
 from .. import DATA, FIRMWARE, MODELS
 from ..decoder import charlm
-from ..evaluation.producers import COMMITTED
+from ..evaluation.producers import DEPLOYED
 from ..fixedpoint import q16
 from ..fixedpoint.window_net import PAD_LOGX_Q, FixedWindowNet
 from ..morse import MORSE_TABLE
@@ -98,7 +98,7 @@ def _clf_array(name, arr, ctype="int32_t"):
 
 
 def clf_weights_h(kind):
-    net = FixedWindowNet.from_lif(LIF.load(COMMITTED["lif"])) if kind == "lif" else FixedWindowNet.from_mlp(MLP.load(COMMITTED["mlp"]))
+    net = FixedWindowNet.from_lif(LIF.load(DEPLOYED["lif"])) if kind == "lif" else FixedWindowNet.from_mlp(MLP.load(DEPLOYED["mlp"]))
     dims = [net.layers_q[0][0].shape[0]] + [W.shape[1] for W, _ in net.layers_q]
     L = [BANNER, "#pragma once", "#include <stdint.h>", f"#define CLF_IS_LIF {int(kind == 'lif')}", f"#define CLF_W {net.W}",
          f"#define CLF_NFEAT {dims[0]}", f"#define CLF_NLAYERS {len(net.layers_q)}", f"#define CLF_PAD_LOGX_Q {PAD_LOGX_Q}"]

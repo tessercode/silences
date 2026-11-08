@@ -1,0 +1,183 @@
+{
+ "protocol_hash": "cafa08a4f02b598e",
+ "corpus": "rand_4242",
+ "floor": 0.995,
+ "a4_pass": true,
+ "rows": {
+  "bigru_fist_seed44": {
+   "gaps": 53606,
+   "agree": 53606,
+   "agreement": 1.0
+  },
+  "bigru_seed44": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_seed45": {
+   "gaps": 53606,
+   "agree": 53606,
+   "agreement": 1.0
+  },
+  "bigru_seed47": {
+   "gaps": 53606,
+   "agree": 53604,
+   "agreement": 0.9999626907435735
+  },
+  "bigru_seed46": {
+   "gaps": 53606,
+   "agree": 53606,
+   "agreement": 1.0
+  },
+  "bigru_seed43": {
+   "gaps": 53606,
+   "agree": 53603,
+   "agreement": 0.9999440361153602
+  },
+  "bigru_rep_seed45": {
+   "gaps": 53606,
+   "agree": 53606,
+   "agreement": 1.0
+  },
+  "bigru_rep_seed42": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_rep_seed49": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_fist_seed42": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_seed42": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_rep_seed43": {
+   "gaps": 53606,
+   "agree": 53603,
+   "agreement": 0.9999440361153602
+  },
+  "bigru_seed48": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_fist_seed45": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_fist_seed46": {
+   "gaps": 53606,
+   "agree": 53606,
+   "agreement": 1.0
+  },
+  "bigru_fist_seed47": {
+   "gaps": 53606,
+   "agree": 53606,
+   "agreement": 1.0
+  },
+  "bigru_fist_seed48": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_rep_seed48": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_rep_seed47": {
+   "gaps": 53606,
+   "agree": 53604,
+   "agreement": 0.9999626907435735
+  },
+  "bigru_fist_seed43": {
+   "gaps": 53606,
+   "agree": 53602,
+   "agreement": 0.9999253814871469
+  },
+  "bigru_rep_seed46": {
+   "gaps": 53606,
+   "agree": 53606,
+   "agreement": 1.0
+  },
+  "bigru_seed49": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_rep_seed44": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_fist_seed49": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_shared_seed42": {
+   "gaps": 53606,
+   "agree": 53606,
+   "agreement": 1.0
+  },
+  "bigru_shared_seed43": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_shared_seed45": {
+   "gaps": 53606,
+   "agree": 53604,
+   "agreement": 0.9999626907435735
+  },
+  "bigru_shared_seed44": {
+   "gaps": 53606,
+   "agree": 53604,
+   "agreement": 0.9999626907435735
+  },
+  "bigru_shared_seed46": {
+   "gaps": 53606,
+   "agree": 53604,
+   "agreement": 0.9999626907435735
+  },
+  "bigru_shared_seed49": {
+   "gaps": 53606,
+   "agree": 53606,
+   "agreement": 1.0
+  },
+  "bigru_shared_seed48": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_shared_seed47": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_rep_ens5": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_fist_ens5": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  },
+  "bigru_shared_ens5": {
+   "gaps": 53606,
+   "agree": 53605,
+   "agreement": 0.9999813453717867
+  }
+ }
+}

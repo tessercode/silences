@@ -16,7 +16,7 @@ from silences.fixedpoint.window_net import FixedWindowNet
 from silences.operators import OPERATORS
 from silences.segmenters import bigru
 from silences.segmenters.lif import LIF
-from silences.evaluation.producers import COMMITTED
+from silences.evaluation.producers import DEPLOYED
 from silences.training.window_nets import training_matrix
 
 G = FIRMWARE / "golden"
@@ -71,6 +71,20 @@ def test_bigru_and_lif_fixed_point_match_their_goldens():
     for r in _golden("segmenter_bigru_n5.json")["vectors"][:3]:
         v = vec[int(r["vector_id"])]
         assert bigru.lp3_ticks(seeds, v["ticks"], v["ch"], v["tu"]) == r["log_p3_q16"]
-    net = FixedWindowNet.from_lif(LIF.load(COMMITTED["lif"]))
+    net = FixedWindowNet.from_lif(LIF.load(DEPLOYED["lif"]))
     for v in _golden("segmenter_lif.json")["vectors"][:3]:
         assert net.lp3_ticks(v["ticks"], v["ch"], v["tu"]) == v["lp3"]
+
+
+def test_matched_record_names_the_deployed_models():
+    """The record of the paper hashes the two deployed networks, and its protocol chain reaches the first one."""
+    import hashlib
+    from silences import PROTOCOL, RECORDS
+    from silences.evaluation import protocol as P
+    R = json.loads((RECORDS / "matched" / "results.json").read_text())
+    assert R["protocol_hash"] == P.MATCHED_HASH and R["anchors_pass"]
+    for fam in ("lif", "mlp"):
+        p = RECORDS.parent / R["deployed"][fam]["installed"]
+        assert hashlib.sha256(p.read_bytes()).hexdigest() == R["deployed"][fam]["pickle_sha256"]
+    assert P.MATCHED["base_protocol_hash"] == P.GRID_WINDOW_HASH and P.GRID_WINDOW["base_protocol_hash"] == P.GRID_BIGRU_HASH
+    assert P.GRID_BIGRU["base_protocol_hash"] == P.DECODER_WEIGHTS_HASH and (PROTOCOL / "matched.json").exists()

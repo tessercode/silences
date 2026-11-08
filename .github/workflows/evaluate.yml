@@ -20,5 +20,7 @@ jobs:
         run: lscpu | grep -E "Model name|Flags" | cut -c1-200; grep -o -m1 avx512f /proc/cpuinfo || echo "no avx512f"
       - name: Training matrix
         run: PYTHONPATH=. .venv/bin/python -c "from silences.training.window_nets import training_matrix; print(training_matrix()[2])"
-      - name: Evaluate and compare
+      - name: Evaluate and compare (the superseded records)
         run: SILENCES_WORKERS=4 make evaluate
+      - name: Evaluate and compare (the record of the paper)
+        run: SILENCES_WORKERS=4 make evaluate-matched

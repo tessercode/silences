@@ -22,7 +22,7 @@ from ..pipeline import compose
 from ..segmenters import bigru
 from ..segmenters.lif import LIF
 from ..segmenters.mlp import MLP
-from ..evaluation.producers import COMMITTED
+from ..evaluation.producers import DEPLOYED
 
 G = FIRMWARE / "golden"
 OPERATORS = ("fast_normalr", "slow_normalr", "high_r_bug", "cootie_high_jitter", "cootie_corrected")
@@ -153,7 +153,7 @@ def check_chain_bigru():
 
 
 def _window_nets():
-    return dict(lif=FixedWindowNet.from_lif(LIF.load(COMMITTED["lif"])), mlp=FixedWindowNet.from_mlp(MLP.load(COMMITTED["mlp"])))
+    return dict(lif=FixedWindowNet.from_lif(LIF.load(DEPLOYED["lif"])), mlp=FixedWindowNet.from_mlp(MLP.load(DEPLOYED["mlp"])))
 
 
 def check_segmenter_window():

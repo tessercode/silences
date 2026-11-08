@@ -1,0 +1,9 @@
+{
+ "a2_record_corpora_reproduced": true,
+ "train_fingerprints": {
+  "fist": 96000,
+  "shared": 5000
+ },
+ "overlaps": {},
+ "a5_disjoint": true
+}

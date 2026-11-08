@@ -3,10 +3,13 @@
 #   make setup          a Python 3.12 virtual environment with the pinned requirements and the NLTK corpora
 #   make paper          tier 1: the records -> every table, figure and number in the paper (seconds)
 #   make check          fast checks: unit tests, every firmware golden, every generated header
-#   make evaluate       tier 2: the shipped models -> every evaluation record, then compared (about 10 min)
-#   make train-lif SEED=0 / train-mlp SEED=0
+#   make evaluate       tier 2: the shipped models -> the superseded 5,000-transmission records, then compared (about 10 min)
+#   make evaluate-matched  tier 2: every model of the grid -> the record of the paper (records/matched/), then compared (about 40 min)
+#   make train-lif SEED=0 / train-mlp SEED=0 [CORPUS=op12|gen]
 #                       tier 3: retrain one seed and check it is bit-identical to the shipped model
-#   make train-bigru    tier 3: retrain the BiGRU pool (CUDA GPU, about 5 min)
+#                       (CORPUS=op12 is the family of record; without CORPUS, the original 5,000-transmission corpus)
+#   make train-bigru [ARM=rep|fist|shared]
+#                       tier 3: retrain the BiGRU pool, or one of its retrained arms (CUDA GPU, about 5 min each)
 #   make lm             rebuild the character language model and check it is byte-identical
 #   make firmware-host  every board's host gate (gcc, no SDK)
 #   make firmware-renode   every board on the emulated RP2040 (Pico SDK and Renode, see firmware/README.md)
@@ -15,7 +18,9 @@ PYTHON ?= .venv/bin/python
 SEED ?= 0
 export PYTHONPATH := $(CURDIR)
 
-.PHONY: setup paper check evaluate train-lif train-mlp train-bigru lm collision firmware-host firmware-renode
+.PHONY: setup paper check evaluate evaluate-matched train-lif train-mlp train-bigru lm collision firmware-host firmware-renode
+CORPUS ?=
+ARM ?=
 
 setup:
 	python3.12 -m venv .venv
@@ -39,11 +44,15 @@ evaluate:
 	$(PYTHON) -m silences.evaluation.decoder_weights
 	$(PYTHON) tools/compare_records.py --git records/random_letters records/decoder_weights
 
+evaluate-matched:
+	$(PYTHON) -m silences.evaluation.matched
+	$(PYTHON) tools/compare_records.py --git records/matched
+
 train-lif train-mlp:
-	$(PYTHON) -m silences.training.window_nets $(@:train-%=%) $(SEED)
+	$(PYTHON) -m silences.training.window_nets $(@:train-%=%) $(SEED) $(if $(CORPUS),--corpus $(CORPUS),)
 
 train-bigru:
-	$(PYTHON) -m silences.training.bigru
+	$(PYTHON) -m silences.training.bigru $(if $(ARM),--arm $(ARM),)
 
 lm:
 	$(PYTHON) -m silences.decoder.charlm build
