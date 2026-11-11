@@ -15,7 +15,7 @@ from silences.fixedpoint import q16
 from silences.fixedpoint.window_net import FixedWindowNet
 from silences.operators import OPERATORS
 from silences.segmenters import bigru
-from silences.segmenters.lif import LIF
+from silences.segmenters.lif import LIF, SpikeFedLIF
 from silences.evaluation.producers import DEPLOYED
 from silences.training.window_nets import training_matrix
 
@@ -29,6 +29,8 @@ def _golden(name):
 def test_protocols_are_the_registered_ones():
     assert protocol.RANDOM_LETTERS_HASH == "f3b85d0c9db49b96"
     assert protocol.DECODER_WEIGHTS_HASH == "a7f80cf1ace9639d"
+    assert protocol.MATCHED_HASH == "58c31eb368faa229"
+    assert protocol.SPIKE_FED_HASH == "76de3765e2be3d62"
 
 
 def test_operators_in_table_order():
@@ -76,6 +78,27 @@ def test_bigru_and_lif_fixed_point_match_their_goldens():
         assert net.lp3_ticks(v["ticks"], v["ch"], v["tu"]) == v["lp3"]
 
 
+def test_spike_fed_network_fixed_point_matches_its_golden():
+    """The deployed network of record (the LIF fed spikes) in Q16.16, encoder included, against the firmware golden."""
+    m = SpikeFedLIF.load(DEPLOYED["spk"])
+    assert m.scale == 3.0 and m.T == 40 and m.fcs[0][0].shape[0] == 84
+    net = FixedWindowNet.from_spk(m)
+    for v in _golden("segmenter_spk.json")["vectors"][:3]:
+        assert net.lp3_ticks(v["ticks"], v["ch"], v["tu"]) == v["lp3"]
+
+
+def test_spike_encoder_fires_floor_of_rate_times_step():
+    """Each ON/OFF channel fires floor(t * rate) spikes by step t, rate = clip(+-z / scale, 0, 1)."""
+    m = SpikeFedLIF.load(DEPLOYED["spk"])
+    F = np.tile(m.mu, (3, 1)) + np.array([[0.0], [1.5], [-4.0]]) * m.sd        # z = 0, +1.5 sd, -4 sd on every feature
+    spk = m.encode(F)
+    assert spk.shape == (m.T, 3, 84) and set(np.unique(spk)) <= {0.0, 1.0}
+    cum = spk.cumsum(0)
+    assert cum[-1, 0].sum() == 0                                                 # z = 0: no spikes on either channel
+    assert np.all(cum[:, 1, :42] == np.floor(np.arange(1, m.T + 1)[:, None] * 0.5)) and cum[-1, 1, 42:].sum() == 0
+    assert np.all(cum[:, 2, 42:] == np.arange(1, m.T + 1)[:, None]) and cum[-1, 2, :42].sum() == 0   # saturated OFF channel
+
+
 def test_matched_record_names_the_deployed_models():
     """The record of the paper hashes the two deployed networks, and its protocol chain reaches the first one."""
     import hashlib
@@ -88,3 +111,19 @@ def test_matched_record_names_the_deployed_models():
         assert hashlib.sha256(p.read_bytes()).hexdigest() == R["deployed"][fam]["pickle_sha256"]
     assert P.MATCHED["base_protocol_hash"] == P.GRID_WINDOW_HASH and P.GRID_WINDOW["base_protocol_hash"] == P.GRID_BIGRU_HASH
     assert P.GRID_BIGRU["base_protocol_hash"] == P.DECODER_WEIGHTS_HASH and (PROTOCOL / "matched.json").exists()
+
+
+def test_spike_fed_record_names_the_deployed_model():
+    """The record of the paper since v1.2.0: the spike-fed family's seed 0 is the deployed model, the ruling that
+    adopted it names that file, and the port gate's fidelity was measured on it."""
+    import hashlib
+    from silences import RECORDS
+    from silences.evaluation import protocol as P
+    R = json.loads((RECORDS / "spike_fed" / "results.json").read_text())
+    D = json.loads((RECORDS / "spike_fed" / "research" / "decision.json").read_text())
+    F = json.loads((RECORDS / "spike_fed" / "fidelity.json").read_text())
+    assert R["protocol_hash"] == P.SPIKE_FED_HASH and P.SPIKE_FED["base_protocol_hash"] == P.GRID_WINDOW_HASH
+    assert R["anchors"]["c3_pass"] and R["anchors"]["c4"]["c4_disjoint"] and R["anchors"]["c5"]["passed"]
+    sha = hashlib.sha256(DEPLOYED["spk"].read_bytes()).hexdigest()
+    assert D["target"]["family"] == "spk40_op12" and D["target"]["sha256"] == sha
+    assert F["g1"]["g1_pass"] and F["g1"]["installed_sha256"] == sha and F["g2_agreement_pass"]

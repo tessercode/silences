@@ -1,5 +1,9 @@
 {
- "description": "Figures from the bench runs of the LIF segmenter board that no other record carries. Latency, bit-exactness and the chain results come from latency_*.json, transport_*.json and chain_*.json; flash and SRAM from footprint_lif.txt.",
+ "description": "Figures from the bench runs of the segmenter board that no other record carries. Latency, bit-exactness and the chain results come from latency_*.json, transport_*.json and chain_*.json; flash and SRAM from footprint_*.txt.",
+ "spk": {
+  "stack_bytes": 376,
+  "stack_note": "Worst-case stack of the classifier path of the spike-fed network as reported at deployment (2026-11-10): the deepest frame chain clf_run (24 B) + clf_run_marks (160 B) + clf_forward (192 B) in the -fstack-usage output of clf_hw (footprint_spk.txt). Within PICO_STACK_SIZE."
+ },
  "lif": {
   "stack_bytes": 264,
   "stack_note": "Worst-case stack of the classifier path as reported at deployment: main (104 B) plus clf_run_marks (160 B) in the -fstack-usage output of clf_hw. Within PICO_STACK_SIZE."

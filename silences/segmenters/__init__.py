@@ -1,7 +1,8 @@
 """Gap segmenters: each maps a transmission to per-gap log-posteriors over (intra-letter,
 inter-letter, inter-word) in Q16.16, the rows the beam decoder consumes.
 
-    lif     the feedforward LIF network (Section 8)
+    lif     the feedforward LIF network, fed spikes (SpikeFedLIF, the network of record) or fed
+            currents (LIF, the ladder's middle rung) (Section 8)
     mlp     its tanh MLP control, same inputs and layer sizes (Section 7)
     bigru   the bidirectional-GRU baseline (Section 6)
     oracle  confident posteriors from the true labels (the decoder's ceiling)

@@ -1,0 +1,40 @@
+# clf_hw.elf footprint (spk), regenerate with firmware/common/measure_footprint.sh spk
+# arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; pico-sdk 2.2.0
+   text	   data	    bss	    dec	    hex	filename
+ 280540	      0	  31796	 312336	  4c410	clf_hw.elf
+
+clf_hw.elf  :
+section                 size        addr
+.boot2                   256   268435456
+.text                  22724   268435712
+.rodata               250992   268458440
+.binary_info              40   268709432
+.ram_vector_table        192   536870912
+.uninitialized_data        0   536871104
+.data                    384   536871104
+.tdata                     0   536871488
+.tbss                      0   536871488
+.bss                   31604   536871488
+.heap                   2048   536903092
+.scratch_x                 0   537133056
+.scratch_y                 0   537137152
+.stack_dummy            4096   537137152
+.ARM.attributes           40           0
+.comment                  38           0
+.debug_info           290748           0
+.debug_abbrev          26527           0
+.debug_loclists        87041           0
+.debug_aranges          4456           0
+.debug_rnglists        14866           0
+.debug_line           117797           0
+.debug_str             25294           0
+.debug_frame            8500           0
+.debug_line_str         1026           0
+Total                 888669
+
+
+# largest stack frames (-fstack-usage)
+clf_forward.c:32:6:clf_forward	192	static
+clf_core.h:152:5:clf_run_marks	160	static
+clf_core.h:162:5:clf_run	24	static
+spk_led.c:9:6:board_identity_led	8	static

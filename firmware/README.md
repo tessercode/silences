@@ -9,12 +9,12 @@ encoder ──waveform──> front_end ──0x06──> segmenter ──0x03�
 |---|---|---|---|
 | Encoder | `encoder/` | `encoder_gpio` | Keys a sentence typed on its console as TEMPO completion spikes on two GPIO lines, rendered by the generator in `enc_rng.h` and the operators in `fists.h` |
 | Front end | `front_end/` | `fe_sentence_b1` | Captures the two lines, splits transmissions at 1.75 s of silence, sends each as a 0x06 frame with its time-unit estimate |
-| Segmenter | `segmenter_lif/`, `segmenter_mlp/`, `segmenter_bigru/` | `clf_hw` (LIF, MLP); `gap9_hw_3c_n5` (BiGRU) | Turns the marks of a 0x06 frame into per-gap log-posteriors (a 0x03 frame); one image per segmenter, the same board |
+| Segmenter | `segmenter_spk/`, `segmenter_lif/`, `segmenter_mlp/`, `segmenter_bigru/` | `clf_hw` (the LIF fed spikes, the image of record since v1.2.0; the LIF fed currents; the MLP); `gap9_hw_3c_n5` (BiGRU) | Turns the marks of a 0x06 frame into per-gap log-posteriors (a 0x03 frame); one image per segmenter, the same board |
 | Router | `router/` | `router_hw` | Pairs each 0x03 frame with its 0x06 frame's channels and forwards a 0x05 frame |
 | Decoder | `decoder/` | `decode_board` | Beam search with the character language model; decoded text over USB |
 
 `common/` holds what the boards share: the classifier core (`clf_core.h`) behind the LIF and MLP
-segmenters, the router core, the UART receive ring and PIO programs, the lookup tables. The frame formats
+segmenters (the spike-fed LIF adds its input encoder in its own `clf_forward.c`), the router core, the UART receive ring and PIO programs, the lookup tables. The frame formats
 are documented in `silences/frames.py`.
 
 ## The software reference and the goldens
@@ -31,10 +31,10 @@ the language-model table, test vectors) and checks them.
 |---|---|
 | `rng_kat.json` | the encoder's generator against the published xoshiro128** and SplitMix64 (`tests/kat/`) |
 | `fe_*.json` | the front end: waveform in, 0x06 frame out |
-| `segmenter_{lif,mlp}.json`, `segmenter_bigru_n{1,5}.json` | each segmenter's posteriors on the 97 (BiGRU) or 50 (LIF, MLP) test vectors |
+| `segmenter_{spk,lif,mlp}.json`, `segmenter_bigru_n{1,5}.json` | each segmenter's posteriors on the 97 (BiGRU) or 50 (spike-fed LIF, LIF, MLP) test vectors |
 | `frames_n{1,5}.json` | the BiGRU segmenter's 0x03 and the router's 0x05 frames |
 | `beam_n{1,5}.json`, `beam_cap_vectors.json` | the decoder's text, gap classes and final score, including vectors at the 255-gap cap |
-| `chain_bigru_n{1,5}.json`, `chain_{lif,mlp}.json` | the whole chain, sentence by sentence (what the hardware runs were compared with) |
+| `chain_bigru_n{1,5}.json`, `chain_{spk,lif,mlp}.json` | the whole chain, sentence by sentence (what the hardware runs were compared with; on one of `chain_spk.json`'s 63 sentences the beam dies at the default decoder weights, in software and on the board alike) |
 
 ## Running the checks
 
@@ -52,7 +52,7 @@ themselves were checked on the bench (`bench/`).
 
 ```bash
 export PICO_SDK_PATH=$PWD/third_party/pico-sdk
-cmake -S segmenter_lif -B segmenter_lif/build -DCMAKE_BUILD_TYPE=Release && make -C segmenter_lif/build clf_hw
+cmake -S segmenter_spk -B segmenter_spk/build -DCMAKE_BUILD_TYPE=Release && make -C segmenter_spk/build clf_hw
 ```
 
 The chain's decoder image was built with `-DB2_SILICON_HWM=ON` (receive-ring occupancy readable over

@@ -7,8 +7,12 @@ decoder_weights.json   the evaluation on English words and random letters, (T, g
 grid_bigru.json        the BiGRU recipe retrained on three final-phase corpora, scored on the record
                        and on four fresh evaluation seeds (registered 2026-11-06; chained)
 grid_window.json       the feedforward recipe trained on the BiGRU's two corpora (2026-11-06; chained)
-matched.json           the record of the paper since v1.1.0: every family at matched training data,
-                       the deployed seed-0 networks, their fixed-point fidelity (2026-11-06; chained)
+matched.json           the matched-data record (v1.1.0): every family at matched training data, the
+                       deployed seed-0 networks, their fixed-point fidelity (2026-11-06; chained)
+spike_fed.json         the spike-fed network (v1.2.0): the LIF recipe fed the window as spike trains,
+                       at T = 40 and T = 80, and the current-fed LIF at T = 80, on the matched op12
+                       corpora, scored beside the matched record's families (2026-11-08; chained to
+                       grid_window)
 
 Each protocol is identified by the first 16 hex digits of the sha256 of its JSON with sorted keys.
 The records carry that hash, so a result can never be mistaken for one made under another protocol.
@@ -32,10 +36,12 @@ DECODER_WEIGHTS, DECODER_WEIGHTS_HASH = _load("decoder_weights", "a7f80cf1ace963
 GRID_BIGRU, GRID_BIGRU_HASH = _load("grid_bigru", "cafa08a4f02b598e")
 GRID_WINDOW, GRID_WINDOW_HASH = _load("grid_window", "c041694763a2f430")
 MATCHED, MATCHED_HASH = _load("matched", "58c31eb368faa229")
+SPIKE_FED, SPIKE_FED_HASH = _load("spike_fed", "76de3765e2be3d62")
 assert DECODER_WEIGHTS["base_protocol_hash"] == RANDOM_LETTERS_HASH
 assert GRID_BIGRU["base_protocol_hash"] == DECODER_WEIGHTS_HASH
 assert GRID_WINDOW["base_protocol_hash"] == GRID_BIGRU_HASH
 assert MATCHED["base_protocol_hash"] == GRID_WINDOW_HASH
+assert SPIKE_FED["base_protocol_hash"] == GRID_WINDOW_HASH
 
 EVAL = RANDOM_LETTERS["eval"]                      # per_fist 250, evaluation seeds 999/777/555/321
 CALIB = RANDOM_LETTERS["calib"]                    # random-letter calibration: seed 4242, T grid, CER
@@ -56,6 +62,9 @@ BIGRU_SHARED = GRID_BIGRU["part_a"]["shared"]               # per_fist 1000, see
 MATCHED_FAMILIES = MATCHED["families"]                      # lif -> lif_op12, mlp -> mlp_op12, bigru -> bigru_fist
 MATCHED_SINGLES = MATCHED["singles"]
 DEPLOYED_SEED = MATCHED["deployed_seed"]                    # 0
+SPIKE_FED_ARMS = SPIKE_FED["arms"]                          # spk40, spk80 (fed spikes), lif80 (fed currents at T = 80)
+SPIKE_FED_CORPUS = SPIKE_FED["corpus_arm"]                  # op12: the matched operator corpora
+SPIKE_FED_SEEDS = SPIKE_FED["train_seeds"]                  # 0..9
 # Ruling (Luke, 2026-11-08): the fixed-point CER/WER bound of protocol/matched.json (fidelity.max_abs_pp) was
 # missed by one cell (0.20 pp, LIF random-letter WER at the default weights; CER within 0.04 pp) while the
 # decision criterion (fidelity.min_agreement) held at 99.993%. The record stands on the decision criterion

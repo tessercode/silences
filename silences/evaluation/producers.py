@@ -15,13 +15,19 @@ The matched-data record (v1.1.0) adds, through grid_producers():
     bigru_{rep,fist,shared}_seed42..49     the BiGRU recipe with its final phase on each corpus
                                            (fist is the baseline of record), and bigru_{arm}_ens5
     lif_op12_seed0_fx, mlp_op12_seed0_fx   the deployed networks in the firmware's Q16.16 arithmetic
+The spike-fed record (v1.2.0) adds, through spike_fed_producers():
+    spk40_op12_seed0..9             the LIF fed the window as spike trains, T = 40: the family of record since
+                                    v1.2.0; seed 0 is the deployed network (firmware/segmenter_spk)
+    spk80_op12_seed0..9             the same at T = 80
+    lif80_op12_seed0..9             the current-fed LIF at T = 80 (the equal-T control)
+    spk40_op12_seed0_fx             the deployed spike-fed network in the firmware's Q16.16 arithmetic
 """
 import json
 
 from .. import MODELS
 from ..fixedpoint.window_net import FixedWindowNet
 from ..segmenters import bigru, oracle
-from ..segmenters.lif import LIF
+from ..segmenters.lif import LIF, SpikeFedLIF
 from ..segmenters.mlp import MLP
 
 SEEDS = list(range(10))
@@ -34,9 +40,13 @@ def model_path(family, seed):
 
 
 COMMITTED = dict(lif=MODELS / "lif" / "deployed_5k.pkl", mlp=MODELS / "mlp" / "deployed_5k.pkl")   # the superseded rows
-DEPLOYED = dict(lif=MODELS / "lif" / "op12" / "seed0.pkl", mlp=MODELS / "mlp" / "op12" / "seed0.pkl")  # on the boards since v1.1.0
-_LOAD = dict(lif=LIF.load, mlp=MLP.load)
+DEPLOYED = dict(spk=MODELS / "spk40" / "op12" / "seed0.pkl",      # the chain's segmenter since v1.2.0 (2026-11-10)
+                lif=MODELS / "lif" / "op12" / "seed0.pkl",        # the chain's segmenter 2026-11-06 to 2026-11-10
+                mlp=MODELS / "mlp" / "op12" / "seed0.pkl")
+_LOAD = dict(lif=LIF.load, mlp=MLP.load, spk40=SpikeFedLIF.load, spk80=SpikeFedLIF.load, lif80=LIF.load)
 GRID_ARMS = ("op12", "gen")
+SPIKE_FED_FAMILIES = ("spk40", "spk80", "lif80")                   # protocol/spike_fed.json's arms, in its order
+SPIKE_FED_CORPUS = "op12"
 
 
 def grid_model_path(family, arm, seed):
@@ -77,6 +87,25 @@ def grid_producers(fixed_point=True):
         prods["lif_op12_seed0_fx"] = FixedWindowNet.from_lif(LIF.load(DEPLOYED["lif"])).lp3
         prods["mlp_op12_seed0_fx"] = FixedWindowNet.from_mlp(MLP.load(DEPLOYED["mlp"])).lp3
         sources["lif_op12_seed0_fx"], sources["mlp_op12_seed0_fx"] = DEPLOYED["lif"], DEPLOYED["mlp"]
+    return prods, sources
+
+
+def spike_fed_family_rows():
+    """{family: [rows]} for the spike-fed record's families."""
+    return {f"{fam}_{SPIKE_FED_CORPUS}": [f"{fam}_{SPIKE_FED_CORPUS}_seed{s}" for s in SEEDS] for fam in SPIKE_FED_FAMILIES}
+
+
+def spike_fed_producers(fixed_point=True):
+    """{row: producer}, {row: model file} for the rows the spike-fed record adds."""
+    prods, sources = {}, {}
+    for fam in SPIKE_FED_FAMILIES:
+        for s in SEEDS:
+            p = grid_model_path(fam, SPIKE_FED_CORPUS, s)
+            if p.exists():                                         # every step scores whichever models exist
+                prods[f"{fam}_{SPIKE_FED_CORPUS}_seed{s}"], sources[f"{fam}_{SPIKE_FED_CORPUS}_seed{s}"] = _LOAD[fam](p).lp3, p
+    if fixed_point:
+        prods["spk40_op12_seed0_fx"] = FixedWindowNet.from_spk(SpikeFedLIF.load(DEPLOYED["spk"])).lp3
+        sources["spk40_op12_seed0_fx"] = DEPLOYED["spk"]
     return prods, sources
 
 

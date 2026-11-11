@@ -1,0 +1,11 @@
+{
+ "experiment": "exp213_spike_input",
+ "escalation": "CLAUDE.md §7 stop-and-flag: on English at matched training data both spike-input arms (spk40_op12, spk80_op12) TIE the matched BiGRU seeds (bigru_fist) under the evidence rule; neither LEADS the tanh MLP control (mlp_op12).",
+ "flagged": "2026-11-09T07:46 (preview) and 2026-11-09T12:04 (confirmed), logs/daily_log.md",
+ "decided_by": "Luke Hindman",
+ "decided": "2026-11-09",
+ "decision": "Adopt spk40_op12 seed 0 as the paper's spiking segmenter and the RP2040 target. Silences presents the ladder MLP -> LIF fed currents -> LIF fed spikes; the current-fed lif_op12 family becomes the ladder's middle rung. lif_op12_seed0 stays deployed on the chain until the spk40_op12_seed0 port passes its gate (bit-exact Q16.16 host/M0+/Renode, chain and bench gates, latency); §9 of the paper is held until then.",
+ "wording": "2026-11-10: the spiking network is 'not separated from the recurrent baseline'; the encoder-saturation conjecture stays in notebooks/experiment213_notes.md; the pre-registered reading labels stay in the notes, the paper states the measurements.",
+ "target": {"family": "spk40_op12", "row": "spk40_op12_seed0", "pickle": "outputs/exp213_spike_input/models/spk40_op12_seed0.pkl", "sha256": "a6f1f8e77e9dc243060f96b2fc54b3d2c6ebcf0e03c54b21a4be2d3b761821c2"},
+ "plan": "papers/silences/notes/2026-11-09-m2-revision-plan.md"
+}

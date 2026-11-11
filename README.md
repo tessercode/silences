@@ -10,10 +10,12 @@ a character language model turns the posteriors into text. This repository holds
 
 - the synthetic operators and the corpus renderer (`silences/corpus.py`), the front end's
   time-unit estimate and the gap-window features;
-- the three segmenters: the feedforward LIF network, its tanh MLP control and the bidirectional-GRU
-  baseline, with every trained model the paper reports: the families of record, trained on 12,000
-  operator transmissions per seed (ten LIF seeds, ten MLP seeds, the eight-seed BiGRU pool with its
-  final phase on that corpus), the rest of the model-by-corpus grid of Table 4 (the same recipes on
+- the segmenters: the feedforward LIF network in its two forms (fed the gap window as spike trains,
+  the network of record since v1.2.0, and fed it as a constant current, the ladder's middle rung), its
+  tanh MLP control and the bidirectional-GRU baseline, with every trained model the paper reports: the
+  families of record, trained on 12,000 operator transmissions per seed (ten seeds of each LIF form,
+  ten MLP seeds, the eight-seed BiGRU pool with its final phase on that corpus), the spike-fed and the
+  current-fed network at T = 80, the rest of the model-by-corpus grid of Table 4 (the same recipes on
   the generic corpus and on the original 5,000-transmission corpus), and the deployed networks, which
   are the first seed of each feedforward family;
 - the decoder (integer beam search and the Q16.16 character language model), the per-model fit of the
@@ -51,17 +53,37 @@ emulated RP2040.
 | Figure 1 and its numbers, the 4.0 T_u collision | `paper/figures/fig_collision.pdf`, `records/collision.json` | `python -m silences.collision` |
 | Figure 2, style coverage | `paper/figures/fig_coverage.pdf` | `data/operator_style_fits.csv`, `fists.h` |
 | Table 2, the training recipes | `paper/training_table.tex` | `protocol/`, `silences/training/`, `records/training/` |
-| Table 3, English error rates of the deployed models | `paper/cerwer_table_eng.tex` | `records/matched/` |
+| Table 3, English error rates of the deployed models | `paper/cerwer_table_eng.tex` | `records/spike_fed/`, `records/matched/` |
 | Table 4, model by training corpus | `paper/grid_table.tex` | `records/matched/` (the grid block) |
-| Table 5, training-seed distributions | `paper/seed_table_dw.tex` | `records/matched/` |
-| Figure 7, error by operator | `paper/figures/fig_cerwer_eng.pdf` | `records/matched/` |
-| Figure 8, the decoder weights | `paper/figures/fig_decoder_weights.pdf` | `records/matched/fit.json` |
-| Random-letter results and the fixed-point fidelity quoted in the text | `paper/numbers.tex` | `records/matched/` |
+| Table 5, training-seed distributions | `paper/seed_table_dw.tex` | `records/spike_fed/`, `records/matched/` |
+| Table 6, the ladder from the control to the spiking network | `paper/ladder_table.tex` | `records/spike_fed/`, `records/matched/` |
+| Figure 7, error by operator | `paper/figures/fig_cerwer_eng.pdf` | `records/spike_fed/`, `records/matched/` |
+| Figure 8, the decoder weights | `paper/figures/fig_decoder_weights.pdf` | `records/spike_fed/fit.json`, `records/matched/fit.json` |
+| Section 8.6, what the spikes carry | `paper/numbers.tex` | `records/spike_fed/spikes_*.json` |
+| Random-letter results and the fixed-point fidelity quoted in the text | `paper/numbers.tex` | `records/spike_fed/`, `records/matched/` |
 | Section 9, the RP2040 chain and bench | `paper/numbers.tex` | `records/deployment/` (the 2026-11 runs) |
 
 Every number the prose cites is a macro in `paper/numbers.tex`; none is typed by hand. The records are
-produced by `make evaluate-matched` and `make evaluate` (see REPRODUCE.md), and `records/EQUIVALENCE.md`
-shows they equal, value for value, the records the paper was written from.
+produced by `make evaluate-spike-fed`, `make evaluate-matched` and `make evaluate` (see REPRODUCE.md), and
+`records/EQUIVALENCE.md` shows they equal, value for value, the records the paper was written from.
+
+## What changed in v1.2.0
+
+The paper's spiking network is now the LIF network fed the gap window as spike trains (review item M2:
+the current-fed form read its window as a constant current and so did not process spike timing). Each of
+the 42 standardised window values is split into an ON and an OFF channel driving a regular spike train
+whose rate is proportional to the value and saturates at three standard deviations; the 84 trains enter
+the first layer as spikes (`silences.segmenters.lif.SpikeFedLIF`). Trained with the LIF recipe unchanged
+on the matched op12 corpora, ten seeds at T = 40 (`models/spk40/op12/`) and ten at T = 80
+(`models/spk80/op12/`), beside the current-fed network at T = 80 (`models/lif80/op12/`), it is scored
+against the matched record in `records/spike_fed/` (`protocol/spike_fed.json`): on English text it is not
+separated from the baseline seeds, and the paper presents the ladder MLP, LIF fed currents, LIF fed spikes
+(Table 6). The spike-character diagnostic of both LIF forms (`records/spike_fed/spikes_*.json`,
+`silences.evaluation.spike_character`) measures what the spikes carry. Seed 0 of the spike-fed family is
+the deployed network: its Q16.16 reference (`FixedWindowNet.from_spk`, with the input encoder in integer
+arithmetic), firmware (`firmware/segmenter_spk/`), goldens (`segmenter_spk.json`, `chain_spk.json`) and
+bench runs of 2026-11-10 (`records/deployment/*_spk_20261110.json`) are added; the current-fed network's
+firmware and records stay under their names as the ladder's middle rung.
 
 ## What changed in v1.1.0
 
@@ -82,9 +104,9 @@ corpus, `models/*/deployed_5k.pkl`, `records/decoder_weights/`, `records/random_
 | Path | Contents |
 |---|---|
 | `silences/` | The package: `corpus`, `features`, `segmenters/`, `fixedpoint/`, `decoder/`, `evaluation/`, `training/`, `golden/`, plus the device-exact `encoder_ref`, `front_end`, `frames` and `pipeline` |
-| `protocol/` | The two pre-registered evaluation protocols, verbatim |
-| `models/` | Every trained model: `lif/`, `mlp/` (`seed*.pkl` on the original corpus; `op12/` the families of record, `gen/` the generic-corpus control; `deployed_5k.pkl` the first deployed networks), `bigru/` (`pool/` the original pool; `fist/` the baseline of record, `rep/`, `shared/`; each also as Q16.16 weights); the language-model table |
-| `records/` | The result records (`matched/` is the paper's; `decoder_weights/` and `random_letters/` the superseded ones), the training records, the deployment measurements |
+| `protocol/` | The pre-registered evaluation protocols, verbatim |
+| `models/` | Every trained model: `spk40/op12/` (the LIF fed spikes, the family of record; seed 0 deployed), `spk80/op12/` and `lif80/op12/` (both forms at T = 80), `lif/`, `mlp/` (`seed*.pkl` on the original corpus; `op12/` the matched families, `gen/` the generic-corpus control; `deployed_5k.pkl` the first deployed networks), `bigru/` (`pool/` the original pool; `fist/` the baseline of record, `rep/`, `shared/`; each also as Q16.16 weights); the language-model table |
+| `records/` | The result records (`spike_fed/` is the paper's, against `matched/`; `decoder_weights/` and `random_letters/` the superseded ones), the training records, the deployment measurements |
 | `paper/` | `make_figures.py` and what it writes |
 | `firmware/` | The five boards' firmware, their host and emulator tests, and the goldens |
 | `bench/` | The scripts that ran the hardware measurements |

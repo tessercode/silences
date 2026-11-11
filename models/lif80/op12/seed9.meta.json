@@ -1,0 +1,70 @@
+{
+  "family": "lif80",
+  "seed": 9,
+  "corpus_seed": 210451,
+  "protocol": {
+    "hidden": [
+      256,
+      128
+    ],
+    "beta": 0.95,
+    "threshold": 1.0,
+    "T": 80,
+    "epochs": 60,
+    "lr": 0.001,
+    "batch": 512,
+    "wd": 1e-05,
+    "val": 0.1,
+    "model": "SNNModel"
+  },
+  "base_protocol_hash": "f3b85d0c9db49b96",
+  "exp211_protocol_hash": "c041694763a2f430",
+  "feature_sha256": "d209e93500c96cfb1c2b2316eebf4c3dafb0af7f8a0c366e2fc623e2813060f9",
+  "gaps": 521538,
+  "pickle_sha256": "37d33ccefc871c7c5d40ac0e3235d7da575b58ca6ed461bc912df695c7a5d50a",
+  "c2_forward": {
+    "batch": 2048,
+    "max_abs_logit_diff": 1.2193175506641296,
+    "argmax_agreement": 0.99755859375,
+    "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "wall_s": 6267.3,
+  "finished": "2026-11-09T11:53:35-07:00",
+  "git": {
+    "commit": "6ddcfd4d99aa23a555497930e0b51c1c21a75b0a",
+    "branch": "main",
+    "dirty_paths": [
+      "logs/daily_log.md",
+      "papers/silences/TODO.md",
+      "papers/silences/figures/fig_cerwer_eng.pdf",
+      "papers/silences/figures/fig_collision.pdf",
+      "papers/silences/figures/fig_coverage.pdf",
+      "papers/silences/figures/fig_decoder_weights.pdf",
+      "papers/silences/main.pdf",
+      "papers/silences/scripts/make_figures.py",
+      "papers/silences/values_ledger.md",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp213.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp213_spikein.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp213_spikes.py",
+      "notebooks/experiment213_notes.md",
+      "outputs/exp213_spike_character/",
+      "outputs/exp213_spike_input/",
+      "papers/silences/notes/2026-11-09-m2-revision-plan.md"
+    ],
+    "relevant_dirty_paths": [
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp213.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp213_spikein.py",
+      "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp213_spikes.py"
+    ],
+    "clean_for_record": false
+  },
+  "env": {
+    "python": "3.12.3",
+    "torch": "2.11.0+cu128",
+    "numpy": "2.4.4",
+    "snntorch": "0.9.4",
+    "hostname": "daystrom",
+    "omp_num_threads": "6"
+  },
+  "corpus": "op12"
+}

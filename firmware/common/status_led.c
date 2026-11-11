@@ -34,6 +34,7 @@
 #define COL_RED      RGB(0xFF, 0x00, 0x00)   /* RESERVED: fault only; never an identity */
 #define COL_ORANGE   RGB(0xFF, 0x45, 0x00)   /* spiking_gap9_lif identity (distinct from yellow/red) */
 #define COL_WHITE    RGB(0xFF, 0xFF, 0xFF)   /* spiking_gap9_mlp identity (distinct, desaturated) */
+#define COL_VIOLET   RGB(0x50, 0x00, 0xFF)   /* spiking_gap9_spk identity (between blue and magenta) */
 #define COL_OFF      RGB(0x00, 0x00, 0x00)
 
 /* IDENTITY COLOUR SCHEME — single source of truth; change colours here in one place. */
@@ -45,6 +46,7 @@ static const uint32_t IDENTITY_COLOR[MODULE__COUNT] = {
     [MODULE_DECODE]   = COL_YELLOW,
     [MODULE_GAP9_LIF] = COL_ORANGE,
     [MODULE_GAP9_MLP] = COL_WHITE,
+    [MODULE_GAP9_SPK] = COL_VIOLET,
 };
 
 /* ---- module state ---- */

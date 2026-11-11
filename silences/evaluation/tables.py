@@ -10,6 +10,9 @@ run once. Tables are cached under outputs/tables/ and are regenerated, never shi
 The matched-data record (silences.evaluation.matched) uses a second set, outputs/tables_matched/: the
 same ten corpora plus four fresh evaluation corpora per text (seeds 1106, 2212, 3318, 4424), with every
 row of the grid added (producers.grid_producers). Rows already in outputs/tables/ are copied, not recomputed.
+The spike-fed record (silences.evaluation.spike_fed) uses a third, outputs/tables_spike_fed/: the matched
+set's eighteen corpora with the spike-fed rows added (producers.spike_fed_producers); the matched rows are
+copied from outputs/tables_matched/, which must exist.
 """
 import os
 
@@ -26,10 +29,13 @@ from multiprocessing import get_context   # noqa: E402
 from .. import OUTPUTS, ROOT   # noqa: E402
 from ..corpus import corpus   # noqa: E402
 from . import protocol as P   # noqa: E402
-from .producers import all_producers, grid_producers   # noqa: E402
+from .producers import all_producers, grid_producers, spike_fed_producers   # noqa: E402
 
 TABLES = OUTPUTS / "tables"
 TABLES_MATCHED = OUTPUTS / "tables_matched"
+TABLES_SPIKE_FED = OUTPUTS / "tables_spike_fed"
+_DIRS = {False: TABLES, True: TABLES_MATCHED, "spike_fed": TABLES_SPIKE_FED}
+_HASHES = {False: P.DECODER_WEIGHTS_HASH, True: P.MATCHED_HASH, "spike_fed": P.SPIKE_FED_HASH}
 WORKERS = int(os.environ.get("SILENCES_WORKERS", "20"))
 
 
@@ -46,13 +52,16 @@ def corpora(matched=False):
 
 
 def table_path(text, seed, matched=False):
-    return (TABLES_MATCHED if matched else TABLES) / f"{text}_{seed}.pkl"
+    """matched is False (the ten corpora), True (the matched set) or "spike_fed" (the spike-fed set)."""
+    return _DIRS[matched] / f"{text}_{seed}.pkl"
 
 
 _MATCHED = False
 
 
 def _producers(matched):
+    if matched == "spike_fed":
+        return spike_fed_producers()
     prods, sources = all_producers()
     if matched:
         g, gs = grid_producers()
@@ -69,16 +78,19 @@ def _job(args):
 def build(force=False, matched=False):
     global _MATCHED
     _MATCHED = matched
-    d = TABLES_MATCHED if matched else TABLES
+    d = _DIRS[matched]
     d.mkdir(parents=True, exist_ok=True)
-    todo = [(t, s) for t, _, s in corpora(matched) if force or not table_path(t, s, matched).exists()]
+    todo = [(t, s) for t, _, s in corpora(bool(matched)) if force or not table_path(t, s, matched).exists()]
     if not todo:
         return
     rows, sources = _producers(matched)
-    jobs, reused = [], {}
+    jobs, reused, prev_sources = [], {}, {}
     for t, s in todo:
         have = {}
-        if matched and table_path(t, s).exists():            # the record rows on the ten corpora: copy, do not recompute
+        if matched == "spike_fed":                            # the matched set's rows: copied, never recomputed
+            prev = load(t, s, matched=True)
+            have, prev_sources[(t, s)] = prev["rows"], prev["sources"]
+        elif matched and table_path(t, s).exists():            # the record rows on the ten corpora: copy, do not recompute
             prev = load(t, s)
             have = prev["rows"]
         reused[(t, s)] = have
@@ -95,13 +107,13 @@ def build(force=False, matched=False):
         truth = [" ".join(tx["words"]) for tx in txs]
         ch = [[int(c) for c in tx["ch"]] for tx in txs]
         if reused[(t, s)]:
-            prev = load(t, s)
+            prev = load(t, s, matched=True if matched == "spike_fed" else False)
             assert prev["truth"] == truth and prev["ch"] == ch, f"{t}_{s}: the corpus does not reproduce the cached table's"
-        doc = dict(text=t, seed=s, per_fist=P.EVAL["per_fist"],
-                   protocol_hash=P.MATCHED_HASH if matched else P.DECODER_WEIGHTS_HASH,
-                   truth=truth, fist=[tx["fist"] for tx in txs], ch=ch,
-                   rows={r: (reused[(t, s)][r] if r in reused[(t, s)] else got[(t, s, r)]) for r in rows},
-                   sources={r: (str(p.relative_to(ROOT)) if p else None) for r, p in sources.items()})
+        all_rows = {**reused[(t, s)], **{r: got[(t, s, r)] for r in rows}} if matched == "spike_fed" else \
+            {r: (reused[(t, s)][r] if r in reused[(t, s)] else got[(t, s, r)]) for r in rows}
+        doc = dict(text=t, seed=s, per_fist=P.EVAL["per_fist"], protocol_hash=_HASHES[matched],
+                   truth=truth, fist=[tx["fist"] for tx in txs], ch=ch, rows=all_rows,
+                   sources={**prev_sources.get((t, s), {}), **{r: (str(p.relative_to(ROOT)) if p else None) for r, p in sources.items()}})
         if matched:
             doc["ticks"] = [np.asarray(tx["ticks"], dtype=np.int64) for tx in txs]
         with open(table_path(t, s, matched), "wb") as fh:
@@ -111,11 +123,11 @@ def build(force=False, matched=False):
 def load(text, seed, matched=False):
     with open(table_path(text, seed, matched), "rb") as fh:
         doc = pickle.load(fh)
-    assert doc["protocol_hash"] == (P.MATCHED_HASH if matched else P.DECODER_WEIGHTS_HASH)
+    assert doc["protocol_hash"] == _HASHES[matched]
     return doc
 
 
 if __name__ == "__main__":
-    matched = "--matched" in sys.argv[1:]
+    matched = "spike_fed" if "--spike-fed" in sys.argv[1:] else "--matched" in sys.argv[1:]
     build(force="--force" in sys.argv[1:], matched=matched)
-    print(f"tables -> {TABLES_MATCHED if matched else TABLES}")
+    print(f"tables -> {_DIRS[matched]}")

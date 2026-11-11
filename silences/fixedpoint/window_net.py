@@ -1,11 +1,14 @@
 """Q16.16 reference for the LIF and MLP segmenters: the specification their RP2040 firmware
-(firmware/segmenter_lif, firmware/segmenter_mlp) reproduces bit for bit.
+(firmware/segmenter_spk, firmware/segmenter_lif, firmware/segmenter_mlp) reproduces bit for bit.
 
 Weights, the feature mean and 1/sd are rounded to Q16.16 once, from the float model. At inference
 every step is integer: log(interval / time unit) through the log table, standardisation as a
 rounded multiply, matrix products accumulated in 64 bits, tanh from its table (MLP) or LIF
 membranes with a Q16.16 decay and threshold (LIF), then the same exp/divide/log head as the
-baseline's board.
+baseline's board. The spike-fed network ('spk') adds the input encoder: the clipped standardised
+value zc = clip(+-Z_q, 0, scale_q) stays in Q16.16 and the train's cumulative count by step t is the
+exact integer floor (t * zc) // scale_q, so the only float-vs-fixed difference at the input is the
+Q16.16 rounding of Z itself.
 """
 import numpy as np
 from numpy.lib.stride_tricks import sliding_window_view
@@ -18,13 +21,14 @@ PAD_LOGX_Q = q16.fxlog(q16.to_q(12.0))      # the window's edge padding, through
 
 
 class FixedWindowNet:
-    """kind is 'mlp' or 'lif'."""
+    """kind is 'mlp', 'lif' (fed currents) or 'spk' (fed spikes)."""
 
-    def __init__(self, kind, W, layers_q, mu_q, insd_q, beta_q=None, theta_q=None, T=None):
+    def __init__(self, kind, W, layers_q, mu_q, insd_q, beta_q=None, theta_q=None, T=None, scale_q=None):
         self.kind, self.W = kind, W
         self.layers_q = layers_q            # [(Wt int64[in, out], b int64[out]), ...]
         self.mu_q, self.insd_q = mu_q, insd_q
         self.beta_q, self.theta_q, self.T = beta_q, theta_q, T
+        self.scale_q = scale_q              # 'spk' only: the encoder's saturation, in Q16.16 standard deviations
 
     @staticmethod
     def _q(a):
@@ -38,6 +42,20 @@ class FixedWindowNet:
     def from_lif(cls, m):
         return cls("lif", m.W, [(cls._q(Wt), cls._q(b)) for Wt, b in m.fcs], cls._q(m.mu), cls._q(1.0 / m.sd),
                    beta_q=q16.to_q(m.beta), theta_q=q16.to_q(m.threshold), T=m.T)
+
+    @classmethod
+    def from_spk(cls, m):
+        return cls("spk", m.W, [(cls._q(Wt), cls._q(b)) for Wt, b in m.fcs], cls._q(m.mu), cls._q(1.0 / m.sd),
+                   beta_q=q16.to_q(m.beta), theta_q=q16.to_q(m.threshold), T=m.T, scale_q=q16.to_q(m.scale))
+
+    def encode_q(self, feat_q):
+        """(G, 42) standardised Q16.16 -> (T, G, 84) regular ON/OFF spike trains in {0, 1} (SpikeFedLIF.encode)."""
+        z = np.asarray(feat_q, dtype=np.int64)
+        zc = np.concatenate([np.clip(z, 0, self.scale_q), np.clip(-z, 0, self.scale_q)], axis=1)
+        t = np.arange(1, self.T + 1, dtype=np.int64)[:, None, None]
+        cum = (t * zc[None]) // self.scale_q
+        prev = np.concatenate([np.zeros((1,) + zc.shape, np.int64), cum[:-1]], axis=0)
+        return cum - prev
 
     def features_q(self, ticks, ch, tu_us):
         ticks, ch, W = np.asarray(ticks, np.int64), np.asarray(ch, np.int64), self.W
@@ -63,13 +81,19 @@ class FixedWindowNet:
                     z = q16.TANH.vec(z)
             return z
         G = len(feat_q)
-        I0 = self._matvec(feat_q, *self.layers_q[0], shift=True)        # the constant input current
+        if self.kind == "spk":
+            S_in = self.encode_q(feat_q)                                    # the input spike trains, (T, G, 84)
+        else:
+            I0 = self._matvec(feat_q, *self.layers_q[0], shift=True)        # the constant input current
         mem = [np.zeros((G, Wt.shape[1]), np.int64) for Wt, _ in self.layers_q]
         out = np.zeros((G, 3), np.int64)
-        for _ in range(self.T):
+        for t in range(self.T):
             cur = None
             for i, (Wt, b) in enumerate(self.layers_q):
-                I = I0 if i == 0 else self._matvec(cur, Wt, b, shift=False)
+                if i == 0:
+                    I = self._matvec(S_in[t], Wt, b, shift=False) if self.kind == "spk" else I0
+                else:
+                    I = self._matvec(cur, Wt, b, shift=False)
                 m = fxmul_round(self.beta_q, mem[i]) + I
                 if i < len(self.layers_q) - 1:
                     spk = (m >= self.theta_q).astype(np.int64)

@@ -12,7 +12,7 @@ step() { echo "== $*"; }
 
 step "encoder: render vs the encoder reference"; bash encoder/host/build_and_run.sh | tail -1
 step "front end: capture and 0x06 frames";        bash front_end/host/build_and_run.sh | tail -1
-for m in lif mlp; do
+for m in spk lif mlp; do
     step "segmenter_$m: Q16.16 classifier core"
     (cd segmenter_$m && $CC -I. -I../common ../common/clf_host_main.c clf_forward.c -o "$B/clf_$m" -lm)
     "$B/clf_$m" | "$PY" common/clf_compare.py golden/segmenter_$m.json

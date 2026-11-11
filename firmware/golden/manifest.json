@@ -8,6 +8,7 @@
   "chain_bigru_n5.json": "1a5dbcc101c2a9386a8c9ae99dad9d37549235808a9c6151e6a8498f9c61e81f",
   "chain_lif.json": "187e561d72805bbe6198a161a37ff099a2b26259aec753d88a1c32a36e5f937e",
   "chain_mlp.json": "5763102d295e1474de6caf85cd3ec5360a3c70d5494941cff6de3ad459b0ad20",
+  "chain_spk.json": "92aade8deb643ca904eb813bd63cfc4f5842183a5c28e68a3c134850fa2f5c02",
   "fe_cootie_corrected.json": "b36af44cf4415b2aa76a0f0b2cfd79759af49e693f1ec9f67e14f05ca9d3a299",
   "fe_cootie_high_jitter.json": "705f24ef3061374cf99074828ca91630bd8ee86f68b1482186f149e862c3a365",
   "fe_fast_normalr.json": "592d225f960cdc05a65ebdf85b3c04ec4829f585f788dd86917dde12e5215c8c",
@@ -20,6 +21,7 @@
   "segmenter_bigru_n1.json": "aea507ca450506cd6dc3b326947d7a37e04a1fad05a7fa2d8f890306627cb070",
   "segmenter_bigru_n5.json": "55fdeae43b830147ea686b3cbd39678580b6fa664cbf5ba1a080154c900e8df3",
   "segmenter_lif.json": "f11cb4706b430084a099d1ffb4a05c620788532fb931fc93e6d715a7c2c1779e",
-  "segmenter_mlp.json": "fa6ed1ac5bb55004b2603e3a461ed8629ea2a68da34b2b20d53fd15025d88991"
+  "segmenter_mlp.json": "fa6ed1ac5bb55004b2603e3a461ed8629ea2a68da34b2b20d53fd15025d88991",
+  "segmenter_spk.json": "ed131ab8ceb11e281d8dca2f04ea0371bf103e546d2dc2013422a9646ed171db"
  }
 }

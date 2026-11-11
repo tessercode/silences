@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 PROVENANCE = {"created", "finished", "started", "wall_s", "timing_s", "git", "env", "record_git", "results_git",
-              "source", "sources", "results_sha256", "calibration_sha256", "files", "checked"}
+              "source", "sources", "results_sha256", "calibration_sha256", "files", "checked", "seconds"}
 
 
 def walk(a, b, path, out):

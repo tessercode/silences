@@ -23,15 +23,30 @@ make paper
 
 `paper/make_figures.py` reads the records, checks each against its manifest's hashes and protocol
 hash, and writes `paper/numbers.tex` (the numbers the prose and the proposal cite, listed in
-`paper/consumed_macros.txt`), the five tables and the four data figures. The PDFs carry no creation date, so the whole `paper/` directory must come out
+`paper/consumed_macros.txt`), the six tables and the four data figures. The PDFs carry no creation date, so the whole `paper/` directory must come out
 byte-identical; `make paper` ends with `git diff --exit-code` on it.
 
 ## 2. The records from the shipped models
 
 ```bash
-make evaluate-matched     # the record of the paper, about 40 minutes
+make evaluate-matched     # the matched-data record, about 40 minutes
+make evaluate-spike-fed   # the record of the paper: the spike-fed families against it, about 25 minutes
+make spike-character      # what the spikes carry: both LIF forms, about 40 minutes
 make evaluate             # the superseded 5,000-transmission records, about 10 minutes
 ```
+
+`make evaluate-spike-fed` runs `silences.evaluation.spike_fed`: the thirty spike-fed and T = 80 models
+(and the deployed spike-fed network in Q16.16) on the matched record's eighteen corpora, whose other
+rows are copied from `outputs/tables_matched/` (so `make evaluate-matched` runs first); the anchors
+(the harness reproduces the matched record's `lif_op12_seed0` row exactly; no training transmission
+is in any evaluation corpus), the (T, γ) fits, the evaluation at the fitted and the default weights,
+criterion 1A on the spike-fed and current-fed families (anchored on the matched record's values), the
+deployed network's fixed-point fidelity over every gap, and the statistics of
+`records/spike_fed/results.json`. `make spike-character` then runs the timing-destroying controls
+and the spike statistics of `records/spike_fed/spikes_{spk40,lif}.json`; its `torch` step
+(the training-side forward against the inference forward) needs torch and is run explicitly:
+`python -m silences.evaluation.spike_character spk40 torch`. `check_train.json` (the feature-matrix
+hashes and the forward check of every model) is likewise `python -m silences.evaluation.spike_fed check-train`.
 
 `make evaluate-matched` runs `silences.evaluation.matched`: every segmenter of the grid (the original
 rows, the three BiGRU arms with their ensembles, the op12 and gen feedforward families, the deployed
@@ -60,7 +75,9 @@ repository's vocabulary; the glossary in `records/README.md` maps their terms to
 ## 3. The models (minutes to hours)
 
 ```bash
-make train-lif SEED=0 CORPUS=op12   # the family of record: about 70 minutes per seed, CPU
+make train-spk40 SEED=0 CORPUS=op12 # the network of record, the LIF fed spikes: about 3 hours per seed, CPU
+make train-spk80 SEED=0 CORPUS=op12 # the same at T = 80, about 6 hours; train-lif80 the current-fed form at T = 80
+make train-lif SEED=0 CORPUS=op12   # the current-fed LIF of the matched record: about 70 minutes per seed, CPU
 make train-mlp SEED=0 CORPUS=op12   # about 2 minutes per seed, CPU
 make train-lif SEED=0 CORPUS=gen    # the generic-corpus control (the BiGRU recipe's final-phase corpus)
 make train-lif SEED=0               # the original 5,000-transmission corpus, about 18 minutes per seed
@@ -73,8 +90,8 @@ LIF and MLP training is deterministic on the CPU: the retrained pickle (in `outp
 byte-identical to `models/<family>/seed<N>.pkl` (or `models/<family>/<corpus>/seed<N>.pkl`), and the
 command says whether it is. Seeds run 0 to 9. The op12 and gen corpora are generated per seed and
 their feature matrices are checked against the hashes in `records/training/window_nets_grid.json`
-before training starts. The deployed networks are `models/{lif,mlp}/op12/seed0.pkl`, so
-`CORPUS=op12 SEED=0` regenerates what runs on the boards.
+before training starts. The deployed networks are `models/{spk40,lif,mlp}/op12/seed0.pkl`, so
+`CORPUS=op12 SEED=0` regenerates what runs on the boards (the spike-fed network since 2026-11-10).
 
 The BiGRU pool trains on the GPU in bfloat16 with CUDA graphs. On the GPU and software it was trained
 with (an RTX 5080, torch 2.11.0 with CUDA 12.8) every retrained weight equals the shipped
@@ -111,4 +128,6 @@ goldens. The emulator gates need the Pico SDK 2.2.0, arm-none-eabi-gcc (the imag
 13.2.1), Renode 1.16.1 and Renode_RP2040; see `firmware/README.md`.
 
 The hardware measurements in Section 9 (the five-board chain, per-gap latency, transport, footprint)
-were made on the bench with `bench/`; see `bench/README.md`. Their results are in `records/deployment/`.
+were made on the bench with `bench/`; see `bench/README.md`. Their results are in `records/deployment/`
+(the spike-fed network's runs of 2026-11-10 are the paper's; the current-fed network's of 2026-11-06/08
+stay as the ladder's middle rung).

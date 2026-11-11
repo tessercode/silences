@@ -4,10 +4,14 @@
 #   make paper          tier 1: the records -> every table, figure and number in the paper (seconds)
 #   make check          fast checks: unit tests, every firmware golden, every generated header
 #   make evaluate       tier 2: the shipped models -> the superseded 5,000-transmission records, then compared (about 10 min)
-#   make evaluate-matched  tier 2: every model of the grid -> the record of the paper (records/matched/), then compared (about 40 min)
-#   make train-lif SEED=0 / train-mlp SEED=0 [CORPUS=op12|gen]
+#   make evaluate-matched  tier 2: every model of the grid -> the matched-data record (records/matched/), then compared (about 40 min)
+#   make evaluate-spike-fed  tier 2: the spike-fed families -> the record of the paper (records/spike_fed/), then compared (about 25 min; needs the matched tables)
+#   make spike-character   the spike statistics and timing-destroying controls of both LIF forms (records/spike_fed/spikes_*.json, about 40 min)
+#   make train-spk40 SEED=0 CORPUS=op12
+#                       tier 3: retrain one seed of the network of record (the LIF fed spikes) and check it is bit-identical
+#   make train-lif SEED=0 / train-mlp SEED=0 [CORPUS=op12|gen]; train-spk80 / train-lif80 SEED=0 CORPUS=op12
 #                       tier 3: retrain one seed and check it is bit-identical to the shipped model
-#                       (CORPUS=op12 is the family of record; without CORPUS, the original 5,000-transmission corpus)
+#                       (CORPUS=op12 is the matched corpus; without CORPUS, the original 5,000-transmission corpus)
 #   make train-bigru [ARM=rep|fist|shared]
 #                       tier 3: retrain the BiGRU pool, or one of its retrained arms (CUDA GPU, about 5 min each)
 #   make lm             rebuild the character language model and check it is byte-identical
@@ -18,7 +22,7 @@ PYTHON ?= .venv/bin/python
 SEED ?= 0
 export PYTHONPATH := $(CURDIR)
 
-.PHONY: setup paper check evaluate evaluate-matched train-lif train-mlp train-bigru lm collision firmware-host firmware-renode
+.PHONY: setup paper check evaluate evaluate-matched evaluate-spike-fed spike-character train-lif train-mlp train-spk40 train-spk80 train-lif80 train-bigru lm collision firmware-host firmware-renode
 CORPUS ?=
 ARM ?=
 
@@ -48,7 +52,16 @@ evaluate-matched:
 	$(PYTHON) -m silences.evaluation.matched
 	$(PYTHON) tools/compare_records.py --git records/matched
 
-train-lif train-mlp:
+evaluate-spike-fed:
+	$(PYTHON) -m silences.evaluation.spike_fed
+	$(PYTHON) tools/compare_records.py --git records/spike_fed
+
+spike-character:
+	$(PYTHON) -m silences.evaluation.spike_character spk40
+	$(PYTHON) -m silences.evaluation.spike_character lif
+	$(PYTHON) tools/compare_records.py --git records/spike_fed
+
+train-lif train-mlp train-spk40 train-spk80 train-lif80:
 	$(PYTHON) -m silences.training.window_nets $(@:train-%=%) $(SEED) $(if $(CORPUS),--corpus $(CORPUS),)
 
 train-bigru:

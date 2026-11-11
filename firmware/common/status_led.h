@@ -20,6 +20,7 @@ typedef enum {
     MODULE_DECODE,        /* future */
     MODULE_GAP9_LIF,      /* spiking_gap9_lif drop-in (LIF segmenter) — distinct from MODULE_GAP9 */
     MODULE_GAP9_MLP,      /* spiking_gap9_mlp drop-in (tanh MLP segmenter) */
+    MODULE_GAP9_SPK,      /* spiking_gap9_spk drop-in (spike-fed LIF segmenter, Exp 213) */
     MODULE__COUNT
 } module_id_t;
 

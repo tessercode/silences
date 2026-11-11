@@ -20,7 +20,7 @@ from ..decoder.beam import decode_tx
 from ..fixedpoint.window_net import FixedWindowNet
 from ..pipeline import compose
 from ..segmenters import bigru
-from ..segmenters.lif import LIF
+from ..segmenters.lif import LIF, SpikeFedLIF
 from ..segmenters.mlp import MLP
 from ..evaluation.producers import DEPLOYED
 
@@ -153,7 +153,16 @@ def check_chain_bigru():
 
 
 def _window_nets():
-    return dict(lif=FixedWindowNet.from_lif(LIF.load(DEPLOYED["lif"])), mlp=FixedWindowNet.from_mlp(MLP.load(DEPLOYED["mlp"])))
+    return dict(spk=FixedWindowNet.from_spk(SpikeFedLIF.load(DEPLOYED["spk"])),
+                lif=FixedWindowNet.from_lif(LIF.load(DEPLOYED["lif"])), mlp=FixedWindowNet.from_mlp(MLP.load(DEPLOYED["mlp"])))
+
+
+def _window_decode(g):
+    """The golden's expected decode, or the beam's death triple: the spike-fed chain golden carries one sentence
+    (vid 58) on which the software beam dies at the default decoder weights, and the board dies the same way."""
+    if g["expected_decode"] is None:
+        return (None, None, None)
+    return (g["expected_decode"], g["expected_seg"], g["expected_score"])
 
 
 def check_segmenter_window():
@@ -170,7 +179,7 @@ def check_chain_window():
     for name, net in _window_nets().items():
         for g in _load(f"chain_{name}.json")["vectors"]:
             c = compose(g["text"], int(g["fist"]), int(g["seed"]), net.lp3_ticks, seq=int(g["vid"]))
-            ok += _chain_matches(g, c, lambda g: (g["expected_decode"], g["expected_seg"], g["expected_score"]))
+            ok += _chain_matches(g, c, _window_decode)
             n += 1
     return ok, n
 
