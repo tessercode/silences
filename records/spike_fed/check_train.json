@@ -1,0 +1,238 @@
+{
+ "c1": {
+  "0": {
+   "corpus_seed": 210442,
+   "feature_sha256": "1d32e612e046ab65f356e4cbde343d55723e093faa57fa2b6a9e28d9f2a84654",
+   "equals_models": true
+  },
+  "1": {
+   "corpus_seed": 210443,
+   "feature_sha256": "6bbd15b0b080bcdbd3dd7c3fb1e6d238a579655556e72442be92d84fc400cafb",
+   "equals_models": true
+  },
+  "2": {
+   "corpus_seed": 210444,
+   "feature_sha256": "43edd4532ef2b6579c33e972f407519f78d65ab057d60cb5cfcd8da27357dc59",
+   "equals_models": true
+  },
+  "3": {
+   "corpus_seed": 210445,
+   "feature_sha256": "90a8a4a812f4b26a761bbb4aaa488a6f8c07b25188e1be22a8bb4670d1131d3b",
+   "equals_models": true
+  },
+  "4": {
+   "corpus_seed": 210446,
+   "feature_sha256": "1d10b1f7293e3d2624ebde717ed7e2307c230f94d1d0b543ceb667a4bdcebae0",
+   "equals_models": true
+  },
+  "5": {
+   "corpus_seed": 210447,
+   "feature_sha256": "8ec512dc2605ba0fdd0e03b92caaad27d4b45aca3add9474e399dd31739cf617",
+   "equals_models": true
+  },
+  "6": {
+   "corpus_seed": 210448,
+   "feature_sha256": "0cb8949bc737fcfd18cfe3b21534040c02e4973dac50712cdce7876cf062a399",
+   "equals_models": true
+  },
+  "7": {
+   "corpus_seed": 210449,
+   "feature_sha256": "94217530d58b32f18151dc433f218c1a8cdd244dba1bebebc63abbf65937af50",
+   "equals_models": true
+  },
+  "8": {
+   "corpus_seed": 210450,
+   "feature_sha256": "bc5cd26bf9c0c2ca0eb6f83ad253a8458ae15b4a4c162a0961c7ee1a8e39130e",
+   "equals_models": true
+  },
+  "9": {
+   "corpus_seed": 210451,
+   "feature_sha256": "d209e93500c96cfb1c2b2316eebf4c3dafb0af7f8a0c366e2fc623e2813060f9",
+   "equals_models": true
+  }
+ },
+ "c2": {
+  "spk40_op12_seed0": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.627805271955502,
+   "argmax_agreement": 0.99755859375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed0": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.4233553297838952,
+   "argmax_agreement": 0.99853515625,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed0": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.4019971094336938,
+   "argmax_agreement": 0.99609375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk40_op12_seed1": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.6853582465921697,
+   "argmax_agreement": 0.99609375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed1": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.398015777473937,
+   "argmax_agreement": 0.9970703125,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed1": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.1441979402691729,
+   "argmax_agreement": 0.99951171875,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk40_op12_seed2": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.693377956939628,
+   "argmax_agreement": 0.99755859375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed2": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.337158250688482,
+   "argmax_agreement": 0.9970703125,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed2": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.7607022736208897,
+   "argmax_agreement": 0.99365234375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk40_op12_seed3": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.916282273897604,
+   "argmax_agreement": 0.99609375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed3": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.6646623506507936,
+   "argmax_agreement": 0.998046875,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed3": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.2561579076983378,
+   "argmax_agreement": 0.9970703125,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk40_op12_seed4": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.469547259786591,
+   "argmax_agreement": 0.9970703125,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed4": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.030447157815061,
+   "argmax_agreement": 0.998046875,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed4": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.360825739691247,
+   "argmax_agreement": 0.9970703125,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk40_op12_seed5": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.519407550375675,
+   "argmax_agreement": 0.9990234375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed5": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.6854735596877894,
+   "argmax_agreement": 0.99951171875,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed5": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.2545182415363527,
+   "argmax_agreement": 0.998046875,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk40_op12_seed6": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.56081214226883,
+   "argmax_agreement": 0.99853515625,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed6": {
+   "batch": 2048,
+   "max_abs_logit_diff": 3.0886502402684,
+   "argmax_agreement": 0.99853515625,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed6": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.2760111873700204,
+   "argmax_agreement": 0.99755859375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk40_op12_seed7": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.4488422992381977,
+   "argmax_agreement": 0.9990234375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed7": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.742095410760651,
+   "argmax_agreement": 0.998046875,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed7": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.1270572890600903,
+   "argmax_agreement": 0.99755859375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk40_op12_seed8": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.118706607931969,
+   "argmax_agreement": 0.99658203125,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed8": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.33340551989955,
+   "argmax_agreement": 0.99951171875,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed8": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.2623554800845618,
+   "argmax_agreement": 0.99951171875,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk40_op12_seed9": {
+   "batch": 2048,
+   "max_abs_logit_diff": 3.2107830107663204,
+   "argmax_agreement": 0.99658203125,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "spk80_op12_seed9": {
+   "batch": 2048,
+   "max_abs_logit_diff": 2.6289138339670437,
+   "argmax_agreement": 0.998046875,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  },
+  "lif80_op12_seed9": {
+   "batch": 2048,
+   "max_abs_logit_diff": 1.2193175506641296,
+   "argmax_agreement": 0.99755859375,
+   "note": "snnTorch resets one step after the spike; numpy inference resets in the same step"
+  }
+ },
+ "c1_pass": true,
+ "c2_min_argmax_agreement": 0.99365234375
+}

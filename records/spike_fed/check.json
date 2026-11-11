@@ -1,0 +1,18 @@
+{
+ "c3": {
+  "rand_999": {
+   "transmissions": 1250,
+   "equal": true
+  },
+  "eng_999": {
+   "transmissions": 1250,
+   "equal": true
+  }
+ },
+ "c3_pass": true,
+ "c4": {
+  "train_fingerprints": 120000,
+  "overlaps": {},
+  "c4_disjoint": true
+ }
+}

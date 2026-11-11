@@ -1,0 +1,50 @@
+{
+ "passed": true,
+ "files": {
+  "results.json": {
+   "values": 15231,
+   "differences": 0,
+   "examples": []
+  },
+  "check.json": {
+   "values": 7,
+   "differences": 0,
+   "examples": []
+  },
+  "fit.json": {
+   "values": 21961,
+   "differences": 0,
+   "examples": []
+  },
+  "eval.json": {
+   "values": 23041,
+   "differences": 0,
+   "examples": []
+  },
+  "criterion_1a.json": {
+   "values": 1135,
+   "differences": 0,
+   "examples": []
+  },
+  "fidelity.json": {
+   "values": 562,
+   "differences": 0,
+   "examples": []
+  },
+  "spikes_spk40.json": {
+   "values": 805,
+   "differences": 0,
+   "examples": []
+  },
+  "spikes_lif.json": {
+   "values": 613,
+   "differences": 0,
+   "examples": []
+  },
+  "check_train.json": {
+   "values": 142,
+   "differences": 0,
+   "examples": []
+  }
+ }
+}

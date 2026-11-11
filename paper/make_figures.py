@@ -245,6 +245,7 @@ def emit_text_record(E, tag, FAM_SHORT=FAM_SHORT, PAIR_SHORT=PAIR_SHORT, SINGLE_
                     macro(f"{M_}{ps}{sfx}Abs", f"{abs(c['d']):.1f}")
                     macro(f"{M_}{ps}{sfx}Lo", _sd1(c["lo"]))
                     macro(f"{M_}{ps}{sfx}Hi", _sd1(c["hi"]))
+                    macro(f"{M_}{ps}{sfx}LoAbs", f"{abs(c['lo']):.1f}")
                     macro(f"{M_}{ps}{sfx}HiAbs", f"{abs(c['hi']):.1f}")
                     if cond == "own_fit":
                         for f in FIST_COLS:
@@ -860,7 +861,7 @@ def write_grid_table():
         for fam in ("bigru", "mlp", "lif"):
             F_ = G[GRID_FAM[(fam, corp)]]
             cell = f"{F_['cer']:.1f} / {F_['wer']:.1f}"
-            cells.append(r"\textbf{%s}" % cell if corp == "Op" else cell)
+            cells.append(r"\textbf{%s}" % cell if corp == "Op" and fam != "lif" else cell)   # the LIF column is the current-fed rung; the record's LIF is the spike-fed network (Table 6)
         out.append(label + " & " + " & ".join(cells) + r" \\")
     out += [r"\bottomrule", r"\end{tabular}"]
     (HERE / "grid_table.tex").write_text("\n".join(out) + "\n")

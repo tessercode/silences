@@ -1,0 +1,41 @@
+{
+ "experiment": "exp213_spike_input",
+ "protocol_hash": "76de3765e2be3d62",
+ "base_protocol_hash": "c041694763a2f430",
+ "matched_protocol_hash": "58c31eb368faa229",
+ "created": "2026-11-11T14:45:18-07:00",
+ "git": {
+  "commit": "cd2bc5ae95a069b9f94749800e355907931f4d4a",
+  "dirty_paths": [
+   "silences/evaluation/tables.py",
+   "records/spike_fed/check.json",
+   "records/spike_fed/check_train.json",
+   "records/spike_fed/criterion_1a.json",
+   "records/spike_fed/eval.json",
+   "records/spike_fed/fidelity.json",
+   "records/spike_fed/fit.json",
+   "records/spike_fed/results.json",
+   "records/spike_fed/spikes_lif.json"
+  ],
+  "relevant_dirty_paths": [
+   "silences/evaluation/tables.py"
+  ],
+  "clean_for_record": false
+ },
+ "env": {
+  "python": "3.12.3",
+  "numpy": "2.4.4",
+  "blas_threads": "1",
+  "torch": "2.11.0+cu128",
+  "snntorch": "0.9.4"
+ },
+ "files": {
+  "check.json": "1523dde06c67800928d73b5e6117c9f97b7a5e602d7613f6ccbad91a5d4be93e",
+  "check_train.json": "975237128067d5784974f57690a9632c8ccbc5e50c8f63d864114fbe6c7e2d96",
+  "fit.json": "ae498053b9cff1c6be4b8fce4c342ff17c4e12075dd8cad1c62b55832a252961",
+  "eval.json": "5858841b82c1841d30ca431b7a9e592e4ac7ab21899a078952b5749c73682c14",
+  "criterion_1a.json": "0b8fe8135838d5960ce75065241fd189ae675cbd5c3877f7a3ffc833798bb892",
+  "fidelity.json": "a064651e0ca598e38d26158b39a1bf2c7cc99d50efa19bd8b3dc24fd928c4767",
+  "results.json": "5da30f158ec5b0bcdcf86fde55b450fda461fb8644de2734de5d3f408f8ba4b7"
+ }
+}
