@@ -2,9 +2,9 @@
 # Renode gate for the LIF / MLP gap classifier: build clf_bench, boot it headless on the emulated
 # RP2040 through verify.resc, and diff its uart0 output against the Q16.16 golden with the SAME
 # comparator the host gate uses. RunFor 150 (virtual s) covers the 50 vectors with margin.
-#   usage: run_clf_renode.sh lif|mlp
+#   usage: run_clf_renode.sh spk|lif|mlp
 set -euo pipefail
-NET="${1:?usage: run_clf_renode.sh lif|mlp}"
+NET="${1:?usage: run_clf_renode.sh spk|lif|mlp}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MOD="$(cd "$HERE/../segmenter_${NET}" && pwd)"
 THIRD="$(cd "$HERE/.." && pwd)/third_party"
