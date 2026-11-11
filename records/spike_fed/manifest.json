@@ -3,24 +3,12 @@
  "protocol_hash": "76de3765e2be3d62",
  "base_protocol_hash": "c041694763a2f430",
  "matched_protocol_hash": "58c31eb368faa229",
- "created": "2026-11-11T14:45:18-07:00",
+ "created": "2026-11-11T15:01:08-07:00",
  "git": {
-  "commit": "cd2bc5ae95a069b9f94749800e355907931f4d4a",
-  "dirty_paths": [
-   "silences/evaluation/tables.py",
-   "records/spike_fed/check.json",
-   "records/spike_fed/check_train.json",
-   "records/spike_fed/criterion_1a.json",
-   "records/spike_fed/eval.json",
-   "records/spike_fed/fidelity.json",
-   "records/spike_fed/fit.json",
-   "records/spike_fed/results.json",
-   "records/spike_fed/spikes_lif.json"
-  ],
-  "relevant_dirty_paths": [
-   "silences/evaluation/tables.py"
-  ],
-  "clean_for_record": false
+  "commit": "b7742b6026160d47c48aea42650532c9649da0ee",
+  "dirty_paths": [],
+  "relevant_dirty_paths": [],
+  "clean_for_record": true
  },
  "env": {
   "python": "3.12.3",
