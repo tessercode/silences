@@ -93,6 +93,7 @@ research repository the same way (`tools/release/equiv/run.py S3spk` and `spike_
 | Firmware goldens and headers | the spike-fed network's posterior and chain goldens (the chain golden's one beam death included) and `segmenter_spk/clf_weights.h`, regenerated from `models/spk40/op12/seed0.pkl` | every golden reproduced (339 of 339 window-net cases); the header matches |
 | Firmware images | every image built in both trees (the status-LED table changed for the new module, so every image was rebuilt) | 20 of 20 byte-identical |
 | Host gates | every board built for the host and run on its golden, the spike-fed module included | all pass |
+| Emulator gate | the spike-fed module on Renode's emulated RP2040 against its golden | 50 of 50 vectors bit-exact |
 | Paper | the 179 cited numbers, the six tables and the four figures | numbers.tex and the tables identical; the figures pixel-identical |
 
 Shipped unchanged in addition: the ruling that adopted the network and the Exp 213 report (`spike_fed/research/`),
