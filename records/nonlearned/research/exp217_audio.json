@@ -1,0 +1,1259 @@
+{
+ "protocol": {
+  "decoder": "multimon-ng MORSE_CW",
+  "sample_rate": 22050,
+  "tone_hz": 700.0,
+  "amplitude": 20000,
+  "edge_ms": 2.0,
+  "lead_s": 0.5,
+  "tail_s": 2.0,
+  "settings": {
+   "auto": [],
+   "oracle_timed": [
+    "-y",
+    "-d",
+    "{tu_ms}",
+    "-g",
+    "{tu_ms}"
+   ]
+  },
+  "corpora": "the record evaluation corpora of both texts (Exp 209 protocol, per_fist 250, seeds 999/777/555/321)",
+  "text_normalisation": "uppercase, keep A-Z and spaces, collapse runs of spaces, strip"
+ },
+ "decoder_version": "multimon-ng 1.3.0",
+ "corpora": {
+  "rand_999": {
+   "sums": {
+    "auto": {
+     "fast_normalr": [
+      2931,
+      4065,
+      828,
+      860,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      104,
+      3930,
+      50,
+      843,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      2154,
+      4164,
+      815,
+      881,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      4422,
+      4135,
+      1375,
+      867,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3606,
+      4063,
+      1111,
+      865,
+      250,
+      250
+     ]
+    },
+    "oracle_timed": {
+     "fast_normalr": [
+      1357,
+      4065,
+      663,
+      860,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      0,
+      3930,
+      0,
+      843,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      2996,
+      4164,
+      1076,
+      881,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      4069,
+      4135,
+      1336,
+      867,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3580,
+      4063,
+      1122,
+      865,
+      250,
+      250
+     ]
+    }
+   },
+   "samples": [
+    {
+     "fist": "fast_normalr",
+     "truth": "EEESC DEEXC XP XPEA ZPIN",
+     "auto": "EEHKDXCXP XPEAZPIN",
+     "oracle_timed": "EEESK DXC XP XPEA ZPIN"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "WH MFFE PXA",
+     "auto": "WS ISASHE",
+     "oracle_timed": "WS MRAGXT"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "DS IZTTBQ LVMW FYNQF IVI",
+     "auto": "EIIZTTSQSUISHFIHSEIE",
+     "oracle_timed": "T I IZTTDQ DUMW FYNQR EAE"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "MKAAE ZJ IG KC FPH",
+     "auto": "NSEISS EISH SSH",
+     "oracle_timed": "MKTAGO EM KC RGH"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "QJHBV VGXBA YMID",
+     "auto": "HSEHISSHSEHIIS",
+     "oracle_timed": "QOEBA UGXDT YMID"
+    }
+   ],
+   "returncodes": [
+    0
+   ]
+  },
+  "rand_777": {
+   "sums": {
+    "auto": {
+     "fast_normalr": [
+      2823,
+      4096,
+      834,
+      873,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      115,
+      4019,
+      58,
+      856,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      2096,
+      4084,
+      809,
+      871,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      4156,
+      3994,
+      1333,
+      863,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3559,
+      4156,
+      1106,
+      872,
+      250,
+      250
+     ]
+    },
+    "oracle_timed": {
+     "fast_normalr": [
+      1327,
+      4096,
+      658,
+      873,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      0,
+      4019,
+      0,
+      856,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      3003,
+      4084,
+      1039,
+      871,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3946,
+      3994,
+      1276,
+      863,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3657,
+      4156,
+      1149,
+      872,
+      250,
+      250
+     ]
+    }
+   },
+   "samples": [
+    {
+     "fist": "fast_normalr",
+     "truth": "JJCPL IFIIJO OMTB YBPE TNRNS",
+     "auto": "HSHII ISIIHS SIEHSII EIIII",
+     "oracle_timed": "JOCMN IRIIJO OMTB ONM TNNNI"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "JE SZTDH AI QUJVA DIJKR",
+     "auto": "PE EHESS AI SISIE SISSI",
+     "oracle_timed": "JE EZTDS AI UAWAT DIOKN"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "NW ZBVYG TZ YJT EEZPR",
+     "auto": "ISHHV S EH HHE EHHI",
+     "oracle_timed": "NW ZBVYG TL YJT EZPA"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "MCMIE JTL",
+     "auto": "ISIE SES",
+     "oracle_timed": "MGME OTD"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "FI UB HRJB ZN XENMWN",
+     "auto": "FE UB HNJBZNXNMMN",
+     "oracle_timed": "FE UB HNJB ZN X NMMN"
+    }
+   ],
+   "returncodes": [
+    0
+   ]
+  },
+  "rand_555": {
+   "sums": {
+    "auto": {
+     "fast_normalr": [
+      2991,
+      4217,
+      855,
+      898,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      120,
+      4121,
+      60,
+      872,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      2057,
+      4139,
+      791,
+      885,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      4327,
+      4171,
+      1373,
+      876,
+      249,
+      250
+     ],
+     "cootie_corrected": [
+      3560,
+      4093,
+      1122,
+      875,
+      250,
+      250
+     ]
+    },
+    "oracle_timed": {
+     "fast_normalr": [
+      1416,
+      4217,
+      697,
+      898,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      4,
+      4121,
+      3,
+      872,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      3011,
+      4139,
+      1070,
+      885,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3878,
+      4171,
+      1272,
+      876,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3581,
+      4093,
+      1150,
+      875,
+      250,
+      250
+     ]
+    }
+   },
+   "samples": [
+    {
+     "fist": "fast_normalr",
+     "truth": "YAV CS BV",
+     "auto": "BIVHIHE",
+     "oracle_timed": "YAV C I HT"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "KD CZACY KFCUL FT MUU",
+     "auto": "SI SSEHHSHHIHFE III",
+     "oracle_timed": "KN KGTC KFCAL FT MAA"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "HTUQU TW",
+     "auto": "HTUVAEI",
+     "oracle_timed": "HTUQA TM"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "MFR QAV NJSKJC",
+     "auto": "NSS HHISSSSH",
+     "oracle_timed": "MRR TU NOSKOC"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "RS MTX KGN LS",
+     "auto": "RS MEV SSE IE",
+     "oracle_timed": "RS MTX KGT NE"
+    }
+   ],
+   "returncodes": [
+    0
+   ]
+  },
+  "rand_321": {
+   "sums": {
+    "auto": {
+     "fast_normalr": [
+      2901,
+      4089,
+      823,
+      869,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      120,
+      4120,
+      58,
+      881,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      2155,
+      4177,
+      812,
+      872,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      4446,
+      4217,
+      1481,
+      892,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3711,
+      4216,
+      1162,
+      898,
+      250,
+      250
+     ]
+    },
+    "oracle_timed": {
+     "fast_normalr": [
+      1295,
+      4089,
+      654,
+      869,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      2,
+      4120,
+      1,
+      881,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      3205,
+      4177,
+      1100,
+      872,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3979,
+      4217,
+      1368,
+      892,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3712,
+      4216,
+      1171,
+      898,
+      250,
+      250
+     ]
+    }
+   },
+   "samples": [
+    {
+     "fist": "fast_normalr",
+     "truth": "DXQMJ MONXE TERJB",
+     "auto": "DSHIH ISIHEESHH",
+     "oracle_timed": "DKQMJ MONXTERJB"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "NB FO TAMTG UVWSWY WOPY",
+     "auto": "IE IS EEIESIEIIIHSSHH",
+     "oracle_timed": "NT AO TTMTG ATMI MY WOPY"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "JFG ZFMVFF ZZEI",
+     "auto": "HISHHIVFR SSE",
+     "oracle_timed": "JAG ZFMVFR GGE"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "MJT FCK SF HCADZO",
+     "auto": "NSE HHS SU IHESSS",
+     "oracle_timed": "MOT FCK SU ICTDGO"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "TISOL RBXP GEYVK EVEB",
+     "auto": "TISOL NDXP GEYVKAN",
+     "oracle_timed": "TISOL NDXP GEYVK A N"
+    }
+   ],
+   "returncodes": [
+    0
+   ]
+  },
+  "eng_999": {
+   "sums": {
+    "auto": {
+     "fast_normalr": [
+      2716,
+      4170,
+      845,
+      890,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      144,
+      4064,
+      75,
+      867,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      1899,
+      4076,
+      789,
+      872,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3982,
+      4081,
+      1414,
+      862,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3238,
+      4138,
+      1125,
+      879,
+      250,
+      250
+     ]
+    },
+    "oracle_timed": {
+     "fast_normalr": [
+      1424,
+      4170,
+      713,
+      890,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      3,
+      4064,
+      2,
+      867,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      2523,
+      4076,
+      1005,
+      872,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3427,
+      4081,
+      1234,
+      862,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3106,
+      4138,
+      1117,
+      879,
+      250,
+      250
+     ]
+    }
+   },
+   "samples": [
+    {
+     "fist": "fast_normalr",
+     "truth": "CHENA DE BEMAN CAGGY CE",
+     "auto": "DSSIEHMAICAGSH HE",
+     "oracle_timed": "GSTA NE BMAN CAGGY CE"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "SIDER OUR RULE POUCEY NEPA",
+     "auto": "SIDROAR EEE FSESH IESE",
+     "oracle_timed": "SIDR O AR E EE POTG Y NEGT"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "SH MORPH RIAL",
+     "auto": "SH MORPI RIAL",
+     "oracle_timed": "SH MORPI RIAL"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "SKEP WAGOMA FONLY",
+     "auto": "SSEHWAGGII ESIIH",
+     "oracle_timed": "SKEP WAGOMA TONNY"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "GES GUZ SWIFTY WIM OD",
+     "auto": "DES GAZ IEI IEISI",
+     "oracle_timed": "GES GAZ MENE MEM ON"
+    }
+   ],
+   "returncodes": [
+    0
+   ]
+  },
+  "eng_777": {
+   "sums": {
+    "auto": {
+     "fast_normalr": [
+      2623,
+      3996,
+      802,
+      857,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      134,
+      4134,
+      71,
+      859,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      1861,
+      4070,
+      756,
+      860,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3827,
+      4056,
+      1341,
+      867,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3151,
+      4169,
+      1090,
+      882,
+      250,
+      250
+     ]
+    },
+    "oracle_timed": {
+     "fast_normalr": [
+      1290,
+      3996,
+      646,
+      857,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      3,
+      4134,
+      3,
+      859,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      2456,
+      4070,
+      984,
+      860,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3385,
+      4056,
+      1245,
+      867,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3077,
+      4169,
+      1088,
+      882,
+      250,
+      250
+     ]
+    }
+   },
+   "samples": [
+    {
+     "fist": "fast_normalr",
+     "truth": "GLENT BEY KHMER FLATUS FU",
+     "auto": "DHIT HEC IHIS EIEEIIFU",
+     "oracle_timed": "GLNT BEY MHMR TNTTAI FU"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "ZLOTY SH AUNT",
+     "auto": "BLGEH SISIE",
+     "oracle_timed": "ZLOTY S AUNT"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "YOM SKEELY",
+     "auto": "HSI ES ESH",
+     "oracle_timed": "YOM EK ERY"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "PU APA GIL PUPAL",
+     "auto": "LS EHESES PUPAD",
+     "oracle_timed": "PU TPT GED PUPAD"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "YOLK NIT CANCH",
+     "auto": "BSHSEEHIEHH",
+     "oracle_timed": "YOLK TT CATCH"
+    }
+   ],
+   "returncodes": [
+    0
+   ]
+  },
+  "eng_555": {
+   "sums": {
+    "auto": {
+     "fast_normalr": [
+      2836,
+      4228,
+      841,
+      890,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      157,
+      4139,
+      76,
+      891,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      1887,
+      4088,
+      777,
+      870,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      4073,
+      4303,
+      1432,
+      894,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3303,
+      4101,
+      1142,
+      869,
+      250,
+      250
+     ]
+    },
+    "oracle_timed": {
+     "fast_normalr": [
+      1394,
+      4228,
+      688,
+      890,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      1,
+      4139,
+      1,
+      891,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      2563,
+      4088,
+      1012,
+      870,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3646,
+      4303,
+      1291,
+      894,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3153,
+      4101,
+      1087,
+      869,
+      250,
+      250
+     ]
+    }
+   },
+   "samples": [
+    {
+     "fist": "fast_normalr",
+     "truth": "WOT UG AR",
+     "auto": "SSEIS EI",
+     "oracle_timed": "WOE AG TN"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "SUE EYER VILITY TOHO",
+     "auto": "SUE H E VELITY TOHO",
+     "oracle_timed": "SUE Y T VELITY TOHO"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "USUARY TUNIST TIC",
+     "auto": "SIIIIH EEIEIEEIH",
+     "oracle_timed": "UIAA NY T TN EIT TIC"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "GAR TOMATO LESSOR",
+     "auto": "SEIESIIES HESSRS",
+     "oracle_timed": "GTN TOMATO LESSOR"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "ALT ALIDA EURYON WAKIKI",
+     "auto": "AHT IHEDTUAYON IIIISI",
+     "oracle_timed": "ALT ALEDT UAYON MAMIKI"
+    }
+   ],
+   "returncodes": [
+    0
+   ]
+  },
+  "eng_321": {
+   "sums": {
+    "auto": {
+     "fast_normalr": [
+      2759,
+      4231,
+      830,
+      886,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      133,
+      4058,
+      68,
+      869,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      1803,
+      3938,
+      762,
+      860,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3998,
+      4114,
+      1426,
+      874,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3218,
+      4189,
+      1097,
+      871,
+      250,
+      250
+     ]
+    },
+    "oracle_timed": {
+     "fast_normalr": [
+      1426,
+      4231,
+      676,
+      886,
+      250,
+      250
+     ],
+     "slow_normalr": [
+      0,
+      4058,
+      0,
+      869,
+      250,
+      250
+     ],
+     "high_r_bug": [
+      2541,
+      3938,
+      1007,
+      860,
+      250,
+      250
+     ],
+     "cootie_high_jitter": [
+      3476,
+      4114,
+      1252,
+      874,
+      250,
+      250
+     ],
+     "cootie_corrected": [
+      3163,
+      4189,
+      1105,
+      871,
+      250,
+      250
+     ]
+    }
+   },
+   "samples": [
+    {
+     "fist": "fast_normalr",
+     "truth": "BORON POPLAR HLER",
+     "auto": "DSISISSSSEE HIEI",
+     "oracle_timed": "DONON GOG DTT HNEN"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "LO DROOL SNEEZE THRAIL",
+     "auto": "IS SISSH EIIEHSEIS",
+     "oracle_timed": "AO DNOOL ENMTHRTID"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "OM KNOW US DORAB BALI",
+     "auto": "SISISISS SSIIH EEIE",
+     "oracle_timed": "OM KNOM US DONAB TTNE"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "ADDER FOY",
+     "auto": "IEI EFO",
+     "oracle_timed": "AEI E FOY"
+    },
+    {
+     "fist": "fast_normalr",
+     "truth": "IRK GUT KIM LYTIC",
+     "auto": "ISUE SIIIHEIH",
+     "oracle_timed": "IRM GUT KIM NYTIC"
+    }
+   ],
+   "returncodes": [
+    0
+   ]
+  }
+ },
+ "r4_parity": {
+  "rand_999": {
+   "transmissions": 1250,
+   "equal": 1250
+  },
+  "rand_777": {
+   "transmissions": 1250,
+   "equal": 1250
+  },
+  "rand_555": {
+   "transmissions": 1250,
+   "equal": 1250
+  },
+  "rand_321": {
+   "transmissions": 1250,
+   "equal": 1250
+  },
+  "eng_999": {
+   "transmissions": 1250,
+   "equal": 1250
+  },
+  "eng_777": {
+   "transmissions": 1250,
+   "equal": 1250
+  },
+  "eng_555": {
+   "transmissions": 1250,
+   "equal": 1250
+  },
+  "eng_321": {
+   "transmissions": 1250,
+   "equal": 1250
+  }
+ },
+ "texts": {
+  "rand": {
+   "auto": {
+    "overall": {
+     "cer": 63.64080536012837,
+     "wer": 96.48804341238441,
+     "cer_sd": 1.0453852071030518,
+     "wer_sd": 1.3650589489951817,
+     "nonempty": 99.98,
+     "n": 4
+    },
+    "per_fist": {
+     "fast_normalr": {
+      "cer": 70.7244651435915,
+      "wer": 95.43246409270814,
+      "cer_sd": 1.3221789085205162,
+      "wer_sd": 0.6589144166660762,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "slow_normalr": {
+      "cer": 2.833063671539289,
+      "wer": 6.54276522609129,
+      "cer_sd": 0.12678996130722667,
+      "wer_sd": 0.42589110555496273,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "high_r_bug": {
+      "cer": 51.08534653237565,
+      "wer": 91.97201382559794,
+      "cer_sd": 0.9402194065332793,
+      "wer_sd": 1.7471675090533632,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "cootie_high_jitter": {
+      "cer": 105.0418362170071,
+      "wer": 158.95514519491772,
+      "cer_sd": 1.4632216050156048,
+      "wer_sd": 5.010939433175215,
+      "nonempty": 99.9,
+      "n": 4
+     },
+     "cootie_corrected": {
+      "cer": 87.34674207778119,
+      "wer": 128.22535096734467,
+      "cer_sd": 1.3535562095746645,
+      "wer_sd": 1.0576559836542643,
+      "nonempty": 100.0,
+      "n": 4
+     }
+    }
+   },
+   "oracle_timed": {
+    "overall": {
+     "cer": 58.37301800970371,
+     "wer": 96.19944635614974,
+     "cer_sd": 0.7182264010055563,
+     "wer_sd": 1.2531707308504292,
+     "nonempty": 100.0,
+     "n": 4
+    },
+    "per_fist": {
+     "fast_normalr": {
+      "cer": 32.757175764802,
+      "wer": 76.33528688800963,
+      "cer_sd": 0.8899542164431602,
+      "wer_sd": 1.1975971898910307,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "slow_normalr": {
+      "cer": 0.03640187719542104,
+      "wer": 0.11438601880681877,
+      "cer_sd": 0.046466791610953566,
+      "wer_sd": 0.16218151221703322,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "high_r_bug": {
+      "cer": 73.7394127007097,
+      "wer": 122.11821425278913,
+      "cer_sd": 2.095392260248026,
+      "wer_sd": 2.927639129953749,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "cootie_high_jitter": {
+      "cer": 96.13338744070349,
+      "wer": 150.12990058482154,
+      "cer_sd": 2.9090809505024895,
+      "wer_sd": 4.304733820069663,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "cootie_corrected": {
+      "cer": 87.91046847659271,
+      "wer": 130.82662500049986,
+      "cer_sd": 0.28395880221335235,
+      "wer_sd": 0.9435351429102303,
+      "nonempty": 100.0,
+      "n": 4
+     }
+    }
+   }
+  },
+  "eng": {
+   "auto": {
+    "overall": {
+     "cer": 57.974777350333504,
+     "wer": 95.92844496878311,
+     "cer_sd": 0.8559001768117644,
+     "wer_sd": 1.4659575900469344,
+     "nonempty": 100.0,
+     "n": 4
+    },
+    "per_fist": {
+     "fast_normalr": {
+      "cer": 65.76458437780853,
+      "wer": 94.17498104927178,
+      "cer_sd": 0.902886506595788,
+      "wer_sd": 0.6557406393151932,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "slow_normalr": {
+      "cer": 3.463845777882256,
+      "wer": 8.317693028251302,
+      "cer_sd": 0.2575458157505153,
+      "wer_sd": 0.3656643247407696,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "high_r_bug": {
+      "cer": 46.064690774816555,
+      "wer": 89.07590602767743,
+      "cer_sd": 0.39943770634646875,
+      "wer_sd": 1.098416792953836,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "cootie_high_jitter": {
+      "cer": 95.94085476619665,
+      "wer": 160.51131722518056,
+      "cer_sd": 1.6708891534650758,
+      "wer_sd": 4.22895433493735,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "cootie_corrected": {
+      "cer": 77.79840290845715,
+      "wer": 127.23293043175204,
+      "cer_sd": 2.1290534524149236,
+      "wer_sd": 3.3185182624583462,
+      "nonempty": 100.0,
+      "n": 4
+     }
+    }
+   },
+   "oracle_timed": {
+    "overall": {
+     "cer": 51.07201341482886,
+     "wer": 92.48209479203132,
+     "cer_sd": 0.7659445980149688,
+     "wer_sd": 0.6072486693084439,
+     "nonempty": 100.0,
+     "n": 4
+    },
+    "per_fist": {
+     "fast_normalr": {
+      "cer": 33.276312804055664,
+      "wer": 77.27323215150378,
+      "cer_sd": 0.8216097378764287,
+      "wer_sd": 2.0493850095245953,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "slow_normalr": {
+      "cer": 0.042637065838687,
+      "wer": 0.17303931480846513,
+      "cer_sd": 0.036640275592364886,
+      "wer_sd": 0.15056594554094221,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "high_r_bug": {
+      "cer": 62.36593380883292,
+      "wer": 115.77144014135453,
+      "cer_sd": 1.7394740028285884,
+      "wer_sd": 1.1760382559504048,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "cootie_high_jitter": {
+      "cer": 84.16367119286537,
+      "wer": 143.60266377686477,
+      "cer_sd": 0.5674586287797835,
+      "wer_sd": 0.5692106352753015,
+      "nonempty": 100.0,
+      "n": 4
+     },
+     "cootie_corrected": {
+      "cer": 75.3145129512806,
+      "wer": 125.59605244792749,
+      "cer_sd": 1.2698592361334498,
+      "wer_sd": 1.7397771291512483,
+      "nonempty": 100.0,
+      "n": 4
+     }
+    }
+   }
+  }
+ },
+ "wall_s": 14.4
+}

@@ -1,0 +1,19 @@
+{
+ "BETA_ISI": [
+  0.9885,
+  0.9942,
+  0.9962,
+  0.9974,
+  0.9981,
+  0.9987
+ ],
+ "V_KICK": 1.0,
+ "GAP_TAU_DUR": 3.5,
+ "GAP_TAU_DOT": 3.0,
+ "GAP_TAU_DASH": 5.0,
+ "GAP_S": 0.6,
+ "TU_SCALAR_C": 0.9,
+ "TU_ESTIMATOR_PCTILE": 10.0,
+ "TU_ESTIMATOR_DIVISOR": 2.0,
+ "N_INPUT_GAP9": 9
+}

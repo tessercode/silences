@@ -1,0 +1,72 @@
+{
+ "protocol_hash": "69d6da0e39834615",
+ "a1": {
+  "rand_999": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 0.9
+  },
+  "rand_777": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 0.9
+  },
+  "rand_555": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 0.9
+  },
+  "rand_321": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 0.9
+  },
+  "eng_999": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 1.1
+  },
+  "eng_777": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 1.1
+  },
+  "eng_555": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 0.8
+  },
+  "eng_321": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 0.7
+  }
+ },
+ "a2": {
+  "spk40_op12_seed0": {
+   "gaps": 3650,
+   "equal": true,
+   "seconds_per_100_tx": 1.1
+  },
+  "lif_op12_seed0": {
+   "gaps": 3650,
+   "equal": true,
+   "seconds_per_100_tx": 1.0
+  },
+  "mlp_op12_seed0": {
+   "gaps": 3650,
+   "equal": true,
+   "seconds_per_100_tx": 0.7
+  },
+  "bigru_fist_seed42": {
+   "gaps": 3650,
+   "equal": true,
+   "seconds_per_100_tx": 0.8
+  }
+ },
+ "tu_seconds": {
+  "per_100_tx": 0.4
+ },
+ "a1_pass": true,
+ "a2_pass": true
+}

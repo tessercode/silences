@@ -1,0 +1,54 @@
+{
+ "experiment": "exp215_window_width",
+ "family": "mlp_w5_op12",
+ "kind": "mlp",
+ "W": 5,
+ "arm": "op12",
+ "seed": 7,
+ "corpus_seed": 210449,
+ "protocol": {
+  "hidden": [
+   256,
+   128
+  ],
+  "epochs": 150,
+  "lr": 0.001,
+  "batch": 1024,
+  "wd": 1e-05,
+  "val": 0.1,
+  "W": 5,
+  "threads": 2
+ },
+ "base_protocol_hash": "f3b85d0c9db49b96",
+ "feature_sha256": "5675d01f3e39d44d35c4606952b68c9dee28494d11abde3aa1c2b99492ed3017",
+ "gaps": 518094,
+ "n_params": 39171,
+ "pickle_sha256": "10f02c4b9be013467b8418970dbd7a1bc15bc3f6be358b0d82f0168eed999105",
+ "wall_s": 172.3,
+ "finished": "2026-11-12T13:41:37-07:00",
+ "git": {
+  "commit": "71be1a74da3177485fc313aaac94fb43f945c4b6",
+  "branch": "main",
+  "dirty_paths": [
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_bigru.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_width.py",
+   "notebooks/experiment215_notes.md",
+   "outputs/exp215_window_width/"
+  ],
+  "relevant_dirty_paths": [
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_bigru.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_width.py"
+  ],
+  "clean_for_record": false
+ },
+ "env": {
+  "python": "3.12.3",
+  "torch": "2.11.0+cu128",
+  "numpy": "2.4.4",
+  "snntorch": "0.9.4",
+  "hostname": "daystrom",
+  "omp_num_threads": "2"
+ }
+}

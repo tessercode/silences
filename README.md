@@ -15,9 +15,10 @@ a character language model turns the posteriors into text. This repository holds
   tanh MLP control and the bidirectional-GRU baseline, with every trained model the paper reports: the
   families of record, trained on 12,000 operator transmissions per seed (ten seeds of each LIF form,
   ten MLP seeds, the eight-seed BiGRU pool with its final phase on that corpus), the spike-fed and the
-  current-fed network at T = 80, the rest of the model-by-corpus grid of Table 4 (the same recipes on
-  the generic corpus and on the original 5,000-transmission corpus), and the deployed networks, which
-  are the first seed of each feedforward family;
+  current-fed network at T = 80, the window-width sweep of Table 4 (the control at four other widths,
+  both spiking networks at the best of them, the baseline on the window's raw values), the same
+  recipes on the generic corpus and on the original 5,000-transmission corpus (no longer tabulated in
+  the paper), and the deployed networks, which are the first seed of each feedforward family;
 - the decoder (integer beam search and the Q16.16 character language model), the per-model fit of the
   decoder weights, and the evaluation and statistics (`silences/evaluation/`);
 - the result records the paper's numbers come from (`records/`), and the script that turns them into
@@ -53,13 +54,15 @@ emulated RP2040.
 | Figure 1 and its numbers, the 4.0 T_u collision | `paper/figures/fig_collision.pdf`, `records/collision.json` | `python -m silences.collision` |
 | Figure 2, style coverage | `paper/figures/fig_coverage.pdf` | `data/operator_style_fits.csv`, `fists.h` |
 | Table 2, the training recipes | `paper/training_table.tex` | `protocol/`, `silences/training/`, `records/training/` |
-| Table 3, English error rates of the deployed models | `paper/cerwer_table_eng.tex` | `records/spike_fed/`, `records/matched/` |
-| Table 4, model by training corpus | `paper/grid_table.tex` | `records/matched/` (the grid block) |
+| Table 3, non-learned baselines (Section 6.4) | `paper/nonlearned_table.tex` | `records/nonlearned/` |
+| Table 4, the window width and the input representation (Section 7.2) | `paper/width_table.tex` | `records/width/`, `records/width_lif/` |
 | Table 5, training-seed distributions | `paper/seed_table_dw.tex` | `records/spike_fed/`, `records/matched/` |
 | Table 6, the ladder from the control to the spiking network | `paper/ladder_table.tex` | `records/spike_fed/`, `records/matched/` |
 | Figure 7, error by operator | `paper/figures/fig_cerwer_eng.pdf` | `records/spike_fed/`, `records/matched/` |
 | Figure 8, the decoder weights | `paper/figures/fig_decoder_weights.pdf` | `records/spike_fed/fit.json`, `records/matched/fit.json` |
 | Section 8.6, what the spikes carry | `paper/numbers.tex` | `records/spike_fed/spikes_*.json` |
+| Section 10.3, the per-word time-unit oracle | `paper/numbers.tex` | `records/tempo/` |
+| Appendix A, the constants of the renderer, the corpora and the decoder | `paper/numbers.tex` | `silences/`, `firmware/encoder/fists.h`, `records/training/charlm_build.json` |
 | Random-letter results and the fixed-point fidelity quoted in the text | `paper/numbers.tex` | `records/spike_fed/`, `records/matched/` |
 | Section 9, the RP2040 chain and bench | `paper/numbers.tex` | `records/deployment/` (the 2026-11 runs) |
 

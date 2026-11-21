@@ -1,0 +1,24 @@
+{
+ "what": "Facts of the character language model's build (silences/decoder/charlm.py), copied from the research repository's build report",
+ "alphabet_size": 37,
+ "order": 3,
+ "add_k": 0.5,
+ "smoothing": "add-k (k=0.5), dense tables, space-padded BOS",
+ "english": {
+  "source": "NLTK Brown corpus",
+  "sentences": 57340,
+  "train_chars": 5375114,
+  "held_chars": 428200
+ },
+ "ham": {
+  "source": "templated from standard operating references, not measured traffic",
+  "exchanges": 40000,
+  "train_chars": 2326481
+ },
+ "mixture": {
+  "lambda_english": 0.75,
+  "default_insertion_bonus": 2.5,
+  "rule": "min over (lambda,beta) of max(CER_eng, CER_ham) on TUNE",
+  "date": "2026-07-12"
+ }
+}

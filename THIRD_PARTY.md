@@ -15,4 +15,5 @@ Everything here is MIT-licensed (see `LICENSE`) except the following, which keep
 
 The five synthetic operators (`firmware/encoder/fists.h`) were fitted to 44 amateur-radio recordings,
 used with the written permission of their archive owners. The recordings are not redistributed. Their
-per-segment fits are in `data/operator_style_fits.csv`, with each recording identified only by a number.
+per-segment fits are in `data/operator_style_fits.csv`, with each recording identified only by a number;
+`end_s` is the time at which the segment ends within its recording.

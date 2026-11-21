@@ -1,0 +1,71 @@
+{
+ "experiment": "exp215_window_width",
+ "family": "mlp_w20_op12",
+ "kind": "mlp",
+ "W": 20,
+ "arm": "op12",
+ "seed": 7,
+ "corpus_seed": 210449,
+ "protocol": {
+  "hidden": [
+   256,
+   128
+  ],
+  "epochs": 150,
+  "lr": 0.001,
+  "batch": 1024,
+  "wd": 1e-05,
+  "val": 0.1,
+  "W": 20,
+  "threads": 2
+ },
+ "base_protocol_hash": "f3b85d0c9db49b96",
+ "feature_sha256": "cd989a356ff54921228fe5e94810c814cf264d1a90ac7251b84f550d63ae2fdc",
+ "gaps": 518094,
+ "n_params": 54531,
+ "pickle_sha256": "7644a09b57935d1fa85580f6665d602cf4a172d94526455896dd2f25cd90a1d4",
+ "wall_s": 224.5,
+ "finished": "2026-11-12T13:49:14-07:00",
+ "git": {
+  "commit": "71be1a74da3177485fc313aaac94fb43f945c4b6",
+  "branch": "main",
+  "dirty_paths": [
+   "papers/silences/figures/fig_cerwer_eng.pdf",
+   "papers/silences/figures/fig_collision.pdf",
+   "papers/silences/figures/fig_coverage.pdf",
+   "papers/silences/figures/fig_decoder_weights.pdf",
+   "papers/silences/main.bcf",
+   "papers/silences/main.pdf",
+   "papers/silences/main.tex",
+   "papers/silences/scripts/consumed_macros.txt",
+   "papers/silences/scripts/make_figures.py",
+   "papers/silences/scripts/numbers.tex",
+   "papers/silences/scripts/seed_table_dw.tex",
+   "papers/silences/sections/05_pipeline.tex",
+   "papers/silences/sections/08_lif.tex",
+   "papers/silences/sections/09_deployment.tex",
+   "papers/silences/sections/10_discussion.tex",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_bigru.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_width.py",
+   "notebooks/experiment215_notes.md",
+   "outputs/exp215_window_width/",
+   "papers/silences/scripts/seed_table_default.tex",
+   "papers/silences/sections/A1_spec.tex"
+  ],
+  "relevant_dirty_paths": [
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_bigru.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_width.py"
+  ],
+  "clean_for_record": false
+ },
+ "env": {
+  "python": "3.12.3",
+  "torch": "2.11.0+cu128",
+  "numpy": "2.4.4",
+  "snntorch": "0.9.4",
+  "hostname": "daystrom",
+  "omp_num_threads": "2"
+ }
+}

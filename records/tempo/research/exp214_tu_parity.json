@@ -1,0 +1,45 @@
+{
+ "source": "evaluate.tu_parity(per_fist=150, seed=20260720, Q=4.0): robust spread (MAD*1.4826) of est/true",
+ "per_fist": {
+  "fast_normalr": {
+   "fe_med": 0.8403494923215076,
+   "fe_spread": 0.03849968527156259,
+   "raf_med": 1.0084841667847555,
+   "raf_spread": 0.03297042623949761,
+   "n": 150,
+   "spread_ratio_fe_over_raf": 1.167703595698168
+  },
+  "slow_normalr": {
+   "fe_med": 0.8447514327883795,
+   "fe_spread": 0.043622037844701804,
+   "raf_med": 1.0272100542148634,
+   "raf_spread": 0.02811246665633962,
+   "n": 150,
+   "spread_ratio_fe_over_raf": 1.551697272884613
+  },
+  "high_r_bug": {
+   "fe_med": 0.7074617508616143,
+   "fe_spread": 0.11361903474410419,
+   "raf_med": 0.8608550257306682,
+   "raf_spread": 0.24403075052970585,
+   "n": 150,
+   "spread_ratio_fe_over_raf": 0.4655931045471802
+  },
+  "cootie_high_jitter": {
+   "fe_med": 0.47537857454786087,
+   "fe_spread": 0.24248357201554593,
+   "raf_med": 0.45898885408629575,
+   "raf_spread": 0.29003507927427413,
+   "n": 150,
+   "spread_ratio_fe_over_raf": 0.8360491173077699
+  },
+  "cootie_corrected": {
+   "fe_med": 0.6038546638469198,
+   "fe_spread": 0.15892685602933831,
+   "raf_med": 0.6482618344385862,
+   "raf_spread": 0.3028300292674765,
+   "n": 150,
+   "spread_ratio_fe_over_raf": 0.5248054706257852
+  }
+ }
+}
