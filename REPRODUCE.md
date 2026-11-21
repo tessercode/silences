@@ -32,6 +32,9 @@ byte-identical; `make paper` ends with `git diff --exit-code` on it.
 make evaluate-matched     # the matched-data record, about 40 minutes
 make evaluate-spike-fed   # the record of the paper: the spike-fed families against it, about 25 minutes
 make spike-character      # what the spikes carry: both LIF forms, about 40 minutes
+make evaluate-width       # the window width and the spiking networks at half-width 5, about 25 minutes (needs torch)
+make evaluate-tempo       # every family under a per-gap and a per-word time unit, about 20 minutes
+make evaluate-nonlearned  # the threshold readouts, multimon-ng and the checks on the fits, about 30 minutes
 make evaluate             # the superseded 5,000-transmission records, about 10 minutes
 ```
 
@@ -47,6 +50,32 @@ and the spike statistics of `records/spike_fed/spikes_{spk40,lif}.json`; its `to
 (the training-side forward against the inference forward) needs torch and is run explicitly:
 `python -m silences.evaluation.spike_character spk40 torch`. `check_train.json` (the feature-matrix
 hashes and the forward check of every model) is likewise `python -m silences.evaluation.spike_fed check-train`.
+
+The four records added in v1.3.0 are chained to these and run after them, in this order.
+
+`make evaluate-width` runs `silences.evaluation.width`, then `silences.evaluation.width_lif`. The first adds to
+the matched record's eighteen corpora the control at half-widths 2, 5, 15 and 20, the baseline's recipe on the
+window's two raw values, and the baseline of record through a floating-point path (these two need torch); its
+anchors are that the harness reproduces the matched record's `mlp_op12_seed0` row, that no training
+transmission is in an evaluation corpus, that the op12 feature matrices at every width hash to the ones the
+shipped models were trained on, and that the float baseline agrees with its fixed-point rows (to 0.0001 pp of
+character error on English). It also writes per-gap accuracy, the inter-spike interval, the window's lookahead
+and the renderer's channel error (`records/width/gapacc.json`), which Sections 7.1 and 9.5 and Appendix A cite.
+The second scores the spike-fed and current-fed networks at half-width 5 beside both records.
+
+`make evaluate-tempo` runs `silences.evaluation.tempo`: the spike-fed LIF, the current-fed LIF, the control and
+the baseline on the eight record corpora with the time unit supplied four ways (the front end's single
+estimate, a centred and a trailing per-gap estimate, the renderer's true unit per word), every model at its
+weights and decoder weights of record. Under the single estimate each row must reproduce the record's stored
+row exactly, and does. The same module re-runs the earlier rule-based reader whose figures Section 5.2 quotes.
+
+`make evaluate-nonlearned` runs `silences.evaluation.nonlearned`: the threshold readout's five parameters fitted
+on each training seed's corpus, the four readout forms scored like networks, multimon-ng on audio rendered
+from the record corpora, every learned family refitted to word error and on an extended grid, and the readouts
+refitted over negative insertion bonuses. The audio step needs the `multimon-ng` program on the PATH (the
+record was made with version 1.3.0; Debian and Ubuntu package it); run the other steps one at a time
+(`python -m silences.evaluation.nonlearned fitrule`, `tables`, ...) to skip it, in which case `check` and
+`stats` use the committed `audio.json`.
 
 `make evaluate-matched` runs `silences.evaluation.matched`: every segmenter of the grid (the original
 rows, the three BiGRU arms with their ensembles, the op12 and gen feedforward families, the deployed
@@ -82,7 +111,10 @@ make train-mlp SEED=0 CORPUS=op12   # about 2 minutes per seed, CPU
 make train-lif SEED=0 CORPUS=gen    # the generic-corpus control (the BiGRU recipe's final-phase corpus)
 make train-lif SEED=0               # the original 5,000-transmission corpus, about 18 minutes per seed
 make train-mlp SEED=0               # about 30 seconds per seed
+make train-width FAMILY=mlp_w5 SEED=0   # a width family: mlp_w2, mlp_w5, mlp_w15, mlp_w20 (about 3 minutes each),
+                                        # lif_w5 and spk40_w5 (as their record forms above)
 make train-bigru ARM=fist           # the baseline of record, about 5 minutes on a CUDA GPU
+make train-bigru ARM=raw            # the same recipe on the window's two raw values per gap
 make train-bigru                    # the original eight-seed pool; ARM=rep and ARM=shared are the other arms
 ```
 
@@ -99,7 +131,12 @@ checkpoint's; elsewhere expect the retrain to agree statistically, which the com
 `records/training/bigru_pool.json` (each seed's selection accuracy within the shipped pool's range
 widened by its own spread, the ensemble above the 93.9% floor).
 
-The BiGRU arms (`ARM=rep|fist|shared`) swap only the final phase's corpus; on the GPU and software
+The width families were trained with two threads, not six, and `make train-width` retrains them that way; the
+thread count is part of what makes a retrain byte-identical.
+
+The BiGRU arms (`ARM=rep|fist|shared`) swap only the final phase's corpus; `ARM=raw` keeps the fist arm's
+corpora and swaps the nine features for the window's two raw values (its checkpoints are `models/bigru/raw/`,
+its training record `records/width/research/exp215_train_raw.json`); on the GPU and software
 above each arm retrains bit-identical, and `records/training/bigru_arms.json` carries the statistical
 check elsewhere. `models/lif/deployed_5k.pkl` and `models/mlp/deployed_5k.pkl`, the networks first
 deployed (the `lif_committed` and `mlp_committed` rows), were trained by an earlier version of the

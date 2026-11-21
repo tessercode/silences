@@ -1,0 +1,31 @@
+{
+ "passed": true,
+ "against": "outputs/exp216_lif_width",
+ "files": {
+  "results.json": {
+   "values": 14159,
+   "differences": 0,
+   "examples": []
+  },
+  "check.json": {
+   "values": 50,
+   "differences": 0,
+   "examples": []
+  },
+  "fit.json": {
+   "values": 14641,
+   "differences": 0,
+   "examples": []
+  },
+  "eval.json": {
+   "values": 15361,
+   "differences": 0,
+   "examples": []
+  },
+  "gapacc.json": {
+   "values": 7257,
+   "differences": 0,
+   "examples": []
+  }
+ }
+}

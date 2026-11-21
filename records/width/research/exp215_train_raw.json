@@ -1,0 +1,731 @@
+{
+ "experiment": "exp215_window_width",
+ "arm": "bigru_raw",
+ "n_input": 2,
+ "seeds": [
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49
+ ],
+ "alive": [
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49
+ ],
+ "select_balacc": {
+  "mean": 0.9521301867894245,
+  "sd": 0.006740778436306763,
+  "min": 0.9403428148996228,
+  "max": 0.9603670973598034
+ },
+ "recipe": {
+  "notebook": "notebooks/experiment197_3class_ensemble.ipynb",
+  "cells": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "cells_sha256": "819ccfafde3795f93b4e969e9c10b2efd089c8917c6e52b7a9ed74e36106f8cd",
+  "rebound": [
+   "N_INPUT",
+   "encode_transitions"
+  ],
+  "n_tx_train": 12000,
+  "epochs": 180,
+  "phase_starts": [
+   30,
+   60,
+   90
+  ],
+  "batch": 64,
+  "lr": 0.0005,
+  "k_iw": 7.5,
+  "max_t": 122,
+  "n_params": 7107,
+  "n_params_gap9": 8451
+ },
+ "constants": {
+  "BETA_ISI": [
+   0.9885,
+   0.9942,
+   0.9962,
+   0.9974,
+   0.9981,
+   0.9987
+  ],
+  "V_KICK": 1.0,
+  "GAP_TAU_DUR": 3.5,
+  "GAP_TAU_DOT": 3.0,
+  "GAP_TAU_DASH": 5.0,
+  "GAP_S": 0.6,
+  "TU_SCALAR_C": 0.9,
+  "TU_ESTIMATOR_PCTILE": 10.0,
+  "TU_ESTIMATOR_DIVISOR": 2.0,
+  "N_INPUT_GAP9": 9
+ },
+ "b2_encoder": {
+  "transmissions": 200,
+  "max_abs_diff": 0.0,
+  "equal": true
+ },
+ "rows": {
+  "42": {
+   "status": "COMPLETED",
+   "gate": {
+    "checked": true,
+    "passed": true,
+    "epoch": 30,
+    "val_recalls": [
+     0.995088868101029,
+     0.89625,
+     0.7
+    ]
+   },
+   "select_balacc": 0.9530225367086825,
+   "select_recalls": [
+    0.9610189642738808,
+    0.9047902188858746,
+    0.9932584269662922
+   ],
+   "select_per_fist": {
+    "fast_normalr": {
+     "balacc": 0.9712071083780066,
+     "recalls": [
+      0.982465710723192,
+      0.9367799113737075,
+      0.9943757030371203
+     ]
+    },
+    "slow_normalr": {
+     "balacc": 0.9753723614204207,
+     "recalls": [
+      0.9834575955265611,
+      0.9437620245671156,
+      0.9988974641675854
+     ]
+    },
+    "high_r_bug": {
+     "balacc": 0.9496010069219678,
+     "recalls": [
+      0.9607749722089884,
+      0.8961392884178653,
+      0.9918887601390498
+     ]
+    },
+    "cootie_high_jitter": {
+     "balacc": 0.9160257424934305,
+     "recalls": [
+      0.9178777393310266,
+      0.8424081451969898,
+      0.9877913429522752
+     ]
+    }
+   },
+   "final_train_loss": 0.05870131580877578,
+   "final_train_rec": [
+    0.9598376154899597,
+    0.9595955610275269,
+    0.9968218803405762
+   ],
+   "phase2b": {
+    "source": {
+     "kind": "_corpus.corpus",
+     "per_fist": 2400,
+     "seed": 210442
+    },
+    "tu_vs_fe_max_rel": 7.581868043354261e-05,
+    "transmissions": 12000,
+    "gaps": 517973,
+    "class_share": [
+     0.6985750222501945,
+     0.24354551299005933,
+     0.05787946475974617
+    ]
+   },
+   "checkpoint": "checkpoints/exp215/raw/bigru3_seed42.pt",
+   "checkpoint_sha256": "dae6ae9af08699392baf3c47df40c6e37fb42e092798e5d7ddcf3267ff72215b",
+   "wall_s": 34.5
+  },
+  "43": {
+   "status": "COMPLETED",
+   "gate": {
+    "checked": true,
+    "passed": true,
+    "epoch": 30,
+    "val_recalls": [
+     0.9520579981290926,
+     0.89875,
+     0.465
+    ]
+   },
+   "select_balacc": 0.9547276507615999,
+   "select_recalls": [
+    0.9542947356111252,
+    0.9233713627410903,
+    0.9865168539325843
+   ],
+   "select_per_fist": {
+    "fast_normalr": {
+     "balacc": 0.9764076352448395,
+     "recalls": [
+      0.9873753117206983,
+      0.9485967503692763,
+      0.9932508436445444
+     ]
+    },
+    "slow_normalr": {
+     "balacc": 0.9794513864486055,
+     "recalls": [
+      0.9884280832556694,
+      0.9532336835873908,
+      0.9966923925027563
+     ]
+    },
+    "high_r_bug": {
+     "balacc": 0.9464957936482855,
+     "recalls": [
+      0.9406860409718913,
+      0.9208175624526873,
+      0.9779837775202781
+     ]
+    },
+    "cootie_high_jitter": {
+     "balacc": 0.916575775697735,
+     "recalls": [
+      0.9010380622837371,
+      0.8708868230780581,
+      0.9778024417314095
+     ]
+    }
+   },
+   "final_train_loss": 0.06104091122991069,
+   "final_train_rec": [
+    0.9620378613471985,
+    0.9583715796470642,
+    0.9958404898643494
+   ],
+   "phase2b": {
+    "source": {
+     "kind": "_corpus.corpus",
+     "per_fist": 2400,
+     "seed": 210443
+    },
+    "tu_vs_fe_max_rel": 7.578100834234056e-05,
+    "transmissions": 12000,
+    "gaps": 515991,
+    "class_share": [
+     0.6984346626200845,
+     0.2436302183565217,
+     0.05793511902339382
+    ]
+   },
+   "checkpoint": "checkpoints/exp215/raw/bigru3_seed43.pt",
+   "checkpoint_sha256": "24f873fef2a6b100c683390698a975ff477af50dd2914c356b0604cc1d00e029",
+   "wall_s": 34.7
+  },
+  "44": {
+   "status": "COMPLETED",
+   "gate": {
+    "checked": true,
+    "passed": true,
+    "epoch": 30,
+    "val_recalls": [
+     0.9978952291861553,
+     0.935,
+     0.8325
+    ]
+   },
+   "select_balacc": 0.9592419915102477,
+   "select_recalls": [
+    0.9602393435593584,
+    0.9191720242298116,
+    0.998314606741573
+   ],
+   "select_per_fist": {
+    "fast_normalr": {
+     "balacc": 0.9795877582017384,
+     "recalls": [
+      0.9842581047381546,
+      0.9545051698670606,
+      1.0
+     ]
+    },
+    "slow_normalr": {
+     "balacc": 0.9815263317187247,
+     "recalls": [
+      0.9843895619757689,
+      0.9601894331804055,
+      1.0
+     ]
+    },
+    "high_r_bug": {
+     "balacc": 0.9556660094479482,
+     "recalls": [
+      0.95561378434175,
+      0.9137017411052233,
+      0.9976825028968713
+     ]
+    },
+    "cootie_high_jitter": {
+     "balacc": 0.9203265848361989,
+     "recalls": [
+      0.9171088043060361,
+      0.8483104618562786,
+      0.9955604883462819
+     ]
+    }
+   },
+   "final_train_loss": 0.060852695997487306,
+   "final_train_rec": [
+    0.9609729051589966,
+    0.9578616619110107,
+    0.99644535779953
+   ],
+   "phase2b": {
+    "source": {
+     "kind": "_corpus.corpus",
+     "per_fist": 2400,
+     "seed": 210444
+    },
+    "tu_vs_fe_max_rel": 7.915057913281767e-05,
+    "transmissions": 12000,
+    "gaps": 517635,
+    "class_share": [
+     0.6989210544109267,
+     0.243320100070513,
+     0.05775884551856038
+    ]
+   },
+   "checkpoint": "checkpoints/exp215/raw/bigru3_seed44.pt",
+   "checkpoint_sha256": "fdcd4d6a80bda5f0b80aaadaecdd200f8feab14e5df0d69f66001a1cc4a88f86",
+   "wall_s": 34.5
+  },
+  "45": {
+   "status": "COMPLETED",
+   "gate": {
+    "checked": true,
+    "passed": true,
+    "epoch": 30,
+    "val_recalls": [
+     0.9911131898971001,
+     0.92,
+     0.13
+    ]
+   },
+   "select_balacc": 0.9536861213352057,
+   "select_recalls": [
+    0.9603952677022628,
+    0.9057192760786354,
+    0.994943820224719
+   ],
+   "select_per_fist": {
+    "fast_normalr": {
+     "balacc": 0.9739842869971346,
+     "recalls": [
+      0.9812188279301746,
+      0.9429837518463811,
+      0.9977502812148481
+     ]
+    },
+    "slow_normalr": {
+     "balacc": 0.9762654100007956,
+     "recalls": [
+      0.9823703013358186,
+      0.946425928666568,
+      1.0
+     ]
+    },
+    "high_r_bug": {
+     "balacc": 0.9502039352416758,
+     "recalls": [
+      0.9591075115134191,
+      0.8961392884178653,
+      0.9953650057937428
+     ]
+    },
+    "cootie_high_jitter": {
+     "balacc": 0.9144212663458221,
+     "recalls": [
+      0.9193387158785082,
+      0.8372436181201122,
+      0.9866814650388457
+     ]
+    }
+   },
+   "final_train_loss": 0.06145937868747048,
+   "final_train_rec": [
+    0.9586955308914185,
+    0.9600943326950073,
+    0.9960545897483826
+   ],
+   "phase2b": {
+    "source": {
+     "kind": "_corpus.corpus",
+     "per_fist": 2400,
+     "seed": 210445
+    },
+    "tu_vs_fe_max_rel": 8.364312268554339e-05,
+    "transmissions": 12000,
+    "gaps": 517118,
+    "class_share": [
+     0.6986161765786533,
+     0.24338738933860357,
+     0.0579964340827432
+    ]
+   },
+   "checkpoint": "checkpoints/exp215/raw/bigru3_seed45.pt",
+   "checkpoint_sha256": "bf5278d41babfefd24c7e2e5f14a950172910c3abfe2f7972150b717288ad5f1",
+   "wall_s": 34.0
+  },
+  "46": {
+   "status": "COMPLETED",
+   "gate": {
+    "checked": true,
+    "passed": true,
+    "epoch": 30,
+    "val_recalls": [
+     0.9543966323666978,
+     0.965,
+     0.675
+    ]
+   },
+   "select_balacc": 0.9532641540187873,
+   "select_recalls": [
+    0.9456799267156528,
+    0.9172024229811587,
+    0.9969101123595505
+   ],
+   "select_per_fist": {
+    "fast_normalr": {
+     "balacc": 0.9725672586136825,
+     "recalls": [
+      0.9741271820448878,
+      0.9435745937961595,
+      1.0
+     ]
+    },
+    "slow_normalr": {
+     "balacc": 0.9750466760974383,
+     "recalls": [
+      0.9754582168375272,
+      0.9496818114547876,
+      1.0
+     ]
+    },
+    "high_r_bug": {
+     "balacc": 0.9517691664070785,
+     "recalls": [
+      0.9391773860568524,
+      0.9196063588190765,
+      0.996523754345307
+     ]
+    },
+    "cootie_high_jitter": {
+     "balacc": 0.9138924097304066,
+     "recalls": [
+      0.8944252210688197,
+      0.8561310314298363,
+      0.9911209766925638
+     ]
+    }
+   },
+   "final_train_loss": 0.062384839897321825,
+   "final_train_rec": [
+    0.9557912945747375,
+    0.9594367742538452,
+    0.9966924786567688
+   ],
+   "phase2b": {
+    "source": {
+     "kind": "_corpus.corpus",
+     "per_fist": 2400,
+     "seed": 210446
+    },
+    "tu_vs_fe_max_rel": 8.49256900065645e-05,
+    "transmissions": 12000,
+    "gaps": 517628,
+    "class_share": [
+     0.6987914100473699,
+     0.24323259174542336,
+     0.05797599820720672
+    ]
+   },
+   "checkpoint": "checkpoints/exp215/raw/bigru3_seed46.pt",
+   "checkpoint_sha256": "d73497738fda2c7bd297c27bd37d201b3350f1a164b73e4796ffc9962007781c",
+   "wall_s": 34.5
+  },
+  "47": {
+   "status": "COMPLETED",
+   "gate": {
+    "checked": true,
+    "passed": true,
+    "epoch": 30,
+    "val_recalls": [
+     0.9967259120673526,
+     0.79625,
+     0.4475
+    ]
+   },
+   "select_balacc": 0.9403428148996228,
+   "select_recalls": [
+    0.9631629212388173,
+    0.8803374335724107,
+    0.9775280898876404
+   ],
+   "select_per_fist": {
+    "fast_normalr": {
+     "balacc": 0.9654679826489557,
+     "recalls": [
+      0.9815305486284289,
+      0.9227474150664697,
+      0.9921259842519685
+     ]
+    },
+    "slow_normalr": {
+     "balacc": 0.965533311975582,
+     "recalls": [
+      0.9828362845604225,
+      0.920378866360811,
+      0.9933847850055126
+     ]
+    },
+    "high_r_bug": {
+     "balacc": 0.9293002469080616,
+     "recalls": [
+      0.9607749722089884,
+      0.8711582134746404,
+      0.9559675550405562
+     ]
+    },
+    "cootie_high_jitter": {
+     "balacc": 0.9008938934692342,
+     "recalls": [
+      0.9278738946559015,
+      0.8069942452412572,
+      0.9678135405105438
+     ]
+    }
+   },
+   "final_train_loss": 0.06049036565786568,
+   "final_train_rec": [
+    0.9594289064407349,
+    0.9585774540901184,
+    0.996354877948761
+   ],
+   "phase2b": {
+    "source": {
+     "kind": "_corpus.corpus",
+     "per_fist": 2400,
+     "seed": 210447
+    },
+    "tu_vs_fe_max_rel": 9.17431192646931e-05,
+    "transmissions": 12000,
+    "gaps": 517148,
+    "class_share": [
+     0.698449960166142,
+     0.24356277119896044,
+     0.05798726863489755
+    ]
+   },
+   "checkpoint": "checkpoints/exp215/raw/bigru3_seed47.pt",
+   "checkpoint_sha256": "df4736019a51f0687ccdf82ad79b675f620bfb9e3a411e522b7cb12ab4d65722",
+   "wall_s": 34.9
+  },
+  "48": {
+   "status": "COMPLETED",
+   "gate": {
+    "checked": true,
+    "passed": true,
+    "epoch": 30,
+    "val_recalls": [
+     0.9721702525724977,
+     0.88875,
+     0.2375
+    ]
+   },
+   "select_balacc": 0.9423891277214472,
+   "select_recalls": [
+    0.9585631590231353,
+    0.8840536623434538,
+    0.9845505617977528
+   ],
+   "select_per_fist": {
+    "fast_normalr": {
+     "balacc": 0.9630136637563239,
+     "recalls": [
+      0.9809850374064838,
+      0.9125553914327917,
+      0.9955005624296963
+     ]
+    },
+    "slow_normalr": {
+     "balacc": 0.9657899390226876,
+     "recalls": [
+      0.9820596458527493,
+      0.9208228503773864,
+      0.9944873208379272
+     ]
+    },
+    "high_r_bug": {
+     "balacc": 0.9344179018813636,
+     "recalls": [
+      0.9503731935842464,
+      0.877214231642695,
+      0.9756662804171495
+     ]
+    },
+    "cootie_high_jitter": {
+     "balacc": 0.9063156204394217,
+     "recalls": [
+      0.9211072664359862,
+      0.8255865427180168,
+      0.9722530521642619
+     ]
+    }
+   },
+   "final_train_loss": 0.0630986835313389,
+   "final_train_rec": [
+    0.9586485624313354,
+    0.9568371772766113,
+    0.9961992502212524
+   ],
+   "phase2b": {
+    "source": {
+     "kind": "_corpus.corpus",
+     "per_fist": 2400,
+     "seed": 210448
+    },
+    "tu_vs_fe_max_rel": 9.02527075777799e-05,
+    "transmissions": 12000,
+    "gaps": 518940,
+    "class_share": [
+     0.698782132809188,
+     0.24323428527382743,
+     0.05798358191698462
+    ]
+   },
+   "checkpoint": "checkpoints/exp215/raw/bigru3_seed48.pt",
+   "checkpoint_sha256": "20bb4b898b2ceb13ce2b0124308330c1c5199d6844af341308d3aa75a64eb501",
+   "wall_s": 34.0
+  },
+  "49": {
+   "status": "COMPLETED",
+   "gate": {
+    "checked": true,
+    "passed": true,
+    "epoch": 30,
+    "val_recalls": [
+     0.9700654817586529,
+     0.82625,
+     0.885
+    ]
+   },
+   "select_balacc": 0.9603670973598034,
+   "select_recalls": [
+    0.9638255988461614,
+    0.919803783120889,
+    0.9974719101123596
+   ],
+   "select_per_fist": {
+    "fast_normalr": {
+     "balacc": 0.9814576698906127,
+     "recalls": [
+      0.9915835411471322,
+      0.9539143279172821,
+      0.9988751406074241
+     ]
+    },
+    "slow_normalr": {
+     "balacc": 0.9832974901792424,
+     "recalls": [
+      0.9919229574401989,
+      0.9579695130975285,
+      1.0
+     ]
+    },
+    "high_r_bug": {
+     "balacc": 0.957906296979779,
+     "recalls": [
+      0.9568842305859934,
+      0.9191521574564724,
+      0.9976825028968713
+     ]
+    },
+    "cootie_high_jitter": {
+     "balacc": 0.9189971493747532,
+     "recalls": [
+      0.9153402537485582,
+      0.8483104618562786,
+      0.9933407325194229
+     ]
+    }
+   },
+   "final_train_loss": 0.06359419763474235,
+   "final_train_rec": [
+    0.9562008380889893,
+    0.9585298299789429,
+    0.9960963726043701
+   ],
+   "phase2b": {
+    "source": {
+     "kind": "_corpus.corpus",
+     "per_fist": 2400,
+     "seed": 210449
+    },
+    "tu_vs_fe_max_rel": 8.141382047888053e-05,
+    "transmissions": 12000,
+    "gaps": 518094,
+    "class_share": [
+     0.6989445930661231,
+     0.24304276830073307,
+     0.05801263863314379
+    ]
+   },
+   "checkpoint": "checkpoints/exp215/raw/bigru3_seed49.pt",
+   "checkpoint_sha256": "8ee8a266c696cea55269df3a86c3d1bc9b9a33979759c8540c53b144b87b9e39",
+   "wall_s": 36.9
+  }
+ },
+ "wall_s": 278.0,
+ "finished": "2026-11-12T13:40:08-07:00",
+ "git": {
+  "commit": "71be1a74da3177485fc313aaac94fb43f945c4b6",
+  "branch": "main",
+  "dirty_paths": [
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_bigru.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_width.py",
+   "notebooks/experiment215_notes.md",
+   "outputs/exp215_window_width/"
+  ],
+  "relevant_dirty_paths": [
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_bigru.py",
+   "deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp215_width.py"
+  ],
+  "clean_for_record": false
+ },
+ "env": {
+  "python": "3.12.3",
+  "torch": "2.11.0+cu128",
+  "numpy": "2.4.4",
+  "snntorch": "0.9.4",
+  "hostname": "daystrom",
+  "omp_num_threads": null
+ },
+ "device": "cuda:0"
+}

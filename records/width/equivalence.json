@@ -1,0 +1,43 @@
+{
+ "passed": true,
+ "against": "outputs/exp215_window_width",
+ "files": {
+  "results.json": {
+   "values": 24256,
+   "differences": 0,
+   "examples": []
+  },
+  "check.json": {
+   "values": 14,
+   "differences": 0,
+   "examples": []
+  },
+  "features.json": {
+   "values": 137,
+   "differences": 0,
+   "examples": [],
+   "stripped": {
+    "keys": [
+     "models_pass",
+     "models_trained_on_these"
+    ],
+    "why": "the clean record also checks each shipped model's matrix hash"
+   }
+  },
+  "fit.json": {
+   "values": 40993,
+   "differences": 0,
+   "examples": []
+  },
+  "eval.json": {
+   "values": 43009,
+   "differences": 0,
+   "examples": []
+  },
+  "gapacc.json": {
+   "values": 7259,
+   "differences": 0,
+   "examples": []
+  }
+ }
+}

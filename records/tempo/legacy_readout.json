@@ -1,0 +1,54 @@
+{
+ "source": "the earlier rule-based reader: fixed thresholds, 120 transmissions per operator, seed 7",
+ "readout": {
+  "dur": [
+   3.0,
+   6.0
+  ],
+  "dash": [
+   5.1,
+   8.2
+  ],
+  "k": 6.0
+ },
+ "per_fist": {
+  "fast_normalr": {
+   "single": 97.85988289925298,
+   "local": 96.28507974964668,
+   "oracle": 100.0
+  },
+  "slow_normalr": {
+   "single": 99.55582475267515,
+   "local": 96.34564910155461,
+   "oracle": 100.0
+  },
+  "high_r_bug": {
+   "single": 54.633555420956995,
+   "local": 66.32344033918837,
+   "oracle": 68.70583484756713
+  },
+  "cootie_high_jitter": {
+   "single": 38.50191802947708,
+   "local": 59.66081162931557,
+   "oracle": 85.50373511003433
+  },
+  "cootie_corrected": {
+   "single": 45.467393498889564,
+   "local": 60.38764385221078,
+   "oracle": 85.80658186957399
+  }
+ },
+ "a3": {
+  "claimed": {
+   "cootie_single": 38,
+   "cootie_oracle": 85,
+   "high_r_oracle": 68.5
+  },
+  "measured": {
+   "cootie_single": 38.50191802947708,
+   "cootie_oracle": 85.50373511003433,
+   "high_r_oracle": 68.70583484756713
+  }
+ },
+ "a3_pass": true
+}

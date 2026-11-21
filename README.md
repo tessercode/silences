@@ -67,7 +67,8 @@ emulated RP2040.
 | Section 9, the RP2040 chain and bench | `paper/numbers.tex` | `records/deployment/` (the 2026-11 runs) |
 
 Every number the prose cites is a macro in `paper/numbers.tex`; none is typed by hand. The records are
-produced by `make evaluate-spike-fed`, `make evaluate-matched` and `make evaluate` (see REPRODUCE.md), and
+produced by `make evaluate-matched`, `make evaluate-spike-fed`, `make evaluate-width`, `make evaluate-tempo`,
+`make evaluate-nonlearned` and `make evaluate` (see REPRODUCE.md), and
 `records/EQUIVALENCE.md` shows they equal, value for value, the records the paper was written from.
 
 ## What changed in v1.3.0
@@ -136,8 +137,8 @@ corpus, `models/*/deployed_5k.pkl`, `records/decoder_weights/`, `records/random_
 |---|---|
 | `silences/` | The package: `corpus`, `features`, `segmenters/`, `fixedpoint/`, `decoder/`, `evaluation/`, `training/`, `golden/`, plus the device-exact `encoder_ref`, `front_end`, `frames` and `pipeline` |
 | `protocol/` | The pre-registered evaluation protocols, verbatim |
-| `models/` | Every trained model: `spk40/op12/` (the LIF fed spikes, the family of record; seed 0 deployed), `spk80/op12/` and `lif80/op12/` (both forms at T = 80), `lif/`, `mlp/` (`seed*.pkl` on the original corpus; `op12/` the matched families, `gen/` the generic-corpus control; `deployed_5k.pkl` the first deployed networks), `bigru/` (`pool/` the original pool; `fist/` the baseline of record, `rep/`, `shared/`; each also as Q16.16 weights); the language-model table |
-| `records/` | The result records (`spike_fed/` is the paper's, against `matched/`; `decoder_weights/` and `random_letters/` the superseded ones), the training records, the deployment measurements |
+| `models/` | Every trained model: `spk40/op12/` (the LIF fed spikes, the family of record; seed 0 deployed), `spk80/op12/` and `lif80/op12/` (both forms at T = 80), `lif/`, `mlp/` (`seed*.pkl` on the original corpus; `op12/` the matched families, `gen/` the generic-corpus control; `deployed_5k.pkl` the first deployed networks), `mlp_w2/`, `mlp_w5/`, `mlp_w15/`, `mlp_w20/`, `spk40_w5/`, `lif_w5/` (the width sweep, each under `op12/`), `bigru/` (`pool/` the original pool; `fist/` the baseline of record, `rep/`, `shared/`; each also as Q16.16 weights; `raw/` the recipe on the window's two raw values, float checkpoints only); the language-model table |
+| `records/` | The result records (`spike_fed/` is the paper's, against `matched/`; `width/`, `width_lif/`, `nonlearned/` and `tempo/` the four added in v1.3.0; `decoder_weights/` and `random_letters/` the superseded ones), the training records, the deployment measurements |
 | `paper/` | `make_figures.py` and what it writes |
 | `firmware/` | The five boards' firmware, their host and emulator tests, and the goldens |
 | `bench/` | The scripts that ran the hardware measurements |

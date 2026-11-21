@@ -1,0 +1,27 @@
+{
+ "protocol_hash": "27313ebef6ba5f9d",
+ "c3": {
+  "rand_999": {
+   "transmissions": 1250,
+   "equal": true
+  },
+  "eng_999": {
+   "transmissions": 1250,
+   "equal": true
+  }
+ },
+ "c3_pass": true,
+ "c4": {
+  "train_fingerprints": 120000,
+  "overlaps": {},
+  "c4_disjoint": true
+ },
+ "w1_pass": true,
+ "b2": {
+  "transmissions": 200,
+  "max_abs_diff": 0.0,
+  "equal": true
+ },
+ "b2_pass": true,
+ "corpus_identity": true
+}

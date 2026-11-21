@@ -1,0 +1,89 @@
+{
+ "passed": true,
+ "against": "outputs/exp217_nonlearned_baselines",
+ "files": {
+  "results.json": {
+   "values": 10997,
+   "differences": 397,
+   "beyond_rounding": 0,
+   "within_rounding": 397,
+   "max_relative_difference": 4.5758288330578244e-14,
+   "tolerance": 1e-12,
+   "stripped": {
+    "keys": [
+     "note"
+    ],
+    "why": "a one-line note on the negative-bonus block is worded without the research run's deviation label"
+   }
+  },
+  "readout_fits.json": {
+   "values": 464,
+   "differences": 0,
+   "examples": []
+  },
+  "check.json": {
+   "values": 19,
+   "differences": 0,
+   "examples": [],
+   "stripped": {
+    "keys": [
+     "families"
+    ],
+    "why": "the research check lists every family it knew of; the clean one lists the families it scores"
+   }
+  },
+  "fit.json": {
+   "values": 9517,
+   "differences": 0,
+   "examples": []
+  },
+  "eval.json": {
+   "values": 122113,
+   "differences": 0,
+   "examples": []
+  },
+  "gapacc.json": {
+   "values": 21265,
+   "differences": 5,
+   "beyond_rounding": 0,
+   "within_rounding": 5,
+   "max_relative_difference": 2.172542458263806e-16,
+   "tolerance": 1e-12
+  },
+  "audio.json": {
+   "values": 823,
+   "differences": 0,
+   "examples": []
+  },
+  "werfit_fits.json": {
+   "values": 1093,
+   "differences": 0,
+   "examples": []
+  },
+  "werfit_eval.json": {
+   "values": 14977,
+   "differences": 0,
+   "examples": []
+  },
+  "extgrid_fits.json": {
+   "values": 46043,
+   "differences": 0,
+   "examples": []
+  },
+  "extgrid_eval.json": {
+   "values": 14977,
+   "differences": 0,
+   "examples": []
+  },
+  "rulegrid_fits.json": {
+   "values": 9560,
+   "differences": 0,
+   "examples": []
+  },
+  "rulegrid_eval.json": {
+   "values": 2497,
+   "differences": 0,
+   "examples": []
+  }
+ }
+}

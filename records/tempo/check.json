@@ -1,0 +1,72 @@
+{
+ "protocol_hash": "69d6da0e39834615",
+ "a1": {
+  "rand_999": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 1.9
+  },
+  "rand_777": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 1.8
+  },
+  "rand_555": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 1.9
+  },
+  "rand_321": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 1.9
+  },
+  "eng_999": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 1.6
+  },
+  "eng_777": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 2.4
+  },
+  "eng_555": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 1.6
+  },
+  "eng_321": {
+   "transmissions": 1250,
+   "equal": true,
+   "seconds": 1.6
+  }
+ },
+ "a2": {
+  "spk40_op12_seed0": {
+   "gaps": 3650,
+   "equal": true,
+   "seconds": 2.0
+  },
+  "lif_op12_seed0": {
+   "gaps": 3650,
+   "equal": true,
+   "seconds": 1.9
+  },
+  "mlp_op12_seed0": {
+   "gaps": 3650,
+   "equal": true,
+   "seconds": 1.5
+  },
+  "bigru_fist_seed42": {
+   "gaps": 3650,
+   "equal": true,
+   "seconds": 1.8
+  }
+ },
+ "timing_s": {
+  "time_units_per_100_tx": 0.42
+ },
+ "a1_pass": true,
+ "a2_pass": true
+}

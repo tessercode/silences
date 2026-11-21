@@ -1,0 +1,50 @@
+{
+ "passed": true,
+ "against": "outputs/exp214_tempo_headroom",
+ "files": {
+  "results.json": {
+   "values": 6196,
+   "differences": 0,
+   "examples": [],
+   "stripped": {
+    "keys": [
+     "seconds_per_100_tx",
+     "tu_seconds"
+    ],
+    "why": "timings"
+   }
+  },
+  "check.json": {
+   "values": 27,
+   "differences": 0,
+   "examples": [],
+   "stripped": {
+    "keys": [
+     "seconds_per_100_tx",
+     "tu_seconds"
+    ],
+    "why": "timings"
+   }
+  },
+  "eval.json": {
+   "values": 46209,
+   "differences": 0,
+   "examples": []
+  },
+  "legacy_readout.json": {
+   "values": 27,
+   "differences": 0,
+   "examples": []
+  },
+  "tu_parity.json": {
+   "values": 30,
+   "differences": 0,
+   "examples": []
+  },
+  "sensitivity.json": {
+   "values": 465,
+   "differences": 0,
+   "examples": []
+  }
+ }
+}
