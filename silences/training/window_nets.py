@@ -6,6 +6,8 @@
     python -m silences.training.window_nets lif 0 --corpus gen     # the BiGRU recipe's generic corpus
     python -m silences.training.window_nets spk80 0 --corpus op12  # the spike-fed network at T = 80
     python -m silences.training.window_nets lif80 0 --corpus op12  # the current-fed network at T = 80 (equal-T control)
+    python -m silences.training.window_nets mlp_w5 0 --corpus op12 # the control with the window halved (Section 7.2); also
+                                                                   # mlp_w2, mlp_w15, mlp_w20, spk40_w5 and lif_w5
 
 The recipe is the same for every corpus: the 42 window features of every gap in the training corpus with
 their gap labels, standardised by the features' own mean and spread; ten percent held out for model
@@ -20,6 +22,10 @@ The spike-fed families (protocol/spike_fed.json: spk40, spk80, and the current-f
 unchanged on the op12 corpora; the spike-fed network encodes each batch into its ON/OFF spike trains on the
 fly (silences.segmenters.lif.SpikeFedLIF.encode) and the first layer receives spikes.
 
+The width families (protocol/width.json and width_lif.json: the control at half-widths 2, 5, 15 and 20, the
+spike-fed and current-fed networks at 5) use their family's recipe unchanged on the op12 corpora featurised at
+that width; they were trained with two threads, so this script retrains them with two.
+
 Training runs on the CPU with six threads and torch's deterministic algorithms, and is bit for bit
 reproducible: a retrained seed must produce a pickle identical to models/<family>/seed<N>.pkl (or
 models/<family>/<corpus>/seed<N>.pkl). The initialisation and the data order consume random numbers in a
@@ -33,12 +39,15 @@ numbers are the inference path's, which the evaluation anchors by reproducing st
 """
 import os
 
-OMP_THREADS = 6
+import re
+import sys
+
+_WIDTH = re.compile(r"^(mlp|lif|spk40)_w(\d+)$")
+OMP_THREADS = 2 if len(sys.argv) > 1 and _WIDTH.match(sys.argv[1]) else 6     # the width families were trained with two threads
 os.environ.setdefault("OMP_NUM_THREADS", str(OMP_THREADS))   # before torch is imported
 
 import hashlib   # noqa: E402
 import json      # noqa: E402
-import sys       # noqa: E402
 import time      # noqa: E402
 
 import numpy as np   # noqa: E402
@@ -300,6 +309,38 @@ def check_forward(m, F, rng):
 SPIKE_FED = ("spk40", "spk80", "lif80")
 
 
+def train_width(family, seed, outdir=RETRAIN):
+    """One seed of a width family (mlp_w<W>, lif_w<W>, spk40_w<W>) on the op12 corpus featurised at half-width W."""
+    import torch
+    from ..evaluation import width
+    kind, W = _WIDTH.match(family).group(1), int(_WIDTH.match(family).group(2))
+    assert OMP_THREADS == 2, "the width families are retrained with two threads (run this module as a script)"
+    torch.set_num_threads(OMP_THREADS)
+    torch.use_deterministic_algorithms(True)
+    t0 = time.time()
+    F, y, f_sha, _ = width.width_matrix(W, seed)
+    if kind == "mlp":
+        c = dict(P.RANDOM_LETTERS["mlp"])
+        m = fit_mlp(MLP(W=W, hidden=tuple(c["hidden"])), F, y, c["epochs"], c["lr"], c["batch"], c["wd"], c["val"], seed)
+    else:
+        c = dict(P.WIDTH_LIF["arms"]["spk" if kind == "spk40" else "lif"])
+        assert c["W"] == W, f"protocol/width_lif.json registers half-width {c['W']} for the spiking networks"
+        if kind == "spk40":
+            m = fit_spk(SpikeFedLIF(W=W, hidden=tuple(c["hidden"]), beta=c["beta"], threshold=c["threshold"], T=c["T"], scale=c["scale"]),
+                        F, y, c["epochs"], c["lr"], c["batch"], c["wd"], c["val"], seed)
+        else:
+            m = fit_lif(LIF(W=W, hidden=tuple(c["hidden"]), beta=c["beta"], threshold=c["threshold"], T=c["T"]),
+                        F, y, c["epochs"], c["lr"], c["batch"], c["wd"], c["val"], seed)
+    outdir.mkdir(parents=True, exist_ok=True)
+    path = outdir / f"{family}_op12_seed{seed}.pkl"
+    m.save(path)
+    meta = dict(family=family, seed=seed, corpus="op12", W=W, corpus_seed=P.GRID_CORPUS_SEED0["op12"] + seed, protocol={**c, "W": W, "threads": OMP_THREADS},
+                feature_sha256=f_sha, gaps=int(len(y)), pickle_sha256=sha256_file(path), wall_s=round(time.time() - t0, 1),
+                finished=now(), git=git_info(), env=env_info())
+    path.with_suffix(".meta.json").write_text(json.dumps(meta, indent=2))
+    return path, meta
+
+
 def train(family, seed, outdir=RETRAIN, arm=None):
     import torch
     torch.set_num_threads(OMP_THREADS)
@@ -343,9 +384,13 @@ def train(family, seed, outdir=RETRAIN, arm=None):
 def main(argv):
     family, seed = argv[0], int(argv[1])
     arm = argv[argv.index("--corpus") + 1] if "--corpus" in argv else None
-    assert family in ("lif", "mlp") + SPIKE_FED, family
+    assert family in ("lif", "mlp") + SPIKE_FED or _WIDTH.match(family), family
     assert arm in (None, "op12", "gen"), arm
-    path, meta = train(family, seed, arm=arm)
+    if _WIDTH.match(family):
+        assert arm == "op12", "the width families train on the op12 corpora"
+        path, meta = train_width(family, seed)
+    else:
+        path, meta = train(family, seed, arm=arm)
     shipped = MODELS / family / f"seed{seed}.pkl" if arm is None else MODELS / family / arm / f"seed{seed}.pkl"
     same = meta["pickle_sha256"] == sha256_file(shipped)
     print(f"{family} seed {seed}: retrained in {meta['wall_s']:.0f}s, sha256 {meta['pickle_sha256'][:16]} "

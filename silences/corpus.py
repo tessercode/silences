@@ -23,14 +23,15 @@ WORD_LENGTHS = (2, 6)    # letters per word, both texts
 WORDS_PER_TX = (2, 5)    # words per transmission
 
 
-def render_sentence(words, operator, rng, word_gap_tu=WORD_GAP_TU):
+def render_sentence(words, operator, rng, word_gap_tu=WORD_GAP_TU, marks=None):
     """Render words as one spike train.
 
     Each word draws its own speed drift omega ~ N(1, operator omega), floored at 0.2. Marks are 1
     (dot) or r (dash) time units, gaps 1 (intra-letter), 3 (inter-letter) or word_gap_tu
     (inter-word) time units, each with Gaussian jitter and floored at 0.1 time units.
     Returns (spikes [(t_s, ch)], letter index per spike, word index per spike, true time unit per
-    word in seconds)."""
+    word in seconds). A list passed as marks receives every mark's (on, off) times in seconds; the
+    spike train itself carries only the off times."""
     t_u_base = 1.2 / operator["wpm"]
     r_val = operator["r"]
     spikes, lidx, widx, tu_words = [], [], [], []
@@ -52,6 +53,8 @@ def render_sentence(words, operator, rng, word_gap_tu=WORD_GAP_TU):
                 noise = rng.normal(0.0, sigma_e) if sigma_e > 0 else 0.0
                 t_dur = max(t_ideal + noise, 0.1 * t_u)
                 t_spike = t_cursor + t_dur
+                if marks is not None:
+                    marks.append((t_cursor, t_spike))
                 spikes.append((t_spike, 0 if t_dur < t_thresh else 1))
                 lidx.append(gletter)
                 widx.append(wi)
@@ -106,25 +109,29 @@ def english_words(rng, n_words):
 TEXTS = dict(rand=random_words, eng=english_words)
 
 
-def render_transmission(operator, rng, words_fn=random_words, n_words_range=WORDS_PER_TX):
+def render_transmission(operator, rng, words_fn=random_words, n_words_range=WORDS_PER_TX, with_marks=False):
     """One transmission by the named operator, or None if it has fewer than three spikes.
 
     Returns dict(fist, ticks [us], ch, widx, lidx, labels per gap, tu_words_us, true_tu_us, words)."""
     op = OPERATORS[operator]
     nw = int(rng.integers(n_words_range[0], n_words_range[1] + 1))
     words = words_fn(rng, nw)
-    spikes, lidx, widx, tu_words = render_sentence(words, op, rng)
+    marks = [] if with_marks else None
+    spikes, lidx, widx, tu_words = render_sentence(words, op, rng, marks=marks)
     if len(spikes) < 3:
         return None
     ticks = np.array([round(s[0] * 1e6) for s in spikes], dtype=np.int64)
     ch = np.array([s[1] for s in spikes], dtype=np.int64)
     labels = np.where(lidx[1:] == lidx[:-1], 0, np.where(widx[1:] == widx[:-1], 1, 2)).astype(np.int64)
     tu_words_us = np.asarray(tu_words, dtype=np.float64) * 1e6
-    return dict(fist=operator, ticks=ticks, ch=ch, widx=widx, lidx=lidx, labels=labels,
-                tu_words_us=tu_words_us, true_tu_us=float(np.mean(tu_words_us)), words=words)
+    tx = dict(fist=operator, ticks=ticks, ch=ch, widx=widx, lidx=lidx, labels=labels,
+              tu_words_us=tu_words_us, true_tu_us=float(np.mean(tu_words_us)), words=words)
+    if with_marks:
+        tx["marks"] = marks                     # (on, off) of every mark in seconds, for rendering audio
+    return tx
 
 
-def corpus(per_fist, seed, text="rand", operators=None, rng=None):
+def corpus(per_fist, seed, text="rand", operators=None, rng=None, with_marks=False):
     """per_fist transmissions from each operator in turn, from one generator seeded with seed.
 
     A rendering with fewer than three spikes is discarded and redrawn; its draws still count."""
@@ -134,7 +141,7 @@ def corpus(per_fist, seed, text="rand", operators=None, rng=None):
     for f in operators or list(OPERATORS):
         made = 0
         while made < per_fist:
-            tx = render_transmission(f, rng, words_fn)
+            tx = render_transmission(f, rng, words_fn, with_marks=with_marks)
             if tx is not None:
                 out.append(tx)
                 made += 1

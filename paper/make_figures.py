@@ -664,22 +664,16 @@ macro("RpSramKB", 264)                                         # the RP2040's SR
 
 
 # ---- the tempo headroom (Section 10.3): the per-word time-unit oracle on every record family ----
-E214_DIR = REC / "tempo" / "research"
+TP_M, TP = load_record(REC / "tempo", ["results.json", "check.json", "legacy_readout.json", "tu_parity.json"])
 
 
-def parse_exp214(d=E214_DIR):
-    E = json.loads((d / "exp214_results.json").read_text())
-    C = json.loads((d / "exp214_check.json").read_text())
-    L = json.loads((d / "exp214_legacy_readout.json").read_text())
-    P = json.loads((d / "exp214_tu_parity.json").read_text())
-    assert E["protocol"]["base_protocol_hash"] == E213["protocol_hash"], "exp214 was not chained to Exp 213"
-    assert E["protocol"]["exp211_hash"] == E212["grid"]["exp211_protocol_hash"], "exp214 was not chained to Exp 211"
-    assert C["protocol_hash"] == E["protocol_hash"] and C["a1_pass"] and C["a2_pass"], "exp214 anchors A1/A2 failed"
-    assert L["a3_pass"], "exp214 anchor A3 (rule-based readout reproduced) failed"
-    assert E["protocol"]["decoder"].startswith("own-fit"), "exp214 did not decode at the record's own weights"
-    # The run's only dirty path was its own script, untracked on its first run (the record is hashed by protocol).
-    assert E["git"]["relevant_dirty_paths"] == ["deploy/rp2040_sentence_decoder/spiking_gap9/seedsweep/exp214.py"], \
-        f"exp214 ran with unexpected dirty paths: {E['git']['relevant_dirty_paths']}"
+def parse_exp214():
+    E, C, L, P = TP["results.json"], TP["check.json"], TP["legacy_readout.json"], TP["tu_parity.json"]
+    assert E["protocol_hash"] == TP_M["protocol_hash"] and E["protocol"]["base_protocol_hash"] == E213["protocol_hash"], "the per-word oracle record is not chained to the spike-fed one"
+    assert E["protocol"]["exp211_hash"] == E212["grid"]["exp211_protocol_hash"], "the per-word oracle record is not chained to the grid"
+    assert C["protocol_hash"] == E["protocol_hash"] and C["a1_pass"] and C["a2_pass"], "the per-word oracle record's anchors failed"
+    assert L["a3_pass"], "the earlier rule-based reader's figures were not reproduced"
+    assert E["protocol"]["decoder"].startswith("own-fit"), "the per-word oracle record did not decode at the record's own weights"
     return E, L, P
 
 
@@ -758,9 +752,9 @@ macro("NEngVocab", _comma(sum(len(v) for v in _C.english_vocabulary().values()))
 
 
 # ---- the window width and the input representation (Section 7.2, Table 4) ----
-E215_DIR = REC / "width" / "research"
-E215 = json.loads((E215_DIR / "exp215_results.json").read_text())
-E215G = json.loads((E215_DIR / "exp215_gapacc.json").read_text())
+WD_M, WD = load_record(REC / "width", ["results.json", "gapacc.json"])
+E215, E215G = WD["results.json"], WD["gapacc.json"]
+assert E215["protocol_hash"] == WD_M["protocol_hash"]
 assert E215["protocol"]["base_protocol_hash"] == E212["grid"]["exp211_protocol_hash"], "exp215 was not chained to Exp 211"
 assert E215G["protocol_hash"] == E215["protocol_hash"] and E215["anchors_pass"], "exp215 anchors failed"
 assert E215["anchors"]["b1_float_vs_fixed"]["within_bound"]
@@ -823,8 +817,9 @@ for k in ("LookaheadTuMean", "LookaheadTuPNinetyFive", "LookaheadMsMean", "Looka
 
 
 # ---- the spiking networks at the sweep's best width (Section 7.2, Table 4) ----
-E216_DIR = REC / "width_lif" / "research"
-E216 = json.loads((E216_DIR / "exp216_results.json").read_text())
+WL_M, WL = load_record(REC / "width_lif", ["results.json"])
+E216 = WL["results.json"]
+assert E216["protocol_hash"] == WL_M["protocol_hash"]
 assert E216["protocol"]["base_protocol_hash"] == E215["protocol_hash"], "exp216 was not chained to Exp 215"
 assert E216["protocol"]["exp213_hash"] == E213["protocol_hash"], "exp216 was not chained to Exp 213"
 assert E216["anchors_pass"] and E216["anchors"]["f1_pass"] and E216["anchors"]["c3_pass"], "exp216 anchors failed"
@@ -865,7 +860,9 @@ macro("NChanSpkFive", 4 * 11)
 
 
 # ---- non-learned baselines and the two checks on the fits (Sections 6.4 and 8.4, Table 3) ----
-E217 = json.loads((REC / "nonlearned" / "research" / "exp217_results.json").read_text())
+NL_M, NL = load_record(REC / "nonlearned", ["results.json"])
+E217 = NL["results.json"]
+assert E217["protocol_hash"] == NL_M["protocol_hash"]
 if E217 is not None:
     assert E217["protocol"]["base_protocol_hash"] == E216["protocol_hash"], "exp217 was not chained to Exp 216"
     assert E217["anchors"]["r5_pass"] and all(E217["anchors"][k] for k in ("r1_corpus_identity", "r2_fixed_equals_legacy", "r3_lp3_format", "r4_audio_parity")), "exp217 anchors failed"

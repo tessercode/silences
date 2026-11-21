@@ -13,6 +13,13 @@ spike_fed.json         the spike-fed network (v1.2.0): the LIF recipe fed the wi
                        at T = 40 and T = 80, and the current-fed LIF at T = 80, on the matched op12
                        corpora, scored beside the matched record's families (2026-11-08; chained to
                        grid_window)
+width.json             the window width (v1.3.0): the control at half-widths 2, 5, 15 and 20 and the
+                       baseline's recipe on the window's two raw values (2026-11-12; chained to grid_window)
+width_lif.json         the spike-fed and current-fed networks at half-width 5 (2026-11-13; chained to width
+                       and to spike_fed)
+nonlearned.json        the threshold readouts, multimon-ng on rendered audio, and the two checks on the
+                       decoder-weight fits (2026-11-13; chained to width_lif)
+tempo.json             the per-word time-unit oracle on every family (2026-11-12; chained to spike_fed)
 
 Each protocol is identified by the first 16 hex digits of the sha256 of its JSON with sorted keys.
 The records carry that hash, so a result can never be mistaken for one made under another protocol.
@@ -37,11 +44,19 @@ GRID_BIGRU, GRID_BIGRU_HASH = _load("grid_bigru", "cafa08a4f02b598e")
 GRID_WINDOW, GRID_WINDOW_HASH = _load("grid_window", "c041694763a2f430")
 MATCHED, MATCHED_HASH = _load("matched", "58c31eb368faa229")
 SPIKE_FED, SPIKE_FED_HASH = _load("spike_fed", "76de3765e2be3d62")
+WIDTH, WIDTH_HASH = _load("width", "27313ebef6ba5f9d")
+WIDTH_LIF, WIDTH_LIF_HASH = _load("width_lif", "becf0c6424151fa2")
+NONLEARNED, NONLEARNED_HASH = _load("nonlearned", "acf83533d6d2f591")
+TEMPO, TEMPO_HASH = _load("tempo", "69d6da0e39834615")
 assert DECODER_WEIGHTS["base_protocol_hash"] == RANDOM_LETTERS_HASH
 assert GRID_BIGRU["base_protocol_hash"] == DECODER_WEIGHTS_HASH
 assert GRID_WINDOW["base_protocol_hash"] == GRID_BIGRU_HASH
 assert MATCHED["base_protocol_hash"] == GRID_WINDOW_HASH
 assert SPIKE_FED["base_protocol_hash"] == GRID_WINDOW_HASH
+assert WIDTH["base_protocol_hash"] == GRID_WINDOW_HASH
+assert WIDTH_LIF["base_protocol_hash"] == WIDTH_HASH and WIDTH_LIF["exp213_hash"] == SPIKE_FED_HASH
+assert NONLEARNED["base_protocol_hash"] == WIDTH_LIF_HASH
+assert TEMPO["base_protocol_hash"] == SPIKE_FED_HASH and TEMPO["exp211_hash"] == GRID_WINDOW_HASH
 
 EVAL = RANDOM_LETTERS["eval"]                      # per_fist 250, evaluation seeds 999/777/555/321
 CALIB = RANDOM_LETTERS["calib"]                    # random-letter calibration: seed 4242, T grid, CER

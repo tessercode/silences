@@ -6,13 +6,21 @@
 #   make evaluate       tier 2: the shipped models -> the superseded 5,000-transmission records, then compared (about 10 min)
 #   make evaluate-matched  tier 2: every model of the grid -> the matched-data record (records/matched/), then compared (about 40 min)
 #   make evaluate-spike-fed  tier 2: the spike-fed families -> the record of the paper (records/spike_fed/), then compared (about 25 min; needs the matched tables)
+#   make evaluate-width    tier 2: the control at four other window widths, the baseline on the window's raw values and the
+#                       spiking networks at half-width 5 -> records/width/ and records/width_lif/ (about 45 min; needs torch
+#                       and the matched and spike-fed tables)
+#   make evaluate-tempo    tier 2: every family under a per-gap and a per-word time unit -> records/tempo/ (about 30 min)
+#   make evaluate-nonlearned  tier 2: the threshold readouts, multimon-ng on rendered audio and the two checks on the fits ->
+#                       records/nonlearned/ (about 40 min; needs evaluate-width and evaluate-tempo, and the multimon-ng program)
 #   make spike-character   the spike statistics and timing-destroying controls of both LIF forms (records/spike_fed/spikes_*.json, about 40 min)
 #   make train-spk40 SEED=0 CORPUS=op12
 #                       tier 3: retrain one seed of the network of record (the LIF fed spikes) and check it is bit-identical
 #   make train-lif SEED=0 / train-mlp SEED=0 [CORPUS=op12|gen]; train-spk80 / train-lif80 SEED=0 CORPUS=op12
 #                       tier 3: retrain one seed and check it is bit-identical to the shipped model
 #                       (CORPUS=op12 is the matched corpus; without CORPUS, the original 5,000-transmission corpus)
-#   make train-bigru [ARM=rep|fist|shared]
+#   make train-width FAMILY=mlp_w5 SEED=0
+#                       tier 3: retrain one seed of a width family (mlp_w2, mlp_w5, mlp_w15, mlp_w20, spk40_w5, lif_w5)
+#   make train-bigru [ARM=rep|fist|shared|raw]
 #                       tier 3: retrain the BiGRU pool, or one of its retrained arms (CUDA GPU, about 5 min each)
 #   make lm             rebuild the character language model and check it is byte-identical
 #   make firmware-host  every board's host gate (gcc, no SDK)
@@ -22,9 +30,10 @@ PYTHON ?= .venv/bin/python
 SEED ?= 0
 export PYTHONPATH := $(CURDIR)
 
-.PHONY: setup paper check evaluate evaluate-matched evaluate-spike-fed spike-character train-lif train-mlp train-spk40 train-spk80 train-lif80 train-bigru lm collision firmware-host firmware-renode
+.PHONY: setup paper check evaluate evaluate-matched evaluate-spike-fed evaluate-width evaluate-tempo evaluate-nonlearned spike-character train-width train-lif train-mlp train-spk40 train-spk80 train-lif80 train-bigru lm collision firmware-host firmware-renode
 CORPUS ?=
 ARM ?=
+FAMILY ?= mlp_w5
 
 setup:
 	python3.12 -m venv .venv
@@ -56,6 +65,21 @@ evaluate-spike-fed:
 	$(PYTHON) -m silences.evaluation.spike_fed
 	$(PYTHON) tools/compare_records.py --git records/spike_fed
 
+# The width sweep, the spiking networks at its best width, the non-learned baselines and the per-word oracle: each
+# needs the tables of the records it is chained to (evaluate-matched, then evaluate-spike-fed, then these in order).
+evaluate-width:
+	$(PYTHON) -m silences.evaluation.width
+	$(PYTHON) -m silences.evaluation.width_lif
+	$(PYTHON) tools/compare_records.py --git records/width records/width_lif
+
+evaluate-tempo:
+	$(PYTHON) -m silences.evaluation.tempo
+	$(PYTHON) tools/compare_records.py --git records/tempo
+
+evaluate-nonlearned:
+	$(PYTHON) -m silences.evaluation.nonlearned
+	$(PYTHON) tools/compare_records.py --git records/nonlearned
+
 spike-character:
 	$(PYTHON) -m silences.evaluation.spike_character spk40
 	$(PYTHON) -m silences.evaluation.spike_character lif
@@ -63,6 +87,9 @@ spike-character:
 
 train-lif train-mlp train-spk40 train-spk80 train-lif80:
 	$(PYTHON) -m silences.training.window_nets $(@:train-%=%) $(SEED) $(if $(CORPUS),--corpus $(CORPUS),)
+
+train-width:
+	$(PYTHON) -m silences.training.window_nets $(FAMILY) $(SEED) --corpus op12
 
 train-bigru:
 	$(PYTHON) -m silences.training.bigru $(if $(ARM),--arm $(ARM),)

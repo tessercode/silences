@@ -70,6 +70,34 @@ Every number the prose cites is a macro in `paper/numbers.tex`; none is typed by
 produced by `make evaluate-spike-fed`, `make evaluate-matched` and `make evaluate` (see REPRODUCE.md), and
 `records/EQUIVALENCE.md` shows they equal, value for value, the records the paper was written from.
 
+## What changed in v1.3.0
+
+The release follows the paper as submitted. Four experiments the manuscript gained are added, each with its
+protocol, models, evaluation code and record:
+
+- **The window width** (Section 7.2, Table 4; `protocol/width.json`, `silences.evaluation.width`,
+  `records/width/`). The control at half-widths 2, 5, 15 and 20 (`models/mlp_w*/op12/`, ten seeds each), the
+  baseline's recipe on the window's two raw values per gap (`models/bigru/raw/`, `make train-bigru ARM=raw`),
+  and the baseline of record through a floating-point path (`silences.segmenters.bigru_float`).
+- **The spiking networks at half-width 5** (Section 7.2, Table 4; `protocol/width_lif.json`,
+  `silences.evaluation.width_lif`, `records/width_lif/`; `models/spk40_w5/op12/`, `models/lif_w5/op12/`).
+- **Non-learned baselines** (Section 6.4, Table 3; `protocol/nonlearned.json`, `silences.evaluation.nonlearned`,
+  `records/nonlearned/`): the threshold readout in four forms (`silences.segmenters.readout`), multimon-ng on
+  audio rendered from the evaluation corpora (`silences.evaluation.audio`), and the two checks on the
+  decoder-weight fits that Section 8.4 cites (fitted to word error; an extended grid).
+- **The per-word time-unit oracle** (Sections 5.2 and 10.3; `protocol/tempo.json`, `silences.evaluation.tempo`,
+  `records/tempo/`): every family re-run with the time unit supplied per gap and per word
+  (`silences.timing`).
+
+Each record is re-issued by this package from the shipped models and equals the research repository's record
+value for value (`records/EQUIVALENCE.md`); the research records ship beside them under `research/`.
+
+The paper no longer tabulates the per-operator scores of the single deployed networks or the model-by-corpus
+grid, and no longer reports the baseline's five-seed ensemble; `paper/` follows it (253 cited numbers, six
+tables). The grid's models and the matched record's grid block are kept. `data/operator_style_fits.csv`
+gains the time at which each fitted segment ends, from which the recordings' total length is computed, and
+`records/training/charlm_build.json` holds the language model's build facts cited in Appendix A.
+
 ## What changed in v1.2.0
 
 The paper's spiking network is now the LIF network fed the gap window as spike trains (review item M2:

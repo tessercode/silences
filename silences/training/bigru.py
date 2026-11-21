@@ -45,7 +45,7 @@ from ..operators import OPERATORS
 
 SMOKE = "--smoke" in sys.argv[1:]
 ARM = sys.argv[sys.argv.index("--arm") + 1] if "--arm" in sys.argv[1:] else None
-assert ARM in (None, "rep", "fist", "shared"), ARM
+assert ARM in (None, "rep", "fist", "shared", "raw"), ARM
 OUT = OUTPUTS / "retrain" / ("bigru" if ARM is None else f"bigru_{ARM}")
 FIST_SEED_BASE, FIST_PER_OPERATOR = 210_400, 2400
 SHARED_PER_OPERATOR, SHARED_SEED = 1000, 13
@@ -77,6 +77,9 @@ V_KICK = 1.0
 GAP_TAU_DUR, GAP_TAU_DOT, GAP_TAU_DASH, GAP_S = 3.5, 3.0, 5.0, 0.6
 TU_PCTILE, TU_DIVISOR, TU_SCALAR_C = 10.0, 2.0, 0.90
 N_INPUT, N_HIDDEN, N_OUTPUT = 9, 32, 3
+N_INPUT_RAW = 2
+if ARM == "raw":                       # the recipe on the window networks' two raw values per gap (Section 7.2)
+    N_INPUT = N_INPUT_RAW
 
 SIGMA_P1A, SIGMA_P1B, SIGMA_P2A, SIGMA_P2B = (0.0, 0.0), (0.0, 0.2), (0.0, 0.3), (0.0, 0.45)
 NW_P1, WL_P1 = [2], [2]
@@ -138,7 +141,7 @@ def generate_sentence(n_words_list, wlen_list, t_u, sigma_frac, t_thresh_frac, r
     return spikes, labels, tu_words
 
 
-def features(spikes, t_u_norm_s):
+def nine_features(spikes, t_u_norm_s):
     """The nine float features per gap (the fixed-point versions are segmenters.bigru.features_q)."""
     rows = []
     for i in range(len(spikes) - 1):
@@ -149,7 +152,20 @@ def features(spikes, t_u_norm_s):
         tau_bit = GAP_TAU_DASH if ch_next >= 0.5 else GAP_TAU_DOT
         durbit = 1.0 / (1.0 + np.exp(-(isi_tu - tau_bit) / GAP_S))
         rows.append(np.array(list(pop) + [ch_next, dur_gap, durbit], dtype=np.float32))
-    return np.stack(rows) if rows else np.zeros((0, N_INPUT), dtype=np.float32)
+    return np.stack(rows) if rows else np.zeros((0, 9), dtype=np.float32)
+
+
+def raw_features(spikes, t_u_norm_s):
+    """[log(interval / time unit), bit of the closing mark] per gap: the window networks' pair, unwindowed."""
+    if len(spikes) < 2:
+        return np.zeros((0, N_INPUT_RAW), dtype=np.float32)
+    t = np.array([s[0] for s in spikes], dtype=np.float64)
+    c = np.array([s[1] for s in spikes], dtype=np.float64)
+    x = np.diff(t) / float(t_u_norm_s)
+    return np.stack([np.log(np.clip(x, 1e-3, None)), c[1:]], axis=1).astype(np.float32)
+
+
+features = raw_features if ARM == "raw" else nine_features
 
 
 def estimate_tu(spikes):
@@ -410,7 +426,7 @@ def main():
                                        (SIGMA_P2A, NW_P1, WL_P1, RNG_TRAIN_P2A)):
             X, y = training_tensors(build_dataset(N_TX_TRAIN, lo, hi, nw, wl, base + seed)[0])
             phases.append((X.to(device), y.to(device)))
-        if ARM == "fist":
+        if ARM in ("fist", "raw"):             # raw: the fist arm's corpora, so the comparison with the control is at matched data
             final = operator_phase(FIST_PER_OPERATOR if not SMOKE else 80, FIST_SEED_BASE + seed)
         elif ARM == "shared":
             shared = shared or operator_phase(SHARED_PER_OPERATOR if not SMOKE else 80, SHARED_SEED)
@@ -451,19 +467,22 @@ def check(out):
     widened by its own spread, and the new ensemble's test balanced accuracy clears the floor."""
     if ARM is None:
         ref = json.loads((RECORDS / "training" / "bigru_pool.json").read_text())
+    elif ARM == "raw":
+        A = json.loads((RECORDS / "width" / "research" / "exp215_train_raw.json").read_text())
+        ref = dict(consistency=dict(min=A["select_balacc"]["min"], max=A["select_balacc"]["max"]), selected_seeds="not selected")
     else:
         A = json.loads((RECORDS / "training" / "bigru_arms.json").read_text())["arms"][ARM]
         ref = dict(consistency=dict(min=A["select_balacc"]["min"], max=A["select_balacc"]["max"]), selected_seeds=A["selected_top"])
     lo, hi = ref["consistency"]["min"], ref["consistency"]["max"]
     band = (lo - (hi - lo), hi + (hi - lo))
     seeds_ok = all(band[0] <= p["select_balacc"] <= band[1] for p in out["pool"].values() if p["status"] == "COMPLETED")
-    ens_ok = out["ensemble_test"]["pooled_balacc"] >= BALACC_FLOOR
+    ens_ok = out["ensemble_test"]["pooled_balacc"] >= BALACC_FLOOR or ARM == "raw"     # the raw-feature network is not held to the floor
     print(f"retrained pool: SELECT balanced accuracy {out['consistency']['min'] * 100:.2f}-{out['consistency']['max'] * 100:.2f}% "
           f"(shipped {lo * 100:.2f}-{hi * 100:.2f}%, band {band[0] * 100:.2f}-{band[1] * 100:.2f}%) -> {'PASS' if seeds_ok else 'FAIL'}; "
           f"ensemble test {out['ensemble_test']['pooled_balacc'] * 100:.2f}% (floor {BALACC_FLOOR * 100:.1f}%) -> "
           f"{'PASS' if ens_ok else 'FAIL'}; selected {out['selected_seeds']} (shipped {ref['selected_seeds']})")
     from ..segmenters.bigru import POOL_DIR, arm_dir
-    shipped = POOL_DIR if ARM is None else arm_dir(ARM)
+    shipped = POOL_DIR if ARM is None else arm_dir(ARM)        # models/bigru/raw for the raw arm
     same = [s for s, p in out["pool"].items() if p["status"] == "COMPLETED" and (OUT / "pool" / f"bigru3_seed{s}.pt").exists()
             and _weights_equal(shipped / f"bigru3_seed{s}.pt", OUT / "pool" / f"bigru3_seed{s}.pt")]
     print(f"weights identical to the shipped checkpoints for {len(same)} of {len(out['pool'])} seeds")
